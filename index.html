@@ -3,7 +3,62 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <title>Chris' Pizza</title>
+    <style></style>
   </head>
-  <body></body>
+  <body>
+    <dialog id="sign-up-dialog">
+      This is a dialog box
+      <button onclick="closeDialog('sign-up-dialog')" id="close-dialog-btn">
+        Close
+      </button>
+    </dialog>
+
+    <div class="navbar">
+      <div class="navbar-logo-container">
+        <div class="navbar-logo-title">Chris' Pizza</div>
+        <img class="navbar-logo" src="./assets/images/icon.png" />
+      </div>
+      <div class="sub-navbar">
+        <div class="navbarItems">
+          <a href="#" class="navbarItem">Menu</a>
+          <a href="#" class="navbarItem">Offers</a>
+          <a href="#" class="navbarItem">Your Orders</a>
+          <a href="#" class="navbarItem">Stores</a>
+          <a href="#" class="navbarItem">Support</a>
+        </div>
+        
+        <div class="cart-profile-container">
+          <i class="nav-icon fa-solid fa-cart-shopping fa-xl"></i>
+          <button class="button join-button">Join Us</button>
+        </div>
+    </div>
+
+    <!-- <i class="nav-icon fa-solid fa-cart-shopping fa-xl"></i> -->
+    <script>
+      // Displaces the container element based on the height of the navbar
+      let navMargin = document.getElementById("navbar").offsetHeight;
+      const container = (document.getElementById("container").style.marginTop =
+        navMargin + "px");
+
+      const signUpDialog = document.getElementById("sign-up-dialog");
+      //signUpDialog.showModal();
+
+      const closeDialog = (id) => {
+        const dialog = document.getElementById(id);
+        dialog.close();
+      };
+    </script>
+    <script
+      src="https://kit.fontawesome.com/0ef6f85575.js"
+      crossorigin="anonymous"
+    ></script>
+  </body>
 </html>
