@@ -34,6 +34,7 @@ body {
   left: 0;
   height: fit-content;
   z-index: 99;
+
 }
 
 .navbar-logo-container {
@@ -213,8 +214,12 @@ body {
   justify-content: center;
   flex-basis: 23.33333%;
   width: 23.33333%;
+  cursor: pointer;
+  transition: 0.3s;
+}
 
-
+.catagory-container:hover {
+  transform: scale(1.1);
 }
 
 .catagory-image {
@@ -225,4 +230,37 @@ body {
   margin-top: 1rem;
 }
 
-.footer {}
+.footer {
+  background: var(--primary);
+  height: 10rem;
+  width: 100vw;
+  position: relative;
+}
+
+
+.footer-left-container {
+  display: flex;
+  position: absolute;
+  top: 1.5rem;
+  left: 8rem;
+}
+
+.footer-left-text-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.footer-title {
+  font-family: 'Magzo', sans-serif;
+  font-size: 1.3rem;
+}
+
+.footer-number {
+  font-weight: 600;
+  font-size: 1.3rem;
+}
+
+.footer-subtitle {
+  font-weight: 600;
+}
