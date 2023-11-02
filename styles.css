@@ -219,7 +219,7 @@ a {
   align-items: center;
   justify-content: center;
   flex-basis: 23.33333%;
-  width: 23.33333%;
+  width: fit-content;
   cursor: pointer;
   transition: 0.3s;
 }
@@ -231,8 +231,12 @@ a {
   justify-content: center;
   cursor: pointer;
   transition: 0.3s;
-
   flex-basis: 200px;
+  transition: 0.3s;
+}
+
+.smaller-catagory-container:hover {
+  transform: scale(1.1);
 }
 
 .smaller-inner-catagory-container {
@@ -423,15 +427,14 @@ a {
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  gap: 2rem;
+  gap: 3rem;
+  margin: 2rem 0;
 }
 
 .item-container {
   background: var(--secondary);
-
   width: fit-content;
-  width: 20%;
-
+  width: 15rem;
 }
 
 .item-info-container {}
@@ -471,4 +474,78 @@ a {
   font-size: 1rem;
   padding: 0.1rem 0.4rem;
   border-radius: 5px;
+}
+
+
+.see-more-container {
+  margin: 2rem 0;
+}
+
+.see-more-button {
+  background: var(--background);
+  color: var(--primary);
+  border: 1px solid var(--primary);
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  font-size: 1.2rem;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.see-more-button:hover {
+  background: var(--primary);
+  color: var(--background);
+  border: 1px solid var(--primary);
+}
+
+.back-container {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.back-span {
+  color: var(--text);
+  font-size: 1.3rem;
+}
+
+.ordering-container {
+  width: 100vw;
+  display: flex;
+}
+
+.ordering-big-container {
+  width: 90%;
+  position: relative;
+  background: lime;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+.ordering-hero-container {
+  margin: 5rem 0;
+  background: salmon;
+  min-height: 10rem;
+  width: 70%;
+}
+
+.ordering-hero-left {
+  background-image: url("https://static.phdvasia.com/sg1/menu/single/desktop_thumbnail_1f633a30-ba93-450a-a93d-1ac3b25a1b54.jpg");
+  background-repeat: no-repeat;
+  min-height: 10rem;
+  width: 50%;
+
+}
+
+.ordering-hero-right {
+  width: 50%;
+  background: var(--secondary);
+}
+
+.ordering-hero-title {
+  font-size: 3rem;
+  font-family: 'Magzo';
+  font-weight: 600;
 }
