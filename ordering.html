@@ -44,10 +44,15 @@
         </div>
     </div>
 
+    <div class="subtotal-bar">
+      <div class="subtotal-bar-title">Subtotal:</div>
+      <div class="subtotal-bar-amount" id="subtotal-bar-amount">0.00</div>
+    </div>
+
     <div class="ordering-container">
       <div class="ordering-big-container">
         <a class="back-container" href="pizza.html">
-          <i class="fa-solid fa-arrow-left fa-lg"></i>
+          <i class="fa-solid fa-arrow-left fa-lg" style="color: #333333"></i>
           <span class="back-span">Back</span>
         </a>
         <div class="ordering-hero-container">
@@ -56,6 +61,19 @@
           </div>
           <div class="ordering-hero-right">
             <div class="ordering-hero-title">Hawaiian</div>
+          </div>
+        </div>
+        <div class="step1-container">
+          <div class="step1-title">Step 1: Choose Quantity</div>
+          <div class="quantity-selection-container">
+            <div class="counter-container">
+              <div class="counter-box" id="qty-minus" onclick="handleQtyCount('minus')">-</div>
+              <input  id= "qty-input"class="counter-box count-box" type="number"  
+              max="999" min="0" placeholder="0" oninput="handleQtyValue(this)"></input>
+              <div class="counter-box" id="qty-plus" onclick="handleQtyCount('plus')">+</div>
+            </div>
+            <div>Large Hawaiian</div>
+            <div>$29.70</div>
           </div>
         </div>
       </div>
@@ -133,30 +151,53 @@
 
     <!-- <i class="nav-icon fa-solid fa-cart-shopping fa-xl"></i> -->
     <script>
-      // Displaces the container element based on the height of the navbar
-      let navMargin = document.getElementById("navbar").offsetHeight;
-      const container = (document.getElementById("container").style.marginTop =
-        navMargin + "px");
+      let subtotal = 0.00;
+      let price = 29.70;
+      let subtotalSpan = document.getElementById('subtotal-bar-amount')
+      let qtyInput = document.getElementById('qty-input')
+      subtotalSpan.innerHTML = subtotal;
+      console.log(subtotalSpan.value)
 
-      const signUpDialog = document.getElementById("sign-up-dialog");
-      //signUpDialog.showModal();
+      function handleQtyCount(type) {
+        let qtyinputint = parseInt(qtyInput.value)
+        console.log(qtyInput.value)
+        console.log(parseInt(qtyInput.value))
+        if (type === 'plus'){
 
-      const closeDialog = (id) => {
-        const dialog = document.getElementById(id);
-        dialog.close();
-      };
+          if (qtyinputint + 1 !== 1000){
+            handleSubtotal(-(qtyinputint+ 1) * price)
+            qtyInput.value++;
+          }
+        }else{
+         
+          if (qtyinputint- 1 !== -1){
+            handleSubtotal((qtyinputint- 1) * price)
+            qtyInput.value--;
 
-      function toggleOrderingCatagoryButton (e) {
-        if (e.classList.contains('ordering-catagory-container-selected')){
-          e.classList.remove('ordering-catagory-container-selected')
+          }
+          else if (qtyInput.value < 0){
+            qtyInput.value = 0;
+          }
         }
-        else{
-          e.classList.add('ordering-catagory-container-selected')
-        }
-      
       }
-      
+
+
+      function handleQtyValue(e) {
+        e.value = Math.abs(e.value)
+        if (e.value > 1000) {
+          e.value = 999;
+        }
+      }
+
+      function handleSubtotal(amount) {
+        if (amount )
+        subtotal += amount;
+        subtotalSpan.innerHTML = subtotal;
+      }
+
+
     </script>
+    <script src="script.js"></script>
     <script
       src="https://kit.fontawesome.com/0ef6f85575.js"
       crossorigin="anonymous"

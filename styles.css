@@ -1,6 +1,7 @@
 :root {
   --primary: #ff9900;
   --secondary: #ffeab5;
+  --tetiary: #FFCE85;
   --complimentary: #002e58;
   --background: #ffffff;
   --text: #333333;
@@ -507,17 +508,20 @@ a {
 .back-span {
   color: var(--text);
   font-size: 1.3rem;
+  margin: 0 0.2rem;
 }
 
 .ordering-container {
   width: 100vw;
   display: flex;
+  min-height: 100vh;
+  align-items: flex-start;
+  justify-content: center;
 }
 
 .ordering-big-container {
   width: 90%;
   position: relative;
-  background: lime;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -525,14 +529,16 @@ a {
 
 
 .ordering-hero-container {
+  display: flex;
   margin: 5rem 0;
-  background: salmon;
+
   min-height: 10rem;
   width: 70%;
 }
 
 .ordering-hero-left {
   background-image: url("https://static.phdvasia.com/sg1/menu/single/desktop_thumbnail_1f633a30-ba93-450a-a93d-1ac3b25a1b54.jpg");
+  background-size: cover;
   background-repeat: no-repeat;
   min-height: 10rem;
   width: 50%;
@@ -542,10 +548,81 @@ a {
 .ordering-hero-right {
   width: 50%;
   background: var(--secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .ordering-hero-title {
   font-size: 3rem;
   font-family: 'Magzo';
+  font-weight: 600;
+}
+
+.step1-container {
+  width: 90%;
+  border-bottom: 1px solid var(--text);
+}
+
+.step1-title {
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+
+.counter-container {
+  display: flex;
+}
+
+.counter-box {
+  width: 3rem;
+  height: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  background: var(--tetiary);
+  cursor: pointer;
+}
+
+.count-box {
+  background: var(--background);
+  font-size: 1.5rem;
+  border: none;
+  text-align: center;
+}
+
+.quantity-selection-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 3rem;
+}
+
+.subtotal-bar {
+  position: fixed;
+  bottom: -1rem;
+  left: 0;
+  right: 0;
+  margin-left: auto;
+  margin-right: auto;
+  width: 10rem;
+  padding: 1rem 3.5rem 1.5rem 3.5rem;
+  background: var(--primary);
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--background);
+  z-index: 999;
+}
+
+.subtotal-bar-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.subtotal-bar-amount {
+  font-size: 1.5rem;
   font-weight: 600;
 }
