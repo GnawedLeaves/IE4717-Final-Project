@@ -409,10 +409,10 @@ a {
 
 .ordering-pizza-size-button {
   cursor: pointer;
-  font-size: 1.1rem;
+  font-size: 1.3rem;
   width: fit-content;
   text-align: center;
-  padding: 0.5rem 1rem;
+  padding: 0.7rem 1.3rem;
   border-radius: 5px;
   background: var(--background);
   border: 1px solid var(--primary);
@@ -587,6 +587,13 @@ a {
 .step1-container {
   width: 90%;
   border-bottom: 1px solid var(--text);
+  padding: 2.5rem 0;
+}
+
+.step2-container {
+  width: 90%;
+  border-bottom: 1px solid var(--text);
+  padding: 2.5rem 0;
 }
 
 .step1-title {
@@ -597,6 +604,8 @@ a {
 .counter-container {
   display: flex;
 }
+
+
 
 .counter-box {
   width: 3rem;
@@ -609,9 +618,11 @@ a {
   cursor: pointer;
 }
 
+
+
 .count-box {
   background: var(--background);
-  font-size: 1.5rem;
+  font-size: 1.6rem;
   border: none;
   text-align: center;
 }
@@ -662,4 +673,34 @@ a {
   justify-content: space-between;
   align-items: center;
   padding: 3rem;
+}
+
+.customise-container {
+  display: flex;
+  align-items: center;
+  padding: 2rem;
+  gap: 2rem;
+
+}
+
+.customise-pizza-container {
+  margin: 1.5rem 0;
+
+}
+
+.customise-item-title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  width: 8rem;
+
+}
+
+.qty-price-title {
+  font-size: 1.5rem;
+}
+
+.counter-box-small {
+  font-size: 1.2rem;
+  width: 2.3rem;
+  height: 2.3rem;
 }
