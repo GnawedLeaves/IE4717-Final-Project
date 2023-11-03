@@ -23,13 +23,13 @@
 
     <div class="navbar">
       <a href="index.html">
-        <div class="navbar-logo-container"  >
-          <div class="navbar-logo-title">Chris' Pizza</div> 
+        <div class="navbar-logo-container">
+          <div class="navbar-logo-title">Chris' Pizza</div>
           <img class="navbar-logo" src="./assets/images/icon.png" />
         </div>
       </a>
 
-      <div class="sub-navbar" >
+      <div class="sub-navbar">
         <div class="navbarItems">
           <a href="#" class="navbarItem">Menu</a>
           <a href="#" class="navbarItem">Offers</a>
@@ -37,170 +37,249 @@
           <a href="#" class="navbarItem">Stores</a>
           <a href="#" class="navbarItem">Support</a>
         </div>
-        
+
         <div class="cart-profile-container">
           <i class="nav-icon fa-solid fa-cart-shopping fa-xl"></i>
           <button class="button-filled join-button">Join Us</button>
         </div>
-    </div>
+      </div>
 
-    <div class="subtotal-bar">
-      <div class="subtotal-bar-title">Subtotal:</div>
-      <div class="subtotal-bar-amount" id="subtotal-bar-amount">0.00</div>
-    </div>
+      <div class="subtotal-bar">
+        <div class="subtotal-bar-title">Subtotal:</div>
+        <div class="subtotal-bar-amount" id="subtotal-bar-amount">0.00</div>
+      </div>
 
-    <div class="ordering-container">
-      <div class="ordering-big-container">
-        <a class="back-container" href="pizza.html">
-          <i class="fa-solid fa-arrow-left fa-lg" style="color: #333333"></i>
-          <span class="back-span">Back</span>
-        </a>
-        <div class="ordering-hero-container">
-          <div class="ordering-hero-left">
-            <!-- <img src="https://static.phdvasia.com/sg1/menu/single/desktop_thumbnail_1f633a30-ba93-450a-a93d-1ac3b25a1b54.jpg"/> -->
-          </div>
-          <div class="ordering-hero-right">
-            <div class="ordering-hero-title">Hawaiian</div>
-          </div>
-        </div>
-        <div class="step1-container">
-          <div class="step1-title">Step 1: Choose Quantity</div>
-          <div class="quantity-selection-container">
-            <div class="counter-container">
-              <div class="counter-box" id="qty-minus" onclick="handleQtyCount('minus')">-</div>
-              <input  id= "qty-input"class="counter-box count-box" type="number"  
-              max="999" min="0" placeholder="0" oninput="handleQtyValue(this)"></input>
-              <div class="counter-box" id="qty-plus" onclick="handleQtyCount('plus')">+</div>
+      <div class="ordering-container">
+        <div class="ordering-big-container">
+          <a class="back-container" href="pizza.html">
+            <i class="fa-solid fa-arrow-left fa-lg" style="color: #333333"></i>
+            <span class="back-span">Back</span>
+          </a>
+          <div class="ordering-hero-container">
+            <div class="ordering-hero-left">
+              <!-- <img src="https://static.phdvasia.com/sg1/menu/single/desktop_thumbnail_1f633a30-ba93-450a-a93d-1ac3b25a1b54.jpg"/> -->
             </div>
-            <div>Large Hawaiian</div>
-            <div>$29.70</div>
+            <div class="ordering-hero-right">
+              <div class="ordering-hero-title">Hawaiian</div>
+            </div>
+          </div>
+          <div class="step1-container">
+            <div class="step1-title">Step 1: Select Size</div>
+            <div class="customise-size-container">
+              <div class="customise-size-buttons-container">
+                <div
+                  id="size-regular-button"
+                  class="ordering-pizza-size-button"
+                  onclick="toggleSizeButtons(this)"
+                >
+                  Regular $19.70
+                </div>
+                <div
+                  id="size-large-button"
+                  class="ordering-pizza-size-button"
+                  onclick="toggleSizeButtons(this)"
+                >
+                  Large $29.70
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="step1-container">
+            <div class="step1-title">Step 2: Customise Pizza</div>
+            <div class="customise-pizza-container"></div>
+          </div>
+          <div class="step1-container">
+            <div class="step1-title">Step 3: Choose Quantity</div>
+            <div class="quantity-selection-container">
+              <div class="counter-container">
+                <div
+                  class="counter-box"
+                  id="qty-minus"
+                  onclick="handleQtyCount('minus')"
+                >
+                  -
+                </div>
+                <input
+                  id="qty-input"
+                  class="counter-box count-box"
+                  type="number"
+                  max="999"
+                  min="0"
+                  placeholder="0"
+                  oninput="handleQtyValue(this)"
+                />
+                <div
+                  class="counter-box"
+                  id="qty-plus"
+                  onclick="handleQtyCount('plus')"
+                >
+                  +
+                </div>
+              </div>
+              <div>Large Hawaiian</div>
+              <div>$29.70</div>
+            </div>
           </div>
         </div>
       </div>
 
-    </div>
-
-    <div class="footer">
-      <div class="footer-left-container">
-        <div class="footer-info-container">
-          <img class="footer-img" src="./assets/images/footer-icon.png"/>
-          <div class="footer-left-text-container">
-            <div class="footer-title">Chris' Pizza</div>
-            <div class="footer-subtitle">Pizza House SG Pte Ltd</div>
-            <div class="footer-number">6723 9873</div>
-          </div>
-        </div>
-  
-      </div>
-      <div class="footer-right-container">
-        <div class="footer-links-container">
-          <div class="footer-links-title">Menu</div>
-          <div class="footer-links-content-container">
-            <a class="footer-link" href="#">Pizza</a>
-            <a class="footer-link" href="#">Sides</a>
-            <a class="footer-link" href="#">Drinks</a>
-            <a class="footer-link" href="#">Sweet Treats</a>
-          </div>
-        </div>
-        <div class="footer-links-container">
-          <div class="footer-links-title">Offers</div>
-          <div class="footer-links-content-container">
-            <a class="footer-link" href="#">Hot Offers</a>
-            <a class="footer-link" href="#">Sharing Bundles</a>
-          </div>
-        </div>
-        <div class="footer-links-container">
-          <div class="footer-links-title">Company</div>
-          <div class="footer-links-content-container">
-            <a class="footer-link" href="#">Join Us</a>
-            <a class="footer-link" href="#">About Us</a>
-            <a class="footer-link" href="#">Terms of Use</a>
-            <a class="footer-link" href="#">Privacy Policy</a>
-            <a class="footer-link" href="#">Stores</a>
-          </div>
-        </div>
-        <div class="footer-links-container">
-          <div class="footer-links-title">Support</div>
-          <div class="footer-links-content-container">
-            <a class="footer-link" href="#">FAQs</a>
-            <a class="footer-link" href="#">Contact Us</a>
-          </div>
-        </div>
-        <div class="footer-links-container">
-          <div class="footer-links-title">Follow Us</div>
-          <div class="footer-links-content-container">
-            <div class="footer-link-with-image-container">
-              <i class="fa-brands fa-facebook"></i>
-              <a class="footer-link" href="#">Facebook</a>
+      <div class="footer">
+        <div class="footer-left-container">
+          <div class="footer-info-container">
+            <img class="footer-img" src="./assets/images/footer-icon.png" />
+            <div class="footer-left-text-container">
+              <div class="footer-title">Chris' Pizza</div>
+              <div class="footer-subtitle">Pizza House SG Pte Ltd</div>
+              <div class="footer-number">6723 9873</div>
             </div>
-            <div class="footer-link-with-image-container">
-              <i class="fa-brands fa-instagram"></i>
-              <a class="footer-link" href="#">Instagram</a>
+          </div>
+        </div>
+        <div class="footer-right-container">
+          <div class="footer-links-container">
+            <div class="footer-links-title">Menu</div>
+            <div class="footer-links-content-container">
+              <a class="footer-link" href="#">Pizza</a>
+              <a class="footer-link" href="#">Sides</a>
+              <a class="footer-link" href="#">Drinks</a>
+              <a class="footer-link" href="#">Sweet Treats</a>
             </div>
-            <div class="footer-link-with-image-container">
-              <i class="fa-brands fa-tiktok"></i>
-              <a class="footer-link" href="#">Tik Tok</a>
+          </div>
+          <div class="footer-links-container">
+            <div class="footer-links-title">Offers</div>
+            <div class="footer-links-content-container">
+              <a class="footer-link" href="#">Hot Offers</a>
+              <a class="footer-link" href="#">Sharing Bundles</a>
             </div>
-           
-       
-            
+          </div>
+          <div class="footer-links-container">
+            <div class="footer-links-title">Company</div>
+            <div class="footer-links-content-container">
+              <a class="footer-link" href="#">Join Us</a>
+              <a class="footer-link" href="#">About Us</a>
+              <a class="footer-link" href="#">Terms of Use</a>
+              <a class="footer-link" href="#">Privacy Policy</a>
+              <a class="footer-link" href="#">Stores</a>
+            </div>
+          </div>
+          <div class="footer-links-container">
+            <div class="footer-links-title">Support</div>
+            <div class="footer-links-content-container">
+              <a class="footer-link" href="#">FAQs</a>
+              <a class="footer-link" href="#">Contact Us</a>
+            </div>
+          </div>
+          <div class="footer-links-container">
+            <div class="footer-links-title">Follow Us</div>
+            <div class="footer-links-content-container">
+              <div class="footer-link-with-image-container">
+                <i class="fa-brands fa-facebook"></i>
+                <a class="footer-link" href="#">Facebook</a>
+              </div>
+              <div class="footer-link-with-image-container">
+                <i class="fa-brands fa-instagram"></i>
+                <a class="footer-link" href="#">Instagram</a>
+              </div>
+              <div class="footer-link-with-image-container">
+                <i class="fa-brands fa-tiktok"></i>
+                <a class="footer-link" href="#">Tik Tok</a>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <!-- <i class="nav-icon fa-solid fa-cart-shopping fa-xl"></i> -->
-    <script>
-      let subtotal = 0.00;
-      let price = 29.70;
-      let subtotalSpan = document.getElementById('subtotal-bar-amount')
-      let qtyInput = document.getElementById('qty-input')
-      subtotalSpan.innerHTML = subtotal;
-      console.log(subtotalSpan.value)
-
-      function handleQtyCount(type) {
-        let qtyinputint = parseInt(qtyInput.value)
-        console.log(qtyInput.value)
-        console.log(parseInt(qtyInput.value))
-        if (type === 'plus'){
-
-          if (qtyinputint + 1 !== 1000){
-            handleSubtotal(-(qtyinputint+ 1) * price)
-            qtyInput.value++;
-          }
-        }else{
-         
-          if (qtyinputint- 1 !== -1){
-            handleSubtotal((qtyinputint- 1) * price)
-            qtyInput.value--;
-
-          }
-          else if (qtyInput.value < 0){
-            qtyInput.value = 0;
-          }
-        }
-      }
-
-
-      function handleQtyValue(e) {
-        e.value = Math.abs(e.value)
-        if (e.value > 1000) {
-          e.value = 999;
-        }
-      }
-
-      function handleSubtotal(amount) {
-        if (amount )
-        subtotal += amount;
+      <!-- <i class="nav-icon fa-solid fa-cart-shopping fa-xl"></i> -->
+      <script>
+        let subtotal = 0.0;
+        let price = 29.7;
+        let subtotalSpan = document.getElementById("subtotal-bar-amount");
+        let qtyInput = document.getElementById("qty-input");
         subtotalSpan.innerHTML = subtotal;
-      }
+        console.log(subtotalSpan.value);
 
+        function handleQtyCount(type) {
+          let qtyinputint = parseInt(qtyInput.value);
+          console.log(qtyInput.value);
+          console.log(parseInt(qtyInput.value));
+          if (type === "plus") {
+            if (qtyinputint + 1 !== 1000) {
+              handleSubtotal(-(qtyinputint + 1) * price);
+              qtyInput.value++;
+            }
+          } else {
+            if (qtyinputint - 1 !== -1) {
+              handleSubtotal((qtyinputint - 1) * price);
+              qtyInput.value--;
+            } else if (qtyInput.value < 0) {
+              qtyInput.value = 0;
+            }
+          }
+        }
 
-    </script>
-    <script src="script.js"></script>
-    <script
-      src="https://kit.fontawesome.com/0ef6f85575.js"
-      crossorigin="anonymous"
-    ></script>
+        function handleQtyValue(e) {
+          e.value = Math.abs(e.value);
+          if (e.value > 1000) {
+            e.value = 999;
+          }
+        }
+
+        function handleSubtotal(amount) {
+          if (amount) subtotal += amount;
+          subtotalSpan.innerHTML = subtotal;
+        }
+
+        let largeButton = document.getElementById("size-large-button");
+        let regularButton = document.getElementById("size-regular-button");
+
+        function toggleSizeButtons(e) {
+          buttonId = e.id;
+
+          if (buttonId === "size-large-button") {
+            if (
+              !regularButton.classList.contains(
+                "ordering-catagory-container-selected"
+              )
+            ) {
+              largeButton.classList.add("ordering-catagory-container-selected");
+            } else if (
+              regularButton.classList.contains(
+                "ordering-catagory-container-selected"
+              )
+            ) {
+              largeButton.classList.add("ordering-catagory-container-selected");
+              regularButton.classList.remove(
+                "ordering-catagory-container-selected"
+              );
+            }
+          } else if (buttonId === "size-regular-button") {
+            if (
+              !largeButton.classList.contains(
+                "ordering-catagory-container-selected"
+              )
+            ) {
+              regularButton.classList.add(
+                "ordering-catagory-container-selected"
+              );
+            } else if (
+              largeButton.classList.contains(
+                "ordering-catagory-container-selected"
+              )
+            ) {
+              regularButton.classList.add(
+                "ordering-catagory-container-selected"
+              );
+              largeButton.classList.remove(
+                "ordering-catagory-container-selected"
+              );
+            }
+          }
+        }
+      </script>
+      <script src="script.js"></script>
+      <script
+        src="https://kit.fontawesome.com/0ef6f85575.js"
+        crossorigin="anonymous"
+      ></script>
+    </div>
   </body>
 </html>
