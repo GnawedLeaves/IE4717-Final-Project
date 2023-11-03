@@ -704,3 +704,10 @@ a {
   width: 2.3rem;
   height: 2.3rem;
 }
+
+.add-ons-container {
+  display: flex;
+
+  gap: 9rem;
+  padding: 3rem;
+}

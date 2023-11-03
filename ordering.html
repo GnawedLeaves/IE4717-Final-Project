@@ -209,7 +209,7 @@
             <div class="step1-title">Step 4: Choose Add-Ons</div>
             <div class="add-ons-container">
               <div class="item-container">
-                <img class="item-img" src="./assets/images/veggiepizza.png" />
+                <img class="item-img" src="./assets/images/snackplatter.png" />
                 <div class="item-info-container">
                   <div class="item-info-row">
                     <div class="item-title">Snack Platter</div>
@@ -228,7 +228,7 @@
                       </div>
                       <input
                         id="addon1-qty-input"
-                        class="counter-box count-box counter-box-small"
+                        class="counter-box count-box counter-box-small add-ons-input"
                         type="number"
                         max="999"
                         min="0"
@@ -239,6 +239,85 @@
                         class="counter-box counter-box-small"
                         id="qty-plus"
                         onclick="handleQtyCount('plus','addon1-qty-input')"
+                      >
+                        +
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="item-container">
+                <img class="item-img" src="./assets/images/10pcdrumlet.png" />
+                <div class="item-info-container">
+                  <div class="item-info-row">
+                    <div class="item-title">10pc Drumlets</div>
+                  </div>
+                </div>
+                <div class="item-info-container">
+                  <div class="item-info-row">
+                    <div class="item-price">$15.20</div>
+                    <div class="counter-container">
+                      <div
+                        class="counter-box counter-box-small"
+                        id="qty-minus"
+                        onclick="handleQtyCount('minus','addon2-qty-input')"
+                      >
+                        -
+                      </div>
+                      <input
+                        id="addon2-qty-input"
+                        class="counter-box count-box counter-box-small add-ons-input"
+                        type="number"
+                        max="999"
+                        min="0"
+                        placeholder="0"
+                        oninput="handleQtyValue(this)"
+                      />
+                      <div
+                        class="counter-box counter-box-small"
+                        id="qty-plus"
+                        onclick="handleQtyCount('plus','addon2-qty-input')"
+                      >
+                        +
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="item-container">
+                <img
+                  class="item-img"
+                  src="./assets/images/chcolatewaffle.png"
+                />
+                <div class="item-info-container">
+                  <div class="item-info-row">
+                    <div class="item-title">Chocolate Waffle</div>
+                  </div>
+                </div>
+                <div class="item-info-container">
+                  <div class="item-info-row">
+                    <div class="item-price">$6.30</div>
+                    <div class="counter-container">
+                      <div
+                        class="counter-box counter-box-small"
+                        id="qty-minus"
+                        onclick="handleQtyCount('minus','addon3-qty-input')"
+                      >
+                        -
+                      </div>
+                      <input
+                        id="addon3-qty-input"
+                        class="counter-box count-box counter-box-small add-ons-input"
+                        type="number"
+                        max="999"
+                        min="0"
+                        placeholder="0"
+                        oninput="handleQtyValue(this)"
+                      />
+                      <div
+                        class="counter-box counter-box-small"
+                        id="qty-plus"
+                        onclick="handleQtyCount('plus','addon3-qty-input')"
                       >
                         +
                       </div>
@@ -352,6 +431,12 @@
         var allNumberInputs = document.querySelectorAll('input[type="number"]');
         allNumberInputs.forEach((input, index) => {
           input.value = 1;
+        });
+
+        var allAddonsInputs = document.getElementsByClassName("add-ons-input");
+
+        Array.from(allAddonsInputs).forEach((input, index) => {
+          input.value = 0;
         });
 
         function handleSubtotal(amount) {
