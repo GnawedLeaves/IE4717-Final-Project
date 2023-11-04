@@ -15,34 +15,50 @@
   </head>
   <body>
     <dialog id="sign-up-dialog" class="signup-dialog">
-      <div class="dialog-container" id="signupDialog">
+      <form class="dialog-container" id="signupDialog" novalidate>
         <div class="dialog-title">Sign Up</div>
-        <div class="signup-input=container">
+        <div class="signup-input-container">
           <div class="dialog-text">Name</div>
-          <input class="dialog-input" type="text" />
+          <input class="dialog-input" type="text" name="signup-name" required />
         </div>
-        <div class="signup-input=container">
+        <div class="signup-input-container">
           <div class="dialog-text">Email</div>
-          <input class="dialog-input" type="text" />
+          <input
+            class="dialog-input"
+            type="email"
+            name="signup-email"
+            required
+          />
         </div>
 
-        <div class="signup-input=container">
+        <div class="signup-input-container">
           <div class="dialog-text">Password</div>
-          <input class="dialog-input" type="password" />
+          <input
+            class="dialog-input"
+            type="password"
+            name="signup-password"
+            required
+          />
         </div>
 
-        <div class="signup-input=container">
+        <div class="signup-input-container">
           <div class="dialog-text">Address</div>
-          <input class="dialog-input" type="text" />
+          <input
+            class="dialog-input"
+            type="text"
+            name="signup-address"
+            required
+          />
         </div>
-        <div class="signup-input=container">
+        <div class="signup-input-container">
           <div class="dialog-text">Contact Number</div>
-          <input class="dialog-input" type="number" />
+          <input class="dialog-input" type="number" name="signup-contact" />
         </div>
         <div class="signup-button-container">
           <button
             class="dialog-signin-button"
             onclick="closeDialog('sign-up-dialog')"
+            type="submit"
           >
             Sign Up
           </button>
@@ -55,18 +71,28 @@
             >
           </div>
         </div>
-      </div>
-      <div class="dialog-container" id="signinDialog">
+      </form>
+      <form class="dialog-container" id="signinDialog">
         <div class="dialog-title">Sign In</div>
 
         <div class="signup-input=container">
           <div class="dialog-text">Email</div>
-          <input class="dialog-input" type="text" />
+          <input
+            class="dialog-input"
+            type="email"
+            name="signin-email"
+            required
+          />
         </div>
 
         <div class="signup-input=container">
           <div class="dialog-text">Password</div>
-          <input class="dialog-input" type="password" />
+          <input
+            class="dialog-input"
+            type="password"
+            name="signin-password"
+            required
+          />
         </div>
 
         <div class="signup-button-container">
@@ -81,11 +107,12 @@
             <span
               class="dialog-button-subtext-underline"
               onclick="swapDialogContent()"
+              type="submit"
               >Sign Up</span
             >
           </div>
         </div>
-      </div>
+      </form>
     </dialog>
 
     <div class="navbar">
@@ -178,6 +205,47 @@
             </a>
           </div>
         </div>
+        <form class="dialog-container" id="signinDialog">
+          <div class="dialog-title">Sign In</div>
+
+          <div class="signup-input=container">
+            <div class="dialog-text">Email</div>
+            <input
+              class="dialog-input"
+              type="email"
+              name="signin-email"
+              required
+            />
+          </div>
+
+          <div class="signup-input=container">
+            <div class="dialog-text">Password</div>
+            <input
+              class="dialog-input"
+              type="password"
+              name="signin-password"
+              required
+            />
+          </div>
+
+          <div class="signup-button-container">
+            <button
+              class="dialog-signin-button"
+              onclick="closeDialog('sign-up-dialog')"
+            >
+              Sign In
+            </button>
+            <div class="dialog-button-subtext">
+              Don't have an account?
+              <span
+                class="dialog-button-subtext-underline"
+                onclick="swapDialogContent()"
+                type="submit"
+                >Sign Up</span
+              >
+            </div>
+          </div>
+        </form>
         <div class="footer">
           <div class="footer-left-container">
             <div class="footer-info-container">
