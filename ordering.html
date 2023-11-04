@@ -87,88 +87,112 @@
           <div class="step2-container">
             <div class="step1-title">Step 2: Customise Pizza</div>
             <div class="customise-pizza-container">
-              <div class="customise-container">
-                <div class="customise-item-title">Pineapple</div>
-                <div class="counter-container">
-                  <div
-                    class="counter-box"
-                    id="qty-minus"
-                    onclick="handleQtyCount('minus','customise-item1-qty-input')"
-                  >
-                    -
-                  </div>
-                  <input
-                    id="customise-item1-qty-input"
-                    class="counter-box count-box"
-                    type="number"
-                    max="999"
-                    min="0"
-                    placeholder="0"
-                    oninput="handleQtyValue(this)"
-                  />
-                  <div
-                    class="counter-box"
-                    id="qty-plus"
-                    onclick="handleQtyCount('plus','customise-item1-qty-input')"
-                  >
-                    +
-                  </div>
-                </div>
-              </div>
-              <div class="customise-container">
-                <div class="customise-item-title">Ham</div>
-                <div class="counter-container">
-                  <div
-                    class="counter-box"
-                    id="qty-minus"
-                    onclick="handleQtyCount('minus','customise-item2-qty-input')"
-                  >
-                    -
-                  </div>
-                  <input
-                    id="customise-item2-qty-input"
-                    class="counter-box count-box"
-                    type="number"
-                    max="999"
-                    min="0"
-                    placeholder="0"
-                    oninput="handleQtyValue(this)"
-                  />
-                  <div
-                    class="counter-box"
-                    id="qty-plus"
-                    onclick="handleQtyCount('plus','customise-item2-qty-input')"
-                  >
-                    +
+              <div class="customise-item-container">
+                <div class="customise-container">
+                  <div class="customise-item-title">Pineapple</div>
+                  <div class="counter-container">
+                    <div
+                      class="counter-box"
+                      id="qty-minus"
+                      onclick="handleQtyCount('minus','customise-item1-qty-input','customise-item1-subtotal')"
+                    >
+                      -
+                    </div>
+                    <input
+                      id="customise-item1-qty-input"
+                      class="counter-box count-box"
+                      type="number"
+                      max="999"
+                      min="0"
+                      placeholder="0"
+                      oninput="handleQtyValue(this)"
+                    />
+                    <div
+                      class="counter-box"
+                      id="qty-plus"
+                      onclick="handleQtyCount('plus','customise-item1-qty-input','customise-item1-subtotal')"
+                    >
+                      +
+                    </div>
                   </div>
                 </div>
+                <div
+                  class="customise-item-subtotal"
+                  id="customise-item1-subtotal"
+                >
+                  $0.00
+                </div>
               </div>
-              <div class="customise-container">
-                <div class="customise-item-title">Cheese</div>
-                <div class="counter-container">
-                  <div
-                    class="counter-box"
-                    id="qty-minus"
-                    onclick="handleQtyCount('minus','customise-item3-qty-input')"
-                  >
-                    -
+              <div class="customise-item-container">
+                <div class="customise-container">
+                  <div class="customise-item-title">Ham</div>
+                  <div class="counter-container">
+                    <div
+                      class="counter-box"
+                      id="qty-minus"
+                      onclick="handleQtyCount('minus','customise-item2-qty-input','customise-item2-subtotal')"
+                    >
+                      -
+                    </div>
+                    <input
+                      id="customise-item2-qty-input"
+                      class="counter-box count-box"
+                      type="number"
+                      max="999"
+                      min="0"
+                      placeholder="0"
+                      oninput="handleQtyValue(this)"
+                    />
+                    <div
+                      class="counter-box"
+                      id="qty-plus"
+                      onclick="handleQtyCount('plus','customise-item2-qty-input','customise-item2-subtotal')"
+                    >
+                      +
+                    </div>
                   </div>
-                  <input
-                    id="customise-item3-qty-input"
-                    class="counter-box count-box"
-                    type="number"
-                    max="999"
-                    min="0"
-                    placeholder="0"
-                    oninput="handleQtyValue(this)"
-                  />
-                  <div
-                    class="counter-box"
-                    id="qty-plus"
-                    onclick="handleQtyCount('plus','customise-item3-qty-input')"
-                  >
-                    +
+                </div>
+                <div
+                  class="customise-item-subtotal"
+                  id="customise-item2-subtotal"
+                >
+                  $0.00
+                </div>
+              </div>
+              <div class="customise-item-container">
+                <div class="customise-container">
+                  <div class="customise-item-title">Cheese</div>
+                  <div class="counter-container">
+                    <div
+                      class="counter-box"
+                      id="qty-minus"
+                      onclick="handleQtyCount('minus','customise-item3-qty-input','customise-item3-subtotal')"
+                    >
+                      -
+                    </div>
+                    <input
+                      id="customise-item3-qty-input"
+                      class="counter-box count-box"
+                      type="number"
+                      max="999"
+                      min="0"
+                      placeholder="0"
+                      oninput="handleQtyValue(this)"
+                    />
+                    <div
+                      class="counter-box"
+                      id="qty-plus"
+                      onclick="handleQtyCount('plus','customise-item3-qty-input','customise-item3-subtotal')"
+                    >
+                      +
+                    </div>
                   </div>
+                </div>
+                <div
+                  class="customise-item-subtotal"
+                  id="customise-item3-subtotal"
+                >
+                  $0.00
                 </div>
               </div>
             </div>
@@ -402,28 +426,60 @@
         let subtotalSpan = document.getElementById("subtotal-bar-amount");
         // let qtyInput = document.getElementById("qty-input");
         subtotalSpan.innerHTML = subtotal;
-        console.log(subtotalSpan.value);
 
-        function handleQtyCount(type, inputId) {
+        function handleQtyCount(type, inputId, subtotalElementId) {
           let qtyInput = document.getElementById(inputId);
           let qtyinputint = parseInt(qtyInput.value);
           if (type === "plus") {
             if (qtyinputint + 1 !== 1000) {
               qtyInput.value++;
+
+              calculateCustomiseItemSubtotal(
+                subtotalElementId,
+                parseInt(qtyInput.value)
+              );
             }
           } else {
             if (qtyinputint - 1 !== -1) {
               qtyInput.value--;
+
+              calculateCustomiseItemSubtotal(
+                subtotalElementId,
+                parseInt(qtyInput.value)
+              );
             } else if (qtyInput.value < 0) {
               qtyInput.value = 0;
+
+              calculateCustomiseItemSubtotal(
+                subtotalElementId,
+                parseInt(qtyInput.value)
+              );
             }
           }
         }
 
         function handleQtyValue(e) {
+          let newValue;
           e.value = Math.abs(e.value);
           if (e.value > 1000) {
             e.value = 999;
+          }
+        }
+
+        function calculateCustomiseItemSubtotal(subtotalElementId, qty) {
+          let subtotalElement = document.getElementById(subtotalElementId);
+          let price = 1.0;
+          let subtotal = ((qty - 1) * price).toFixed(2);
+          if (subtotalElement) {
+            if (qty === 0 || qty === 1) {
+              subtotalElement.innerHTML = "$0.00";
+              subtotalElement.value = parseFloat(0);
+              console.log(subtotalElement.value);
+            } else {
+              subtotalElement.innerHTML = "$" + subtotal;
+              subtotalElement.value = parseFloat(subtotal);
+              console.log(subtotalElement.value);
+            }
           }
         }
 

@@ -458,15 +458,17 @@ a {
 .item-container {
   background: var(--secondary);
   width: fit-content;
-  width: 15rem;
+  width: 19rem;
 }
 
 
 
-.item-info-container {}
+.item-info-container {
+  padding: 0 0.5rem;
+}
 
 .item-title {
-  font-size: 1.4rem;
+  font-size: 1.7rem;
   font-weight: 600;
 }
 
@@ -674,6 +676,19 @@ a {
   align-items: center;
   padding: 3rem;
 }
+
+
+.customise-item-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-right: 3rem;
+}
+
+.customise-item-subtotal {
+  font-size: 1.2rem;
+}
+
 
 .customise-container {
   display: flex;
