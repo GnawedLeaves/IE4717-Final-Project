@@ -15,11 +15,76 @@
   </head>
   <body>
     <dialog id="sign-up-dialog" class="signup-dialog">
-      <div class="dialog-container">
-        This is a dialog boxioehfwee
-        <button onclick="closeDialog('sign-up-dialog')" id="close-dialog-btn">
-          Close
-        </button>
+      <div class="dialog-container" id="signupDialog">
+        <div class="dialog-title">Sign Up</div>
+        <div class="signup-input=container">
+          <div class="dialog-text">Name</div>
+          <input class="dialog-input" type="text" />
+        </div>
+        <div class="signup-input=container">
+          <div class="dialog-text">Email</div>
+          <input class="dialog-input" type="text" />
+        </div>
+
+        <div class="signup-input=container">
+          <div class="dialog-text">Password</div>
+          <input class="dialog-input" type="password" />
+        </div>
+
+        <div class="signup-input=container">
+          <div class="dialog-text">Address</div>
+          <input class="dialog-input" type="text" />
+        </div>
+        <div class="signup-input=container">
+          <div class="dialog-text">Contact Number</div>
+          <input class="dialog-input" type="number" />
+        </div>
+        <div class="signup-button-container">
+          <button
+            class="dialog-signin-button"
+            onclick="closeDialog('sign-up-dialog')"
+          >
+            Sign Up
+          </button>
+          <div class="dialog-button-subtext">
+            Already have an account?
+            <span
+              class="dialog-button-subtext-underline"
+              onclick="swapDialogContent()"
+              >Sign In</span
+            >
+          </div>
+        </div>
+      </div>
+      <div class="dialog-container" id="signinDialog">
+        <div class="dialog-title">Sign In</div>
+
+        <div class="signup-input=container">
+          <div class="dialog-text">Email</div>
+          <input class="dialog-input" type="text" />
+        </div>
+
+        <div class="signup-input=container">
+          <div class="dialog-text">Password</div>
+          <input class="dialog-input" type="password" />
+        </div>
+
+        <div class="signup-button-container">
+          <button
+            class="dialog-signin-button"
+            onclick="closeDialog('sign-up-dialog')"
+          >
+            Sign In
+          </button>
+          <div class="dialog-button-subtext">
+            Don't have an account?
+            <span
+              class="dialog-button-subtext-underline"
+              onclick="swapDialogContent()"
+              >Sign Up</span
+            >
+          </div>
+        </div>
       </div>
     </dialog>
 
@@ -181,15 +246,6 @@
 
       <!-- <i class="nav-icon fa-solid fa-cart-shopping fa-xl"></i> -->
       <script>
-        // Displaces the container element based on the height of the navbar
-        let navMargin = document.getElementById("navbar").offsetHeight;
-        const container = (document.getElementById(
-          "container"
-        ).style.marginTop = navMargin + "px");
-
-        const signUpDialog = document.getElementById("sign-up-dialog");
-        //signUpDialog.showModal();
-
         function openDialog(id) {
           const dialog = document.getElementById(id);
           dialog.showModal();
@@ -198,6 +254,20 @@
         function closeDialog(id) {
           const dialog = document.getElementById(id);
           dialog.close();
+        }
+
+        let signUpPage = true;
+
+        function swapDialogContent() {
+          if (signUpPage) {
+            document.getElementById("signupDialog").style.display = "none";
+            document.getElementById("signinDialog").style.display = "block";
+            signUpPage = false;
+          } else {
+            document.getElementById("signupDialog").style.display = "block";
+            document.getElementById("signinDialog").style.display = "none";
+            signUpPage = true;
+          }
         }
       </script>
       <script

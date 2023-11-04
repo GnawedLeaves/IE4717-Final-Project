@@ -40,10 +40,12 @@ a {
 }
 
 .signup-dialog {
-  padding: 3rem;
-  background: var(--tetiary);
+  padding: 3rem 5rem;
+  padding-top: 1rem;
+  background: var(--secondary);
   border: none;
   border-radius: 10px;
+
 }
 
 .dialog-container {
@@ -51,14 +53,60 @@ a {
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
+  gap: 1.2rem;
+}
+
+#signinDialog {
+  display: none;
 }
 
 .dialog-title {
-  font-size: 1.5rem;
+  font-size: 2.4rem;
+  font-weight: 600;
+  margin: 1rem 0;
+  text-align: center;
 }
 
 .dialog-text {
   font-size: 1rem;
+}
+
+.dialog-input {
+  margin: 0.5rem 0;
+  height: 2rem;
+  border: none;
+  font-size: 1.4rem;
+}
+
+.signup-button-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.dialog-signin-button {
+  background: var(--primary);
+  color: var(--background);
+  border: 1px solid var(--primary);
+  border-radius: 10px;
+  font-size: 1.2rem;
+  font-weight: 400;
+  padding: 0.7rem 3rem;
+  cursor: pointer;
+  transition: 0.3s;
+  margin-top: 1.5rem;
+}
+
+.dialog-button-subtext {
+  margin-top: 0.9rem;
+  font-size: 0.8rem;
+}
+
+.dialog-button-subtext-underline {
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 .navbar {
