@@ -46,7 +46,7 @@
 
       <div class="subtotal-bar">
         <div class="subtotal-bar-title">Subtotal:</div>
-        <div class="subtotal-bar-amount" id="subtotal-bar-amount">0.00</div>
+        <div class="subtotal-bar-amount" id="subtotal-bar-amount">$0.00</div>
       </div>
 
       <div class="ordering-container">
@@ -77,6 +77,7 @@
                 <div
                   id="size-large-button"
                   class="ordering-pizza-size-button"
+                  value="19.70"
                   onclick="toggleSizeButtons(this)"
                 >
                   Large $29.70
@@ -105,7 +106,7 @@
                       max="999"
                       min="0"
                       placeholder="0"
-                      oninput="handleQtyValue(this)"
+                      oninput="handleQtyValue(this,'customise-item1-subtotal')"
                     />
                     <div
                       class="counter-box"
@@ -141,7 +142,7 @@
                       max="999"
                       min="0"
                       placeholder="0"
-                      oninput="handleQtyValue(this)"
+                      oninput="handleQtyValue(this,'customise-item2-subtotal')"
                     />
                     <div
                       class="counter-box"
@@ -177,7 +178,7 @@
                       max="999"
                       min="0"
                       placeholder="0"
-                      oninput="handleQtyValue(this)"
+                      oninput="handleQtyValue(this,'customise-item3-subtotal')"
                     />
                     <div
                       class="counter-box"
@@ -226,7 +227,7 @@
                 </div>
               </div>
 
-              <div class="qty-price-title" id="qty-subtotal-title">$29.70</div>
+              <div class="qty-price-title" id="qty-subtotal-title">$0.00</div>
             </div>
           </div>
           <div class="step1-container">
@@ -241,12 +242,14 @@
                 </div>
                 <div class="item-info-container">
                   <div class="item-info-row">
-                    <div class="item-price">$29.30</div>
+                    <div class="item-price" id="addon1-subtotal-title">
+                      $5.00
+                    </div>
                     <div class="counter-container">
                       <div
                         class="counter-box counter-box-small"
                         id="qty-minus"
-                        onclick="handleQtyCount('minus','addon1-qty-input')"
+                        onclick="handleQtyCount('minus','addon1-qty-input','addon1-subtotal-title')"
                       >
                         -
                       </div>
@@ -257,12 +260,12 @@
                         max="999"
                         min="0"
                         placeholder="0"
-                        oninput="handleQtyValue(this)"
+                        oninput="handleQtyValue(this,'addon1-subtotal-title')"
                       />
                       <div
                         class="counter-box counter-box-small"
                         id="qty-plus"
-                        onclick="handleQtyCount('plus','addon1-qty-input')"
+                        onclick="handleQtyCount('plus','addon1-qty-input','addon1-subtotal-title')"
                       >
                         +
                       </div>
@@ -279,12 +282,14 @@
                 </div>
                 <div class="item-info-container">
                   <div class="item-info-row">
-                    <div class="item-price">$15.20</div>
+                    <div class="item-price" id="addon2-subtotal-title">
+                      $5.00
+                    </div>
                     <div class="counter-container">
                       <div
                         class="counter-box counter-box-small"
                         id="qty-minus"
-                        onclick="handleQtyCount('minus','addon2-qty-input')"
+                        onclick="handleQtyCount('minus','addon2-qty-input','addon2-subtotal-title')"
                       >
                         -
                       </div>
@@ -295,12 +300,12 @@
                         max="999"
                         min="0"
                         placeholder="0"
-                        oninput="handleQtyValue(this)"
+                        oninput="handleQtyValue(this,'addon2-subtotal-title')"
                       />
                       <div
                         class="counter-box counter-box-small"
                         id="qty-plus"
-                        onclick="handleQtyCount('plus','addon2-qty-input')"
+                        onclick="handleQtyCount('plus','addon2-qty-input','addon2-subtotal-title')"
                       >
                         +
                       </div>
@@ -320,12 +325,14 @@
                 </div>
                 <div class="item-info-container">
                   <div class="item-info-row">
-                    <div class="item-price">$6.30</div>
+                    <div class="item-price" id="addon3-subtotal-title">
+                      $5.00
+                    </div>
                     <div class="counter-container">
                       <div
                         class="counter-box counter-box-small"
                         id="qty-minus"
-                        onclick="handleQtyCount('minus','addon3-qty-input')"
+                        onclick="handleQtyCount('minus','addon3-qty-input','addon3-subtotal-title')"
                       >
                         -
                       </div>
@@ -336,12 +343,12 @@
                         max="999"
                         min="0"
                         placeholder="0"
-                        oninput="handleQtyValue(this)"
+                        oninput="handleQtyValue(this,'addon3-subtotal-title')"
                       />
                       <div
                         class="counter-box counter-box-small"
                         id="qty-plus"
-                        onclick="handleQtyCount('plus','addon3-qty-input')"
+                        onclick="handleQtyCount('plus','addon3-qty-input','addon3-subtotal-title')"
                       >
                         +
                       </div>
@@ -421,12 +428,6 @@
 
       <!-- <i class="nav-icon fa-solid fa-cart-shopping fa-xl"></i> -->
       <script>
-        let subtotal = 0.0;
-        let price = 29.7;
-        let subtotalSpan = document.getElementById("subtotal-bar-amount");
-        // let qtyInput = document.getElementById("qty-input");
-        subtotalSpan.innerHTML = subtotal;
-
         function handleQtyCount(type, inputId, subtotalElementId) {
           let qtyInput = document.getElementById(inputId);
           let qtyinputint = parseInt(qtyInput.value);
@@ -458,30 +459,53 @@
           }
         }
 
-        function handleQtyValue(e) {
+        function handleQtyValue(e, subtotalElementId) {
           let newValue;
           e.value = Math.abs(e.value);
           if (e.value > 1000) {
             e.value = 999;
           }
+          calculateCustomiseItemSubtotal(subtotalElementId, parseInt(e.value));
         }
 
         function calculateCustomiseItemSubtotal(subtotalElementId, qty) {
           let subtotalElement = document.getElementById(subtotalElementId);
           let price = 1.0;
-          let subtotal = ((qty - 1) * price).toFixed(2);
-          if (subtotalElement) {
-            if (qty === 0 || qty === 1) {
-              subtotalElement.innerHTML = "$0.00";
-              subtotalElement.value = parseFloat(0);
-              console.log(subtotalElement.value);
-            } else {
+          let subtotal = 0;
+          if (
+            subtotalElementId === "addon1-subtotal-title" ||
+            subtotalElementId === "addon2-subtotal-title" ||
+            subtotalElementId === "addon3-subtotal-title"
+          ) {
+            price = 5.0;
+            subtotal = (qty * price).toFixed(2);
+
+            if (subtotalElement) {
               subtotalElement.innerHTML = "$" + subtotal;
               subtotalElement.value = parseFloat(subtotal);
-              console.log(subtotalElement.value);
             }
+            if (qty >= 1) {
+              console.log("qty > 1");
+              calculateTotalSubtotalForCart();
+            }
+          } else {
+            price = 1.0;
+            subtotal = ((qty - 1) * price).toFixed(2);
+
+            if (subtotalElement) {
+              if (qty === 0 || qty === 1) {
+                subtotalElement.innerHTML = "$0.00";
+                subtotalElement.value = parseFloat(0);
+              } else {
+                subtotalElement.innerHTML = "$" + subtotal;
+                subtotalElement.value = parseFloat(subtotal);
+              }
+            }
+            handleQtySubtotal();
           }
         }
+
+        function handleAddOnsSubtotal() {}
 
         //pre setting all the input fields to have 1 in their field
         var allNumberInputs = document.querySelectorAll('input[type="number"]');
@@ -494,11 +518,6 @@
         Array.from(allAddonsInputs).forEach((input, index) => {
           input.value = 0;
         });
-
-        function handleSubtotal(amount) {
-          if (amount) subtotal += amount;
-          subtotalSpan.innerHTML = subtotal;
-        }
 
         //TODO: Code the function for subtotal for quantity
 
@@ -547,6 +566,74 @@
               );
             }
           }
+          handleQtySubtotal();
+        }
+
+        function handleQtySubtotal() {
+          let subtotal;
+          let customiseItem1 = document.getElementById(
+            "customise-item1-subtotal"
+          ).innerHTML;
+          let customiseItem2 = document.getElementById(
+            "customise-item2-subtotal"
+          ).innerHTML;
+          let customiseItem3 = document.getElementById(
+            "customise-item3-subtotal"
+          ).innerHTML;
+          let selectedSizeElementText = document.getElementsByClassName(
+            "ordering-catagory-container-selected"
+          )[0];
+          let qtySubtotalTitle = document.getElementById("qty-subtotal-title");
+
+          let qtyElement = document.getElementById("qty-input");
+
+          if (selectedSizeElementText) {
+            let sizePrice = cleanUpStringToFloat(
+              selectedSizeElementText.innerHTML
+            );
+            let item1Price = cleanUpStringToFloat(customiseItem1);
+            let item2Price = cleanUpStringToFloat(customiseItem2);
+            let item3Price = cleanUpStringToFloat(customiseItem3);
+            let qty = cleanUpStringToFloat(qtyElement.value);
+
+            subtotal = (sizePrice + item1Price + item2Price + item3Price) * qty;
+            qtySubtotalTitle.innerHTML = "$" + subtotal.toFixed(2);
+            calculateTotalSubtotalForCart(subtotal);
+          } else {
+            alert("You have not selected a size!");
+          }
+        }
+
+        function cleanUpStringToFloat(input) {
+          return parseFloat(input.replace(/[^\d.]/g, ""));
+        }
+
+        function calculateTotalSubtotalForCart() {
+          let totalForCart,
+            addOnsSubtotal = 0;
+          let qtySubtotalTitle =
+            document.getElementById("qty-subtotal-title").innerHTML;
+          qtySubtotal = cleanUpStringToFloat(qtySubtotalTitle);
+
+          let addonSubtotal1 = cleanUpStringToFloat(
+            document.getElementById("addon1-subtotal-title").innerHTML
+          );
+          let addonSubtotal2 = cleanUpStringToFloat(
+            document.getElementById("addon2-subtotal-title").innerHTML
+          );
+          let addonSubtotal3 = cleanUpStringToFloat(
+            document.getElementById("addon3-subtotal-title").innerHTML
+          );
+
+          totalForCart =
+            qtySubtotal + addonSubtotal1 + addonSubtotal2 + addonSubtotal3;
+          console.log(
+            totalForCart,
+            qtySubtotal,
+            addonSubtotal1 + addonSubtotal2 + addonSubtotal3
+          );
+          document.getElementById("subtotal-bar-amount").innerHTML =
+            "$" + totalForCart.toFixed(2);
         }
       </script>
       <script src="script.js"></script>
