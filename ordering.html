@@ -230,14 +230,14 @@
               <div class="qty-price-title" id="qty-subtotal-title">$0.00</div>
             </div>
           </div>
-          <div class="step1-container">
+          <div class="step1-container" style="border: none">
             <div class="step1-title">Step 4: Choose Add-Ons</div>
             <div class="add-ons-container">
               <div class="item-container">
                 <img class="item-img" src="./assets/images/snackplatter.png" />
                 <div class="item-info-container">
                   <div class="item-info-row">
-                    <div class="item-title">Snack Platter</div>
+                    <div class="item-title add-ons-title">Snack Platter</div>
                   </div>
                 </div>
                 <div class="item-info-container">
@@ -277,7 +277,7 @@
                 <img class="item-img" src="./assets/images/10pcdrumlet.png" />
                 <div class="item-info-container">
                   <div class="item-info-row">
-                    <div class="item-title">10pc Drumlets</div>
+                    <div class="item-title add-ons-title">10pc Drumlets</div>
                   </div>
                 </div>
                 <div class="item-info-container">
@@ -320,7 +320,7 @@
                 />
                 <div class="item-info-container">
                   <div class="item-info-row">
-                    <div class="item-title">Chocolate Waffle</div>
+                    <div class="item-title add-ons-title">Chocolate Waffle</div>
                   </div>
                 </div>
                 <div class="item-info-container">
@@ -357,6 +357,14 @@
                 </div>
               </div>
             </div>
+          </div>
+          <div class="addtocart-button-container">
+            <button
+              class="ordering-addtocart-button"
+              onclick="handleAddtocart()"
+            >
+              Add To Cart
+            </button>
           </div>
         </div>
       </div>
@@ -484,10 +492,8 @@
               subtotalElement.innerHTML = "$" + subtotal;
               subtotalElement.value = parseFloat(subtotal);
             }
-            if (qty >= 1) {
-              console.log("qty > 1");
-              calculateTotalSubtotalForCart();
-            }
+
+            calculateTotalSubtotalForCart();
           } else {
             price = 1.0;
             subtotal = ((qty - 1) * price).toFixed(2);
@@ -625,16 +631,21 @@
             document.getElementById("addon3-subtotal-title").innerHTML
           );
 
+          let addonQty1 = document.getElementById("addon1-qty-input").value;
+          let addonQty2 = document.getElementById("addon2-qty-input").value;
+          let addonQty3 = document.getElementById("addon3-qty-input").value;
+          console.log(addonQty1, addonQty2, addonQty3);
           totalForCart =
-            qtySubtotal + addonSubtotal1 + addonSubtotal2 + addonSubtotal3;
-          console.log(
-            totalForCart,
-            qtySubtotal,
-            addonSubtotal1 + addonSubtotal2 + addonSubtotal3
-          );
+            qtySubtotal +
+            (addonQty1 >= 1 ? addonSubtotal1 : 0) +
+            (addonQty2 >= 1 ? addonSubtotal2 : 0) +
+            (addonQty3 >= 1 ? addonSubtotal3 : 0);
+
           document.getElementById("subtotal-bar-amount").innerHTML =
             "$" + totalForCart.toFixed(2);
         }
+
+        function handleAddtocart() {}
       </script>
       <script src="script.js"></script>
       <script
