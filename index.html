@@ -15,8 +15,9 @@
   </head>
   <body>
     <dialog id="sign-up-dialog" class="signup-dialog">
-      <form class="dialog-container" id="signupDialog" novalidate>
+      <form class="dialog-container" id="signupDialog" method="dialog">
         <div class="dialog-title">Sign Up</div>
+
         <div class="signup-input-container">
           <div class="dialog-text">Name</div>
           <input class="dialog-input" type="text" name="signup-name" required />
@@ -54,12 +55,9 @@
           <div class="dialog-text">Contact Number</div>
           <input class="dialog-input" type="number" name="signup-contact" />
         </div>
+
         <div class="signup-button-container">
-          <button
-            class="dialog-signin-button"
-            onclick="closeDialog('sign-up-dialog')"
-            type="submit"
-          >
+          <button class="dialog-signin-button" id="dialog-signup-button">
             Sign Up
           </button>
           <div class="dialog-button-subtext">
@@ -72,7 +70,7 @@
           </div>
         </div>
       </form>
-      <form class="dialog-container" id="signinDialog">
+      <form class="dialog-container" id="signinDialog" method="dialog">
         <div class="dialog-title">Sign In</div>
 
         <div class="signup-input=container">
@@ -96,10 +94,7 @@
         </div>
 
         <div class="signup-button-container">
-          <button
-            class="dialog-signin-button"
-            onclick="closeDialog('sign-up-dialog')"
-          >
+          <button class="dialog-signin-button" id="dialog-signin-button">
             Sign In
           </button>
           <div class="dialog-button-subtext">
@@ -107,7 +102,6 @@
             <span
               class="dialog-button-subtext-underline"
               onclick="swapDialogContent()"
-              type="submit"
               >Sign Up</span
             >
           </div>
@@ -324,6 +318,8 @@
           dialog.close();
         }
 
+        let signupButton = document.getElementById("dialog-signup-button");
+        let signinButton = document.getElementById("dialog-signin-button");
         let signUpPage = true;
 
         function swapDialogContent() {
