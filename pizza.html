@@ -14,6 +14,105 @@
     <style></style>
   </head>
   <body>
+    <dialog id="sign-up-dialog" class="signup-dialog">
+      <i
+        class="fa-solid fa-xmark fa-l"
+        id="dialog-close-icon"
+        onclick="closeDialog('sign-up-dialog')"
+      ></i>
+      <form class="dialog-container" id="signupDialog" method="dialog">
+        <div class="dialog-title">Sign Up</div>
+
+        <div class="signup-input-container">
+          <div class="dialog-text">Name</div>
+          <input class="dialog-input" type="text" name="signup-name" required />
+        </div>
+        <div class="signup-input-container">
+          <div class="dialog-text">Email</div>
+          <input
+            class="dialog-input"
+            type="email"
+            name="signup-email"
+            required
+          />
+        </div>
+
+        <div class="signup-input-container">
+          <div class="dialog-text">Password</div>
+          <input
+            class="dialog-input"
+            type="password"
+            name="signup-password"
+            required
+          />
+        </div>
+
+        <div class="signup-input-container">
+          <div class="dialog-text">Address</div>
+          <input
+            class="dialog-input"
+            type="text"
+            name="signup-address"
+            required
+          />
+        </div>
+        <div class="signup-input-container">
+          <div class="dialog-text">Contact Number</div>
+          <input class="dialog-input" type="number" name="signup-contact" />
+        </div>
+
+        <div class="signup-button-container">
+          <button class="dialog-signin-button" id="dialog-signup-button">
+            Sign Up
+          </button>
+          <div class="dialog-button-subtext">
+            Already have an account?
+            <span
+              class="dialog-button-subtext-underline"
+              onclick="swapDialogContent()"
+              >Sign In</span
+            >
+          </div>
+        </div>
+      </form>
+      <form class="dialog-container" id="signinDialog" method="dialog">
+        <div class="dialog-title">Sign In</div>
+
+        <div class="signup-input=container">
+          <div class="dialog-text">Email</div>
+          <input
+            class="dialog-input"
+            type="email"
+            name="signin-email"
+            required
+          />
+        </div>
+
+        <div class="signup-input=container">
+          <div class="dialog-text">Password</div>
+          <input
+            class="dialog-input"
+            type="password"
+            name="signin-password"
+            required
+          />
+        </div>
+
+        <div class="signup-button-container">
+          <button class="dialog-signin-button" id="dialog-signin-button">
+            Sign In
+          </button>
+          <div class="dialog-button-subtext">
+            Don't have an account?
+            <span
+              class="dialog-button-subtext-underline"
+              onclick="swapDialogContent()"
+              >Sign Up</span
+            >
+          </div>
+        </div>
+      </form>
+    </dialog>
     <dialog id="sign-up-dialog">
       This is a dialog box
       <button onclick="closeDialog('sign-up-dialog')" id="close-dialog-btn">
@@ -39,9 +138,148 @@
         </div>
 
         <div class="cart-profile-container">
-          <i class="nav-icon fa-solid fa-cart-shopping fa-xl"></i>
-          <button class="button-filled join-button">Join Us</button>
+          <i
+            class="nav-icon fa-solid fa-cart-shopping fa-xl"
+            onclick="showCart()"
+          ></i>
+          <button
+            class="button-filled join-button"
+            onclick="openDialog('sign-up-dialog')"
+          >
+            Join Us
+          </button>
         </div>
+      </div>
+
+      <div class="cart-container" id="cart">
+        <i
+          class="fa-solid fa-xmark fa-xl"
+          id="cart-close-icon"
+          onclick="hideCart()"
+        ></i>
+        <div class="cart-title">Cart</div>
+        <div class="cart-orders-container">
+          <div class="cart-order-container">
+            <div class="cart-item-container">
+              <div class="cart-order-title">1x Chocolate Waffle</div>
+              <div class="cart-order-subtotal">$19.90</div>
+            </div>
+
+            <div class="cart-actions-container">
+              <div class="cart-actions-subcontainer">
+                <i
+                  class="fa-regular fa-pen-to-square cart-action-icon fa-lg"
+                ></i>
+                <i class="fa-regular fa-trash-can cart-action-icon fa-lg"></i>
+              </div>
+            </div>
+          </div>
+          <div class="cart-order-container">
+            <div class="cart-item-container">
+              <div class="cart-order-title">1x Chocolate Waffle</div>
+              <div class="cart-order-subtotal">$19.90</div>
+            </div>
+
+            <div class="cart-actions-container">
+              <div class="cart-actions-subcontainer">
+                <i
+                  class="fa-regular fa-pen-to-square cart-action-icon fa-lg"
+                ></i>
+                <i class="fa-regular fa-trash-can cart-action-icon fa-lg"></i>
+              </div>
+            </div>
+          </div>
+          <div class="cart-order-container">
+            <div class="cart-item-container">
+              <div class="cart-order-title">1x Chocolate Waffle</div>
+              <div class="cart-order-subtotal">$19.90</div>
+            </div>
+
+            <div class="cart-actions-container">
+              <div class="cart-actions-subcontainer">
+                <i
+                  class="fa-regular fa-pen-to-square cart-action-icon fa-lg"
+                ></i>
+                <i class="fa-regular fa-trash-can cart-action-icon fa-lg"></i>
+              </div>
+            </div>
+          </div>
+          <div class="cart-order-container">
+            <div class="cart-item-container">
+              <div class="cart-order-title">1x Chocolate Waffle</div>
+              <div class="cart-order-subtotal">$19.90</div>
+            </div>
+
+            <div class="cart-actions-container">
+              <div class="cart-actions-subcontainer">
+                <i
+                  class="fa-regular fa-pen-to-square cart-action-icon fa-lg"
+                ></i>
+                <i class="fa-regular fa-trash-can cart-action-icon fa-lg"></i>
+              </div>
+            </div>
+          </div>
+          <div class="cart-order-container">
+            <div class="cart-item-container">
+              <div class="cart-order-title">1x Chocolate Waffle</div>
+              <div class="cart-order-subtotal">$19.90</div>
+            </div>
+
+            <div class="cart-actions-container">
+              <div class="cart-actions-subcontainer">
+                <i
+                  class="fa-regular fa-pen-to-square cart-action-icon fa-lg"
+                ></i>
+                <i class="fa-regular fa-trash-can cart-action-icon fa-lg"></i>
+              </div>
+            </div>
+          </div>
+          <div class="cart-order-container">
+            <div class="cart-item-container">
+              <div class="cart-order-title">1x Chocolate Waffle</div>
+              <div class="cart-order-subtotal">$19.90</div>
+            </div>
+
+            <div class="cart-actions-container">
+              <div class="cart-actions-subcontainer">
+                <i
+                  class="fa-regular fa-pen-to-square cart-action-icon fa-lg"
+                ></i>
+                <i class="fa-regular fa-trash-can cart-action-icon fa-lg"></i>
+              </div>
+            </div>
+          </div>
+          <div class="cart-order-container">
+            <div class="cart-item-container">
+              <div class="cart-order-title">1x Chocolate Waffle</div>
+              <div class="cart-order-subtotal">$19.90</div>
+            </div>
+
+            <div class="cart-actions-container">
+              <div class="cart-actions-subcontainer">
+                <i
+                  class="fa-regular fa-pen-to-square cart-action-icon fa-lg"
+                ></i>
+                <i class="fa-regular fa-trash-can cart-action-icon fa-lg"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="totals-container">
+          <div class="cart-servicefee-container">
+            <div class="servicefee-title">Service Fee (10%):</div>
+            <div class="servicefee-amount">$7.90</div>
+          </div>
+          <div class="cart-servicefee-container">
+            <div class="servicefee-title">Delivery Fee:</div>
+            <div class="servicefee-amount">$3.90</div>
+          </div>
+          <div class="cart-servicefee-container">
+            <div class="cart-grand-total-title">Total:</div>
+            <div class="cart-grand-total-title">$50.90</div>
+          </div>
+        </div>
+        <button class="cart-checkout-button">Check Out</button>
       </div>
 
       <div class="page-title-container">
@@ -108,7 +346,7 @@
         </div>
       </div>
 
-      <div class="container">
+      <div class="container" onclick="hideCart()">
         <div class="big-ordering-container">
           <div class="ordering-catagories-container">
             <div
@@ -366,20 +604,6 @@
 
       <!-- <i class="nav-icon fa-solid fa-cart-shopping fa-xl"></i> -->
       <script>
-        // Displaces the container element based on the height of the navbar
-        let navMargin = document.getElementById("navbar").offsetHeight;
-        const container = (document.getElementById(
-          "container"
-        ).style.marginTop = navMargin + "px");
-
-        const signUpDialog = document.getElementById("sign-up-dialog");
-        //signUpDialog.showModal();
-
-        const closeDialog = (id) => {
-          const dialog = document.getElementById(id);
-          dialog.close();
-        };
-
         function toggleOrderingCatagoryButton(e) {
           if (e.classList.contains("ordering-catagory-container-selected")) {
             e.classList.remove("ordering-catagory-container-selected");
@@ -390,6 +614,44 @@
 
         function changePage(url) {
           window.location.href = url;
+        }
+
+        // Sign up dialog functions
+        function openDialog(id) {
+          const dialog = document.getElementById(id);
+          dialog.showModal();
+        }
+
+        function closeDialog(id) {
+          const dialog = document.getElementById(id);
+          dialog.close();
+        }
+
+        let signupButton = document.getElementById("dialog-signup-button");
+        let signinButton = document.getElementById("dialog-signin-button");
+        let signUpPage = true;
+
+        function swapDialogContent() {
+          if (signUpPage) {
+            document.getElementById("signupDialog").style.display = "none";
+            document.getElementById("signinDialog").style.display = "flex";
+            signUpPage = false;
+          } else {
+            document.getElementById("signupDialog").style.display = "flex";
+            document.getElementById("signinDialog").style.display = "none";
+            signUpPage = true;
+          }
+        }
+
+        let cart = document.getElementById("cart");
+        function showCart() {
+          // cart.style.display = "flex";
+          cart.style.transform = "translate(0%, -50%)";
+        }
+
+        function hideCart() {
+          // cart.style.display = "none";
+          cart.style.transform = "translate(100%, -50%)";
         }
       </script>
       <script

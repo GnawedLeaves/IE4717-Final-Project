@@ -15,6 +15,11 @@
   </head>
   <body>
     <dialog id="sign-up-dialog" class="signup-dialog">
+      <i
+        class="fa-solid fa-xmark fa-l"
+        id="dialog-close-icon"
+        onclick="closeDialog('sign-up-dialog')"
+      ></i>
       <form class="dialog-container" id="signupDialog" method="dialog">
         <div class="dialog-title">Sign Up</div>
 
@@ -325,10 +330,10 @@
         function swapDialogContent() {
           if (signUpPage) {
             document.getElementById("signupDialog").style.display = "none";
-            document.getElementById("signinDialog").style.display = "block";
+            document.getElementById("signinDialog").style.display = "flex";
             signUpPage = false;
           } else {
-            document.getElementById("signupDialog").style.display = "block";
+            document.getElementById("signupDialog").style.display = "flex";
             document.getElementById("signinDialog").style.display = "none";
             signUpPage = true;
           }

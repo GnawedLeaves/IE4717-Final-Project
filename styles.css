@@ -40,7 +40,7 @@ a {
 }
 
 .signup-dialog {
-  padding: 3rem 5rem;
+  padding: 3rem 6rem;
   padding-top: 1rem;
   background: var(--secondary);
   border: none;
@@ -53,7 +53,7 @@ a {
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  gap: 1.2rem;
+  gap: 1.4rem;
 }
 
 #signinDialog {
@@ -106,6 +106,20 @@ a {
 
 .dialog-button-subtext-underline {
   text-decoration: underline;
+  cursor: pointer;
+}
+
+#dialog-close-icon {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  cursor: pointer;
+}
+
+#cart-close-icon {
+  position: absolute;
+  top: 3.5rem;
+  left: 3.5rem;
   cursor: pointer;
 }
 
@@ -203,6 +217,7 @@ a {
 
 .nav-icon {
   margin: 0 1rem;
+  cursor: pointer;
 }
 
 .container {
@@ -213,6 +228,124 @@ a {
   z-index: 1;
   margin-top: 0rem;
   min-height: 100vh;
+}
+
+.cart-orders-container {
+  width: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+}
+
+.cart-container {
+  padding: 4rem;
+  background: var(--secondary);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 999;
+  height: 90vh;
+  width: 25rem;
+  top: 50%;
+  right: 0;
+  transform: translate(0%, -50%);
+  transition: 0.3s;
+
+}
+
+.cart-title {
+  font-family: "Magzo";
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+}
+
+.cart-order-subtotal {
+  font-size: 1.3rem;
+
+
+}
+
+.cart-order-container {
+  border-bottom: 1px solid var(--text);
+  width: 100%;
+  padding: 1rem;
+
+}
+
+.cart-order-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.cart-item-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 90%;
+  padding: 1rem 0;
+
+}
+
+.cart-actions-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 1.3rem 0;
+}
+
+.cart-actions-subcontainer {
+  display: flex;
+  align-items: center;
+}
+
+.cart-details-button {
+  cursor: pointer;
+}
+
+.cart-action-icon {
+  margin-right: 1rem;
+  cursor: pointer;
+}
+
+.cart-servicefee-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  width: 100%;
+}
+
+.totals-container {
+  width: 100%;
+  padding: 1rem 0;
+}
+
+.cart-grand-total-title {
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.cart-checkout-button {
+  margin-top: 3rem;
+  background: var(--primary);
+  color: var(--background);
+  border: 1px solid var(--primary);
+  border-radius: 10px;
+  font-size: 1.6rem;
+  font-weight: 600;
+  padding: 0.7rem 3rem;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.cart-checkout-button:hover {
+
+  box-shadow: 5px 5px 7px #bababa,
+    -5px -5px 7px var(--secondary);
 }
 
 .hero-img {
