@@ -204,10 +204,146 @@
       <div class="checkout-container" onclick="hideCart()">
         <div class="checkout-container-left">
           <div class="checkout-details-container">
-            <div class=""></div>
+            <div class="checkout-details-title">Details</div>
+            <div class="signup-input-container-checkout">
+              <div class="dialog-text-checkout">Name</div>
+              <input
+                class="dialog-input-checkout"
+                type="text"
+                name="signup-name"
+                required
+              />
+            </div>
+            <div class="signup-input-container-checkout">
+              <div class="dialog-text-checkout">Address</div>
+              <input
+                class="dialog-input-checkout"
+                type="email"
+                name="signup-email"
+                required
+              />
+            </div>
+            <div class="signup-input-container-checkout">
+              <div class="dialog-text-checkout">Email</div>
+              <input
+                class="dialog-input-checkout"
+                type="email"
+                name="signup-email"
+                required
+              />
+            </div>
+            <div class="signup-input-container-checkout">
+              <div class="dialog-text-checkout">Contact</div>
+              <input
+                class="dialog-input-checkout"
+                type="email"
+                name="signup-email"
+                required
+              />
+            </div>
+          </div>
+          <div class="checkout-details-container" style="margin-top: 8rem">
+            <div class="checkout-details-title">Payment</div>
+            <div class="customise-size-container">
+              <div class="customise-size-buttons-container">
+                <div
+                  id="size-regular-button"
+                  class="ordering-pizza-size-button"
+                  onclick="toggleSizeButtons(this)"
+                >
+                  Credit Card
+                </div>
+                <div
+                  id="size-large-button"
+                  class="ordering-pizza-size-button"
+                  value="19.70"
+                  onclick="toggleSizeButtons(this)"
+                >
+                  Paylah
+                </div>
+              </div>
+            </div>
+            <div class="signup-input-container-checkout">
+              <div class="dialog-text-checkout">Card Number</div>
+              <input
+                class="dialog-input-checkout"
+                type="text"
+                name="signup-name"
+                required
+              />
+            </div>
+            <div class="signup-input-container-checkout">
+              <div class="dialog-text-checkout">Card Holder Name</div>
+              <input
+                class="dialog-input-checkout"
+                type="email"
+                name="signup-email"
+                required
+              />
+            </div>
+            <div class="credit-card-info-container">
+              <div class="signup-input-container-checkout">
+                <div class="dialog-text-checkout">Expiry Date</div>
+                <input
+                  class="dialog-input-checkout"
+                  type="number"
+                  name="signup-email"
+                  style="width: 7rem"
+                  required
+                />
+              </div>
+              <div class="signup-input-container-checkout">
+                <div class="dialog-text-checkout">CVC</div>
+                <input
+                  class="dialog-input-checkout"
+                  type="number"
+                  name="signup-email"
+                  style="width: 7rem"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+          <button class="payment-button">Pay</button>
+        </div>
+        <div class="checkout-container-right">
+          <div class="cart-container-checkout" id="cart">
+            <div class="cart-title-checkout">Cart</div>
+            <div class="cart-orders-container">
+              <div class="cart-order-container">
+                <div class="cart-item-container">
+                  <div class="cart-order-title">1x Chocolate Waffle</div>
+                  <div class="cart-order-subtotal">$19.90</div>
+                </div>
+
+                <div class="cart-actions-container">
+                  <div class="cart-actions-subcontainer">
+                    <i
+                      class="fa-regular fa-pen-to-square cart-action-icon fa-lg"
+                    ></i>
+                    <i
+                      class="fa-regular fa-trash-can cart-action-icon fa-lg"
+                    ></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="totals-container">
+              <div class="cart-servicefee-container">
+                <div class="servicefee-title">Service Fee (10%):</div>
+                <div class="servicefee-amount">$7.90</div>
+              </div>
+              <div class="cart-servicefee-container">
+                <div class="servicefee-title">Delivery Fee:</div>
+                <div class="servicefee-amount">$3.90</div>
+              </div>
+              <div class="cart-servicefee-container">
+                <div class="cart-grand-total-title">Total:</div>
+                <div class="cart-grand-total-title">$50.90</div>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="checkout-container-right">Right</div>
       </div>
 
       <div class="footer">
@@ -325,6 +461,53 @@
         function hideCart() {
           // cart.style.display = "none";
           cart.style.transform = "translate(100%, -50%)";
+        }
+
+        let largeButton = document.getElementById("size-large-button");
+        let regularButton = document.getElementById("size-regular-button");
+
+        function toggleSizeButtons(e) {
+          buttonId = e.id;
+
+          if (buttonId === "size-large-button") {
+            if (
+              !regularButton.classList.contains(
+                "ordering-catagory-container-selected"
+              )
+            ) {
+              largeButton.classList.add("ordering-catagory-container-selected");
+            } else if (
+              regularButton.classList.contains(
+                "ordering-catagory-container-selected"
+              )
+            ) {
+              largeButton.classList.add("ordering-catagory-container-selected");
+              regularButton.classList.remove(
+                "ordering-catagory-container-selected"
+              );
+            }
+          } else if (buttonId === "size-regular-button") {
+            if (
+              !largeButton.classList.contains(
+                "ordering-catagory-container-selected"
+              )
+            ) {
+              regularButton.classList.add(
+                "ordering-catagory-container-selected"
+              );
+            } else if (
+              largeButton.classList.contains(
+                "ordering-catagory-container-selected"
+              )
+            ) {
+              regularButton.classList.add(
+                "ordering-catagory-container-selected"
+              );
+              largeButton.classList.remove(
+                "ordering-catagory-container-selected"
+              );
+            }
+          }
         }
       </script>
       <script
