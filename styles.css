@@ -251,7 +251,7 @@ a {
   width: 25rem;
   top: 50%;
   right: 0;
-  transform: translate(0%, -50%);
+  transform: translate(100%, -50%);
   transition: 0.3s;
 
 }
@@ -273,7 +273,28 @@ a {
   border-bottom: 1px solid var(--text);
   width: 100%;
   padding: 1rem;
+}
 
+.checkout-container {
+  display: grid;
+  grid-template-columns: 1fr 0.8fr;
+  width: 100vw;
+  max-width: 100vw;
+  height: auto;
+  position: relative;
+  z-index: 1;
+  margin-top: 0rem;
+  min-height: 100vh;
+}
+
+.checkout-container-left {
+  grid-column: 1;
+  background: red;
+}
+
+.checkout-container-right {
+  grid-column: 2;
+  background: lime;
 }
 
 .cart-order-title {
