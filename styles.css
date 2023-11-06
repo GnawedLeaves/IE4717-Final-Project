@@ -17,7 +17,8 @@ input::-webkit-inner-spin-button {
 }
 
 @font-face {
-  font-family: "Magzo";
+  font-family: 'Calistoga', serif;
+  letter-spacing: 0.1rem;
   src: url("./assets/fonts/Magzo.ttf");
   font-weight: 400;
   font-style: normal;
@@ -141,8 +142,9 @@ a {
 }
 
 .navbar-logo-title {
-  font-family: "Magzo";
-  font-weight: 600;
+  font-family: 'Calistoga', serif;
+  letter-spacing: 0.1rem;
+  font-weight: 400;
   font-size: 2.2rem;
   color: var(--background);
   margin: 0rem 1rem 0rem 1rem;
@@ -271,7 +273,8 @@ a {
 }
 
 .cart-title {
-  font-family: "Magzo";
+  font-family: 'Calistoga', serif;
+  letter-spacing: 0.1rem;
   font-size: 2.5rem;
   font-weight: 600;
   margin-bottom: 2rem;
@@ -598,7 +601,8 @@ a {
 }
 
 .footer-title {
-  font-family: "Magzo";
+  font-family: 'Calistoga', serif;
+  letter-spacing: 0.1rem;
   font-weight: 600;
   font-size: 1.5rem;
 }
@@ -686,9 +690,10 @@ a {
 
 
 .page-title {
-  font-family: "Magzo";
+  font-family: 'Calistoga', serif;
+  letter-spacing: 0.1rem;
   font-size: 4rem;
-  font-weight: 600;
+
 }
 
 .track-order-id-title {
@@ -930,6 +935,35 @@ a {
 
 }
 
+
+.ordering-hero-hawaiian {
+  background-image: url("https://static.phdvasia.com/sg1/menu/single/desktop_thumbnail_1f633a30-ba93-450a-a93d-1ac3b25a1b54.jpg");
+}
+
+.ordering-hero-chicken-galore {
+  background-image: url("https://static.phdvasia.com/sg1/menu/single/desktop_thumbnail_d2762674-97b0-4713-94be-4257e479f6ba.jpg");
+}
+
+.ordering-hero-chris-special {
+  background-image: url("https://static.phdvasia.com/sg1/menu/single/desktop_thumbnail_896faed4-6405-4e12-9c70-ddbfaf3e3cad.jpg");
+}
+
+.ordering-hero-chicken-curry {
+  background-image: url("https://static.phdvasia.com/sg1/menu/single/desktop_thumbnail_c01c5b13-4752-4547-8e26-af1af00dc0df.jpg");
+}
+
+.ordering-hero-meat-lovers {
+  background-image: url("https://static.phdvasia.com/sg1/menu/single/desktop_thumbnail_f9abc811-3387-4870-82ac-3eb23fa15f37.jpg");
+}
+
+.ordering-hero-veggie-pizza {
+  background-image: url("https://static.phdvasia.com/sg1/menu/single/desktop_thumbnail_24a5bf59-48d3-402d-b803-cca86a1fedc8.jpg");
+}
+
+.ordering-hero-bbq-chicken {
+  background-image: url("https://static.phdvasia.com/sg1/menu/single/desktop_thumbnail_156236ab-b5fb-4ca8-8d37-bc0903977fbc.jpg");
+}
+
 .ordering-hero-right {
   width: 50%;
   background: var(--secondary);
@@ -940,7 +974,8 @@ a {
 
 .ordering-hero-title {
   font-size: 3rem;
-  font-family: 'Magzo';
+  font-family: 'Calistoga', serif;
+  letter-spacing: 0.1rem;
   font-weight: 600;
 }
 

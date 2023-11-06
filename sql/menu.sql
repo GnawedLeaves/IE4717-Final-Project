@@ -25,6 +25,6 @@ INSERT INTO menu (name, itemprice, size) VALUES ('Veggie Pizza', 11.49, 'regular
 INSERT INTO menu (name, itemprice, size) VALUES ('Veggie Pizza', 14.49, 'large');
 INSERT INTO menu (name, itemprice, size) VALUES ('BBQ Chicken', 12.49, 'regular');
 INSERT INTO menu (name, itemprice, size) VALUES ('BBQ Chicken', 15.49, 'large');
-INSERT INTO menu (name, itemprice) VALUES ('Chocolate Waffle', 6.99);
-INSERT INTO menu (name, itemprice) VALUES ('10pc Drumlets', 9.99);
-INSERT INTO menu (name, itemprice) VALUES ('Snack Platter', 15.99);
+INSERT INTO menu (name, itemprice) VALUES ('Chocolate Waffle', 6.99, 'regular');
+INSERT INTO menu (name, itemprice) VALUES ('10pc Drumlets', 9.99, 'regular');
+INSERT INTO menu (name, itemprice) VALUES ('Snack Platter', 15.99, 'regular');

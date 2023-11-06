@@ -1,3 +1,20 @@
+<?php
+if (!isset($_SESSION))
+  session_start();
+$id = session_id();
+echo "Session id in pizza test = $id <br>";
+
+
+
+if (isset($_SESSION["cart"])) {
+  $_SESSION['cart'] = array();
+}
+echo "SESSION: " . var_dump($_SESSION);
+echo "CART: " . $_SESSION['cart'];
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -7,7 +24,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Calistoga&family=Galada&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
       rel="stylesheet"
     />
     <title>Chris' Pizza</title>

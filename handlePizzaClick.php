@@ -1,17 +1,69 @@
 <?php
-if (!isset($_SESSION))
-  session_start();
-var_dump($_SESSION);
+session_start();
+
 $id = session_id();
-echo "<br> Session id in handlepizzaclick = $id <br>";
+echo "Session id in pizza test = $id <br>";
 
 
-var_dump($_POST);
+
+if (!isset($_SESSION["cart"])) {
+  $_SESSION['cart'] = array();
+} else {
+  echo 'cart exists';
+}
 
 
-$haiiwan = $_POST["hawaiian"];
-$_SESSION["haiiwan"] = $haiiwan;
-// unset($_SESSION['haiiwan']);
+echo "SESSION: " . var_dump($_SESSION);
+echo "CART: " . $_SESSION['cart'];
+
+
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+  $pizzaName = $_POST['pizzaName'];
+  $pizzaQty = $_POST['pizzaQty'];
+  $pizzaQtySubtotal = $_POST['pizzaQtySubtotal'];
+  $pizzaTopping1Qty = $_POST['pizzaTopping1Qty'];
+  $pizzaTopping2Qty = $_POST['pizzaTopping2Qty'];
+  $pizzaTopping3Qty = $_POST['pizzaTopping3Qty'];
+  $pizzaAddOn1Qty = $_POST['pizzaAddOn1Qty'];
+  $pizzaAddOn2Qty = $_POST['pizzaAddOn2Qty'];
+  $pizzaAddOn3Qty = $_POST['pizzaAddOn3Qty'];
+  $phpTotal = $_POST['phpTotal'];
+
+
+  $id = session_id();
+  echo "Session id in pizza test = $id <br>";
+
+  if (isset($_POST['pizzaName']) && isset($_POST['pizzaQty']) && isset($_POST['pizzaQtySubtotal'])) {
+    $pizzaName = $_POST['pizzaName'];
+    $pizzaQty = $_POST['pizzaQty'];
+    $pizzaQtySubtotal = $_POST['pizzaQtySubtotal'];
+    array_push(
+      $_SESSION['cart'],
+      array(
+
+        'pizzaName' => $pizzaName,
+        'pizzaQty' => $pizzaQty,
+        'pizzaQtySubtotal' => $pizzaQtySubtotal
+      )
+    );
+    header('Location: pizza.php');
+    exit();
+
+  }
+
+
+  echo "SESSION: " . var_dump($_SESSION);
+
+  // header('Location: pizza.php');
+}
+
+
+
+
+
+
 
 
 ?>
@@ -25,10 +77,7 @@ $_SESSION["haiiwan"] = $haiiwan;
     <link rel="stylesheet" href="styles.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
-      rel="stylesheet"
-    />
+<link href="https://fonts.googleapis.com/css2?family=Calistoga&family=Galada&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
     <title>Chris' Pizza</title>
     <style></style>
   </head>
@@ -70,14 +119,33 @@ $_SESSION["haiiwan"] = $haiiwan;
 
       <div class="ordering-container">
         <div class="ordering-big-container">
-          <a class="back-container" href="pizzatest.php">
+          <a class="back-container" href="pizza.php">
             <i class="fa-solid fa-arrow-left fa-lg" style="color: #333333"></i>
             <span class="back-span">Back</span>
           </a>
           <div class="ordering-hero-container">
-            <div class="ordering-hero-left">
-              <!-- <img src="https://static.phdvasia.com/sg1/menu/single/desktop_thumbnail_1f633a30-ba93-450a-a93d-1ac3b25a1b54.jpg"/> -->
-            </div>
+           
+            <?php
+            if (isset($_POST["hawaiian"])) {
+              echo '  <div class="ordering-hero-left ordering-hero-hawaiian"> </div>';
+            } else if (isset($_POST["chicken-galore"])) {
+              echo '  <div class="ordering-hero-left ordering-hero-chicken-galore"> </div>';
+            } else if (isset($_POST["chris-special"])) {
+              echo '  <div class="ordering-hero-left ordering-hero-chris-special "> </div>';
+            } else if (isset($_POST["chicken-curry"])) {
+              echo '  <div class="ordering-hero-left ordering-hero-chicken-curry"> </div>';
+            } else if (isset($_POST["meat-lovers"])) {
+              echo '  <div class="ordering-hero-left ordering-hero-meat-lovers"> </div>';
+            } else if (isset($_POST["pepperoni"])) {
+              echo '  <div class="ordering-hero-left ordering-hero-pepperoni"> </div>';
+            } else if (isset($_POST["veggie-pizza"])) {
+              echo '  <div class="ordering-hero-left ordering-hero-veggie-pizza"> </div>';
+            } else if (isset($_POST["bbq-chicken"])) {
+              echo '  <div class="ordering-hero-left ordering-hero-bbq-chicken"> </div>';
+            }
+
+            ?>
+            
             <div class="ordering-hero-right">
 
               <div class="ordering-hero-title">
@@ -113,7 +181,26 @@ $_SESSION["haiiwan"] = $haiiwan;
                   class="ordering-pizza-size-button"
                   onclick="toggleSizeButtons(this)"
                 >
-                  Regular $19.70
+                  Regular <?php
+                  if (isset($_POST["hawaiian"])) {
+                    include './php/getHawaiianPrice.php';
+                  } else if (isset($_POST["chicken-galore"])) {
+                    include './php/getChickenGalorePrice.php';
+                  } else if (isset($_POST["chris-special"])) {
+                    include './php/getChrisSpecialPrice.php';
+                  } else if (isset($_POST["chicken-curry"])) {
+                    include './php/getChickenCurryPrice.php';
+                  } else if (isset($_POST["meat-lovers"])) {
+                    include './php/getMeatLoversPrice.php';
+                  } else if (isset($_POST["pepperoni"])) {
+                    include './php/getPepperoniPrice.php';
+                  } else if (isset($_POST["veggie-pizza"])) {
+                    include './php/getVeggiePizzaPrice.php';
+                  } else if (isset($_POST["bbq-chicken"])) {
+                    include './php/getBBQChickenPrice.php';
+                  }
+
+                  ?>
                 </div>
                 <div
                   id="size-large-button"
@@ -121,7 +208,26 @@ $_SESSION["haiiwan"] = $haiiwan;
                   value="19.70"
                   onclick="toggleSizeButtons(this)"
                 >
-                  Large $29.70
+                  Large  <?php
+                  if (isset($_POST["hawaiian"])) {
+                    include './php/getHawaiianLargePrice.php';
+                  } else if (isset($_POST["chicken-galore"])) {
+                    include './php/getChickenGaloreLargePrice.php';
+                  } else if (isset($_POST["chris-special"])) {
+                    include './php/getChrisSpecialLargePrice.php';
+                  } else if (isset($_POST["chicken-curry"])) {
+                    include './php/getChickenCurryLargePrice.php';
+                  } else if (isset($_POST["meat-lovers"])) {
+                    include './php/getMeatLoversLargePrice.php';
+                  } else if (isset($_POST["pepperoni"])) {
+                    include './php/getPepperoniLargePrice.php';
+                  } else if (isset($_POST["veggie-pizza"])) {
+                    include './php/getVeggiePizzaLargePrice.php';
+                  } else if (isset($_POST["bbq-chicken"])) {
+                    include './php/getBBQChickenLargePrice.php';
+                  }
+
+                  ?>
                 </div>
               </div>
             </div>
@@ -402,14 +508,24 @@ $_SESSION["haiiwan"] = $haiiwan;
               </div>
             </div>
           </div>
-          <div class="addtocart-button-container">
-            <button
+          <form class="addtocart-button-container" method='post' >
+            <input class="phphiddendiv" name="pizzaName" id="pizzaName" value="pizzaName 12344444" required>
+            <input class="phphiddendiv" name="pizzaSize" id="pizzaSize" value="pizzaSize Large" required>
+            <input class="phphiddendiv" name="pizzaQty" id="pizzaQty" value="pizzaQty 5" required>
+            <input class="phphiddendiv" name="pizzaQtySubtotal" id="pizzaQtySubtotal" value="1" required>
+            <input class="phphiddendiv" name="pizzaTopping1Qty" id="pizzaTopping1Qty" value="1" required>
+            <input class="phphiddendiv" name="pizzaTopping2Qty" id="pizzaTopping2Qty" value="1" required>
+            <input class="phphiddendiv" name="pizzaTopping3Qty" id="pizzaTopping3Qty" value="1" required>
+            <input class="phphiddendiv" name="pizzaAddOn1Qty" id="pizzaAddOn1Qty" value="0" required>
+            <input class="phphiddendiv" name="pizzaAddOn2Qty" id="pizzaAddOn2Qty" value="0" required>
+            <input class="phphiddendiv" name="pizzaAddOn3Qty" id="pizzaAddOn3Qty" value="0" required>
+            <input class="phphiddendiv" name="phpTotal" id="phpTotal" value="1" required>
+                  <input
               class="ordering-addtocart-button"
-              onclick="handleAddtocart()"
+              type="submit" name="addToCart" value="Add to Cart" 
             >
-              Add To Cart
-            </button>
-          </div>
+    
+          </form>
         </div>
       </div>
 
