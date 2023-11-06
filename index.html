@@ -127,7 +127,7 @@
           <a href="#" class="navbarItem">Menu</a>
           <a href="#" class="navbarItem">Offers</a>
           <a href="#" class="navbarItem">Your Orders</a>
-          <a href="#" class="navbarItem">Stores</a>
+          <a href="stores.html" class="navbarItem">Stores</a>
           <a href="#" class="navbarItem">Support</a>
         </div>
 
@@ -147,7 +147,12 @@
           <div class="hero-img">
             <div class="hero-label">Pizza Parties delivered in</div>
             <div class="hero-label-big">30 MINS!</div>
-            <button class="button-filled hero-button">Order Now!</button>
+            <button
+              class="button-filled hero-button"
+              onclick="changePage('pizza.html')"
+            >
+              Order Now!
+            </button>
           </div>
         </div>
         <div class="catagories-container">
@@ -337,6 +342,9 @@
             document.getElementById("signinDialog").style.display = "none";
             signUpPage = true;
           }
+        }
+        function changePage(url) {
+          window.location.href = url;
         }
       </script>
       <script
