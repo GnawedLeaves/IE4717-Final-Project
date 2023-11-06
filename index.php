@@ -1,5 +1,9 @@
 <?php
-session_start();
+if (!isset($_SESSION))
+  session_start();
+var_dump($_SESSION);
+$id = session_id();
+echo "<br> Session id in index = $id <br>";
 ?>
 
 

@@ -1,3 +1,22 @@
+<?php
+if (!isset($_SESSION))
+  session_start();
+var_dump($_SESSION);
+$id = session_id();
+echo "<br> Session id in handlepizzaclick = $id <br>";
+
+
+var_dump($_POST);
+
+
+$haiiwan = $_POST["hawaiian"];
+$_SESSION["haiiwan"] = $haiiwan;
+// unset($_SESSION['haiiwan']);
+
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -51,7 +70,7 @@
 
       <div class="ordering-container">
         <div class="ordering-big-container">
-          <a class="back-container" href="pizza.php">
+          <a class="back-container" href="pizzatest.php">
             <i class="fa-solid fa-arrow-left fa-lg" style="color: #333333"></i>
             <span class="back-span">Back</span>
           </a>
@@ -60,8 +79,30 @@
               <!-- <img src="https://static.phdvasia.com/sg1/menu/single/desktop_thumbnail_1f633a30-ba93-450a-a93d-1ac3b25a1b54.jpg"/> -->
             </div>
             <div class="ordering-hero-right">
-              <div class="ordering-hero-title">Hawaiian</div>
+
+              <div class="ordering-hero-title">
+              <?php
+              if (isset($_POST["hawaiian"])) {
+                echo $_POST["hawaiian"];
+              } else if (isset($_POST["chicken-galore"])) {
+                echo $_POST["chicken-galore"];
+              } else if (isset($_POST["chris-special"])) {
+                echo $_POST["chris-special"];
+              } else if (isset($_POST["chicken-curry"])) {
+                echo $_POST["chicken-curry"];
+              } else if (isset($_POST["meat-lovers"])) {
+                echo $_POST["meat-lovers"];
+              } else if (isset($_POST["pepperoni"])) {
+                echo $_POST["pepperoni"];
+              } else if (isset($_POST["veggie-pizza"])) {
+                echo $_POST["veggie-pizza"];
+              } else if (isset($_POST["bbq-chicken"])) {
+                echo $_POST["bbq-chicken"];
+              }
+
+              ?></div>
             </div>
+
           </div>
           <div class="step1-container">
             <div class="step1-title">Step 1: Select Size</div>

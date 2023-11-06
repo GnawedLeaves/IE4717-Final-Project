@@ -1254,3 +1254,9 @@ input[type=radio] {
   font-size: 1.5rem;
   ;
 }
+
+.phphiddendiv {
+  display: none;
+  pointer-events: none;
+  opacity: none;
+}

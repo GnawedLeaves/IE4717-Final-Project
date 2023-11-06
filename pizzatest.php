@@ -1,8 +1,9 @@
 <?php
-session_start();
+if (!isset($_SESSION))
+  session_start();
 var_dump($_SESSION);
 $id = session_id();
-echo "<br> Session id in pizza = $id <br>";
+echo "<br> Session id in pizza test = $id <br>";
 ?>
 
 
@@ -292,26 +293,27 @@ echo "<br> Session id in pizza = $id <br>";
             </div>
           </div>
           <div class="ordering-container">
-            <div class="item-container">
+            <form class="item-container" action='handlePizzaClick.php' method='post'>
               <img class="item-img" src="./assets/images/hawaiiwanpizza.png" />
               <div class="item-info-container">
                 <div class="item-info-row">
-                  <div class="item-title">Hawaiian</div>
+                  <div class="item-title" name="Hawaiiandiv">Hawaiian</div>
                 </div>
               </div>
               <div class="item-info-container">
                 <div class="item-info-row">
+                  <input class="phphiddendiv" value="Hawaiian" name="hawaiian" type="text">
                   <div class="item-price"><?php include './php/getHawaiianPrice.php'; ?></div>
                   <button
                     class="item-cta-button"
-                    onclick="changePage('ordering.php')"
+              
                   >
                     Select
                   </button>
                 </div>
               </div>
-            </div>
-            <div class="item-container">
+</form>
+            <form class="item-container" action='handlePizzaClick.php' method='post'>
               <img
                 class="item-img"
                 src="./assets/images/chickengalorepizza.png"
@@ -323,6 +325,7 @@ echo "<br> Session id in pizza = $id <br>";
               </div>
               <div class="item-info-container">
                 <div class="item-info-row">
+                <input class="phphiddendiv" value="Chicken Galore" name="chicken-galore" type="text">
                   <div class="item-price"><?php include './php/getChickenGalorePrice.php'; ?></div>
                   <button
                     class="item-cta-button"
@@ -332,19 +335,20 @@ echo "<br> Session id in pizza = $id <br>";
                   </button>
                 </div>
               </div>
-            </div>
-            <div class="item-container">
+</form>
+<form class="item-container" action='handlePizzaClick.php' method='post'>
               <img
                 class="item-img"
                 src="./assets/images/Chrisspecialpizza.png"
               />
               <div class="item-info-container">
                 <div class="item-info-row">
-                  <div class="item-title">Chris' Special</div>
+                  <div class="item-title">Chris Special</div>
                 </div>
               </div>
               <div class="item-info-container">
                 <div class="item-info-row">
+                <input class="phphiddendiv" value="Chris Special" name="chris-special" type="text">
                   <div class="item-price"><?php include './php/getChrisSpecialPrice.php'; ?></div>
                   <button
                     class="item-cta-button"
@@ -354,8 +358,8 @@ echo "<br> Session id in pizza = $id <br>";
                   </button>
                 </div>
               </div>
-            </div>
-            <div class="item-container">
+</form>
+<form class="item-container" action='handlePizzaClick.php' method='post'>
               <img
                 class="item-img"
                 src="./assets/images/chickencurrypizza.png"
@@ -367,6 +371,7 @@ echo "<br> Session id in pizza = $id <br>";
               </div>
               <div class="item-info-container">
                 <div class="item-info-row">
+                <input class="phphiddendiv" value="Chicken Curry" name="chicken-curry" type="text">
                   <div class="item-price"><?php include './php/getChickenCurryPrice.php'; ?></div>
                   <button
                     class="item-cta-button"
@@ -376,8 +381,8 @@ echo "<br> Session id in pizza = $id <br>";
                   </button>
                 </div>
               </div>
-            </div>
-            <div class="item-container">
+</form>
+<form class="item-container" action='handlePizzaClick.php' method='post'>
               <img class="item-img" src="./assets/images/meatloverspizza.png" />
               <div class="item-info-container">
                 <div class="item-info-row">
@@ -386,6 +391,7 @@ echo "<br> Session id in pizza = $id <br>";
               </div>
               <div class="item-info-container">
                 <div class="item-info-row">
+                <input class="phphiddendiv" value="Meat Lovers" name="meat-lovers" type="text">
                   <div class="item-price"><?php include './php/getMeatLoversPrice.php'; ?></div>
                   <button
                     class="item-cta-button"
@@ -395,8 +401,8 @@ echo "<br> Session id in pizza = $id <br>";
                   </button>
                 </div>
               </div>
-            </div>
-            <div class="item-container">
+</form>
+<form class="item-container" action='handlePizzaClick.php' method='post'>
               <img class="item-img" src="./assets/images/pepperonipizza.png" />
               <div class="item-info-container">
                 <div class="item-info-row">
@@ -405,6 +411,7 @@ echo "<br> Session id in pizza = $id <br>";
               </div>
               <div class="item-info-container">
                 <div class="item-info-row">
+                <input class="phphiddendiv" value="Pepperoni" name="pepperoni" type="text">
                   <div class="item-price"><?php include './php/getPepperoniPrice.php'; ?></div>
                   <button
                     class="item-cta-button"
@@ -414,8 +421,8 @@ echo "<br> Session id in pizza = $id <br>";
                   </button>
                 </div>
               </div>
-            </div>
-            <div class="item-container">
+</form>
+<form class="item-container" action='handlePizzaClick.php' method='post'>
               <img class="item-img" src="./assets/images/veggiepizza.png" />
               <div class="item-info-container">
                 <div class="item-info-row">
@@ -424,6 +431,7 @@ echo "<br> Session id in pizza = $id <br>";
               </div>
               <div class="item-info-container">
                 <div class="item-info-row">
+                <input class="phphiddendiv" value="Veggie Pizza" name="veggie-pizza" type="text">
                   <div class="item-price"><?php include './php/getVeggiePizzaPrice.php'; ?></div>
                   <button
                     class="item-cta-button"
@@ -433,8 +441,8 @@ echo "<br> Session id in pizza = $id <br>";
                   </button>
                 </div>
               </div>
-            </div>
-            <div class="item-container">
+</form>
+<form class="item-container" action='handlePizzaClick.php' method='post'>
               <img class="item-img" src="./assets/images/bbqchickenpizza.png" />
               <div class="item-info-container">
                 <div class="item-info-row">
@@ -443,6 +451,7 @@ echo "<br> Session id in pizza = $id <br>";
               </div>
               <div class="item-info-container">
                 <div class="item-info-row">
+                <input class="phphiddendiv" value="BBQ Chicken" name="bbq-chicken" type="text">
                   <div class="item-price"><?php include './php/getBBQChickenPrice.php'; ?></div>
                   <button
                     class="item-cta-button"
@@ -452,8 +461,8 @@ echo "<br> Session id in pizza = $id <br>";
                   </button>
                 </div>
               </div>
-            </div>
-          </div>
+</form>
+</div>
           <div class="see-more-container">
             <button class="see-more-button">See More >></button>
           </div>
