@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -121,7 +123,7 @@
     </dialog>
 
     <div class="navbar">
-      <a href="index.html">
+      <a href="index.php">
         <div class="navbar-logo-container">
           <div class="navbar-logo-title">Chris' Pizza</div>
           <img class="navbar-logo" src="./assets/images/icon.png" />
@@ -204,7 +206,7 @@
       <div class="catagories-container smaller-catagories-container">
         <div class="smaller-inner-catagory-container">
           <div class="smaller-catagory-container">
-            <a href="pizza.html" class="catagory-link-container">
+            <a href="pizza.php" class="catagory-link-container">
               <img
                 class="smaller-catagory-image"
                 src="./assets/images/hotoffershome.png"
@@ -213,7 +215,7 @@
             </a>
           </div>
           <div class="smaller-catagory-container">
-            <a href="pizza.html" class="catagory-link-container">
+            <a href="pizza.php" class="catagory-link-container">
               <img
                 class="smaller-catagory-image"
                 src="./assets/images/sharingbundleshome.png"
@@ -223,7 +225,7 @@
           </div>
 
           <div class="smaller-catagory-container">
-            <a href="pizza.html" class="catagory-link-container">
+            <a href="pizza.php" class="catagory-link-container">
               <img
                 class="smaller-catagory-image"
                 src="./assets/images/pizzashome.png"
@@ -232,7 +234,7 @@
             </a>
           </div>
           <div class="smaller-catagory-container">
-            <a href="pizza.html" class="catagory-link-container">
+            <a href="pizza.php" class="catagory-link-container">
               <img
                 class="smaller-catagory-image"
                 src="./assets/images/sideshome.png"
@@ -241,7 +243,7 @@
             </a>
           </div>
           <div class="smaller-catagory-container">
-            <a href="pizza.html" class="catagory-link-container">
+            <a href="pizza.php" class="catagory-link-container">
               <img
                 class="smaller-catagory-image"
                 src="./assets/images/drinkshome.png"
@@ -250,7 +252,7 @@
             </a>
           </div>
           <div class="smaller-catagory-container">
-            <a href="pizza.html" class="catagory-link-container">
+            <a href="pizza.php" class="catagory-link-container">
               <img
                 class="smaller-catagory-image"
                 src="./assets/images/sweettreatshome.png"
@@ -293,10 +295,10 @@
               </div>
               <div class="item-info-container">
                 <div class="item-info-row">
-                  <div class="item-price">$29.30</div>
+                  <div class="item-price"><?php include './php/getHawaiianPrice.php'; ?></div>
                   <button
                     class="item-cta-button"
-                    onclick="changePage('ordering.html')"
+                    onclick="changePage('ordering.php')"
                   >
                     Select
                   </button>
@@ -315,10 +317,10 @@
               </div>
               <div class="item-info-container">
                 <div class="item-info-row">
-                  <div class="item-price">$29.30</div>
+                  <div class="item-price"><?php include './php/getChickenGalorePrice.php'; ?></div>
                   <button
                     class="item-cta-button"
-                    onclick="changePage('ordering.html')"
+                    onclick="changePage('ordering.php')"
                   >
                     Select
                   </button>
@@ -337,10 +339,10 @@
               </div>
               <div class="item-info-container">
                 <div class="item-info-row">
-                  <div class="item-price">$29.30</div>
+                  <div class="item-price"><?php include './php/getChrisSpecialPrice.php'; ?></div>
                   <button
                     class="item-cta-button"
-                    onclick="changePage('ordering.html')"
+                    onclick="changePage('ordering.php')"
                   >
                     Select
                   </button>
@@ -359,10 +361,10 @@
               </div>
               <div class="item-info-container">
                 <div class="item-info-row">
-                  <div class="item-price">$29.30</div>
+                  <div class="item-price"><?php include './php/getChickenCurryPrice.php'; ?></div>
                   <button
                     class="item-cta-button"
-                    onclick="changePage('ordering.html')"
+                    onclick="changePage('ordering.php')"
                   >
                     Select
                   </button>
@@ -378,10 +380,10 @@
               </div>
               <div class="item-info-container">
                 <div class="item-info-row">
-                  <div class="item-price">$29.30</div>
+                  <div class="item-price"><?php include './php/getMeatLoversPrice.php'; ?></div>
                   <button
                     class="item-cta-button"
-                    onclick="changePage('ordering.html')"
+                    onclick="changePage('ordering.php')"
                   >
                     Select
                   </button>
@@ -397,10 +399,10 @@
               </div>
               <div class="item-info-container">
                 <div class="item-info-row">
-                  <div class="item-price">$29.30</div>
+                  <div class="item-price"><?php include './php/getPepperoniPrice.php'; ?></div>
                   <button
                     class="item-cta-button"
-                    onclick="changePage('ordering.html')"
+                    onclick="changePage('ordering.php')"
                   >
                     Select
                   </button>
@@ -416,10 +418,10 @@
               </div>
               <div class="item-info-container">
                 <div class="item-info-row">
-                  <div class="item-price">$29.30</div>
+                  <div class="item-price"><?php include './php/getVeggiePizzaPrice.php'; ?></div>
                   <button
                     class="item-cta-button"
-                    onclick="changePage('ordering.html')"
+                    onclick="changePage('ordering.php')"
                   >
                     Select
                   </button>
@@ -435,10 +437,10 @@
               </div>
               <div class="item-info-container">
                 <div class="item-info-row">
-                  <div class="item-price">$29.30</div>
+                  <div class="item-price"><?php include './php/getBBQChickenPrice.php'; ?></div>
                   <button
                     class="item-cta-button"
-                    onclick="changePage('ordering.html')"
+                    onclick="changePage('ordering.php')"
                   >
                     Select
                   </button>

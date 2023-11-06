@@ -22,7 +22,7 @@
     </dialog>
 
     <div class="navbar">
-      <a href="index.html">
+      <a href="index.php">
         <div class="navbar-logo-container">
           <div class="navbar-logo-title">Chris' Pizza</div>
           <img class="navbar-logo" src="./assets/images/icon.png" />
@@ -51,7 +51,7 @@
 
       <div class="ordering-container">
         <div class="ordering-big-container">
-          <a class="back-container" href="pizza.html">
+          <a class="back-container" href="pizza.php">
             <i class="fa-solid fa-arrow-left fa-lg" style="color: #333333"></i>
             <span class="back-span">Back</span>
           </a>

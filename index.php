@@ -1,3 +1,8 @@
+<?php
+session_start();
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -115,7 +120,7 @@
     </dialog>
 
     <div class="navbar">
-      <a href="index.html">
+      <a href="index.php">
         <div class="navbar-logo-container">
           <div class="navbar-logo-title">Chris' Pizza</div>
           <img class="navbar-logo" src="./assets/images/icon.png" />
@@ -149,7 +154,7 @@
             <div class="hero-label-big">30 MINS!</div>
             <button
               class="button-filled hero-button"
-              onclick="changePage('pizza.html')"
+              onclick="changePage('pizza.php')"
             >
               Order Now!
             </button>
@@ -157,7 +162,7 @@
         </div>
         <div class="catagories-container">
           <div class="catagory-container">
-            <a href="pizza.html" class="catagory-link-container">
+            <a href="pizza.php" class="catagory-link-container">
               <img
                 class="catagory-image"
                 src="./assets/images/hotoffershome.png"
@@ -166,7 +171,7 @@
             </a>
           </div>
           <div class="catagory-container">
-            <a href="pizza.html" class="catagory-link-container">
+            <a href="pizza.php" class="catagory-link-container">
               <img
                 class="catagory-image"
                 src="./assets/images/sharingbundleshome.png"
@@ -176,7 +181,7 @@
           </div>
 
           <div class="catagory-container">
-            <a href="pizza.html" class="catagory-link-container">
+            <a href="pizza.php" class="catagory-link-container">
               <img
                 class="catagory-image"
                 src="./assets/images/pizzashome.png"
@@ -185,13 +190,13 @@
             </a>
           </div>
           <div class="catagory-container">
-            <a href="pizza.html" class="catagory-link-container">
+            <a href="pizza.php" class="catagory-link-container">
               <img class="catagory-image" src="./assets/images/sideshome.png" />
               <div class="catagory-caption">Sides</div>
             </a>
           </div>
           <div class="catagory-container">
-            <a href="pizza.html" class="catagory-link-container">
+            <a href="pizza.php" class="catagory-link-container">
               <img
                 class="catagory-image"
                 src="./assets/images/drinkshome.png"
@@ -200,7 +205,7 @@
             </a>
           </div>
           <div class="catagory-container">
-            <a href="pizza.html" class="catagory-link-container">
+            <a href="pizza.php" class="catagory-link-container">
               <img
                 class="catagory-image"
                 src="./assets/images/sweettreatshome.png"
