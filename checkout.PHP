@@ -208,7 +208,7 @@ echo "CART: " . $_SESSION['cart'];
         </div>
         <button
           class="cart-checkout-button"
-          onclick="changePage('checkout.html')"
+          onclick="changePage('checkout.php')"
         >
           Check Out
         </button>

@@ -56,7 +56,7 @@ if (!isset($_SESSION["cart"])) {
 
 
 if (isset($_SESSION['cart'])) {
-  foreach ($_SESSION['cart'] as $cartItem) {
+  foreach ($_SESSION['cart'] as $index => $cartItem) {
     // $id = $cartItem['id'];
     $pizzaName = $cartItem['pizzaName'];
     $pizzaQty = $cartItem['pizzaQty'];
@@ -65,16 +65,64 @@ if (isset($_SESSION['cart'])) {
     $pizzaTopping1Qty = $cartItem['pizzaTopping1Qty'];
     $pizzaTopping2Qty = $cartItem['pizzaTopping2Qty'];
     $pizzaTopping3Qty = $cartItem['pizzaTopping3Qty'];
-    echo "<br/>";
-    echo "Item ID: $id<br>";
-    echo "Pizza Name: $pizzaName<br>";
-    echo "Quantity: $pizzaQty<br>";
-    echo "Size: $pizzaSize<br>";
-    echo "Topping 1: $pizzaTopping1Qty<br>";
-    echo "Topping 2: $pizzaTopping2Qty<br>";
-    echo "Topping 3: $pizzaTopping3Qty<br>";
-    echo "Subtotal: $pizzaQtySubtotal<br>";
-    echo "<br/>";
+
+    $pizzaAddOn1Qty = $cartItem['pizzaAddOn1Qty'];
+    $pizzaAddOn2Qty = $cartItem['pizzaAddOn2Qty'];
+    $pizzaAddOn3Qty = $cartItem['pizzaAddOn3Qty'];
+
+    $pizzaAddOn1Subtotal = $cartItem['pizzaAddOn1Subtotal'];
+    $pizzaAddOn2Subtotal = $cartItem['pizzaAddOn2Subtotal'];
+    $pizzaAddOn3Subtotal = $cartItem['pizzaAddOn3Subtotal'];
+
+    $phpTotal = $cartItem['phpTotal'];
+
+    if (isset($pizzaName)) {
+      echo "<br/>";
+      echo "Array Index: $index<br>";
+      echo "Item ID: $id<br>";
+      echo "Pizza Name: $pizzaName<br>";
+      echo "Quantity: $pizzaQty<br>";
+      echo "Size: $pizzaSize<br>";
+      echo "Topping 1: $pizzaTopping1Qty<br>";
+      echo "Topping 2: $pizzaTopping2Qty<br>";
+      echo "Topping 3: $pizzaTopping3Qty<br>";
+      echo "Subtotal: $pizzaQtySubtotal<br>";
+      echo "<br/>";
+    } else {
+      if (isset($pizzaAddOn1Qty) && $pizzaAddOn1Qty > 0) {
+        echo "<br/>";
+        echo "Array Index: $index<br>";
+        echo "Item ID: $id<br>";
+        echo "Add on Name: 1<br>";
+        echo "Quantity: $pizzaAddOn1Qty<br>";
+        echo "Subtotal: $pizzaAddOn1Subtotal<br>";
+        echo "<br/>";
+
+      }
+      if (isset($pizzaAddOn2Qty) && $pizzaAddOn2Qty > 0) {
+        echo "<br/>";
+        echo "Array Index: $index<br>";
+        echo "Item ID: $id<br>";
+        echo "Add on Name: 2<br>";
+        echo "Quantity: $pizzaAddOn2Qty<br>";
+        echo "Subtotal: $pizzaAddOn2Subtotal<br>";
+        echo "<br/>";
+
+      }
+      if (isset($pizzaAddOn3Qty) && $pizzaAddOn3Qty > 0) {
+        echo "<br/>";
+        echo "Array Index: $index<br>";
+        echo "Item ID: $id<br>";
+        echo "Add on Name: 3<br>";
+        echo "Quantity: $pizzaAddOn3Qty<br>";
+        echo "Subtotal: $pizzaAddOn3Subtotal<br>";
+        echo "<br/>";
+
+      }
+
+
+    }
+
   }
 } else {
   echo 'cart is empty';
@@ -236,40 +284,112 @@ if (isset($_SESSION['cart'])) {
           onclick="hideCart()"
         ></i>
         <div class="cart-title">Cart</div>
-        <div class="cart-orders-container">
-          <div class="cart-order-container">
-            <div class="cart-item-container">
-              <div class="cart-order-title">1x Chocolate Waffle</div>
-              <div class="cart-order-subtotal">$19.90</div>
-            </div>
+        
+        <?php
 
-            <div class="cart-actions-container">
-              <div class="cart-actions-subcontainer">
-                <i
-                  class="fa-regular fa-pen-to-square cart-action-icon fa-lg"
-                ></i>
-                <i class="fa-regular fa-trash-can cart-action-icon fa-lg"></i>
-              </div>
-            </div>
-          </div>
-          <?php
-          if (isset($_SESSION['cart'])) {
-            foreach ($_SESSION['cart'] as $cartItem) {
-              // $id = $cartItem['id'];
-              $pizzaName = $cartItem['pizzaName'];
-              $pizzaQty = $cartItem['pizzaQty'];
-              $pizzaQtySubtotal = $cartItem['pizzaQtySubtotal'];
-              echo "Item ID: $id<br>";
-              echo "Pizza Name: $pizzaName<br>";
-              echo "Quantity: $pizzaQty<br>";
-              echo "Subtotal: $pizzaQtySubtotal<br>";
+        if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0) {
+          echo '<div class="cart-orders-container">';
+          foreach ($_SESSION['cart'] as $index => $cartItem) {
+            // $id = $cartItem['id'];
+            $pizzaName = $cartItem['pizzaName'];
+            $pizzaQty = $cartItem['pizzaQty'];
+            $pizzaQtySubtotal = $cartItem['pizzaQtySubtotal'];
+            $pizzaSize = $cartItem['pizzaSize'];
+            $pizzaTopping1Qty = $cartItem['pizzaTopping1Qty'];
+            $pizzaTopping2Qty = $cartItem['pizzaTopping2Qty'];
+            $pizzaTopping3Qty = $cartItem['pizzaTopping3Qty'];
+
+            $pizzaAddOn1Qty = $cartItem['pizzaAddOn1Qty'];
+            $pizzaAddOn2Qty = $cartItem['pizzaAddOn2Qty'];
+            $pizzaAddOn3Qty = $cartItem['pizzaAddOn3Qty'];
+            $pizzaAddOn1Subtotal = $cartItem['pizzaAddOn1Subtotal'];
+            $pizzaAddOn2Subtotal = $cartItem['pizzaAddOn2Subtotal'];
+            $pizzaAddOn3Subtotal = $cartItem['pizzaAddOn3Subtotal'];
+
+            $phpTotal = $cartItem['phpTotal'];
+            if (isset($pizzaName)) {
+              // echo "<br/>";
+              // echo "Array Index: $index<br>";
+              // echo "<br/>";
+              echo '<form method="POST" action="./php/deleteCartItem.php" class="cart-order-container">';
+              echo '<div class="cart-item-container">';
+              // echo "Array Index: $index<br>";
+              echo '<input class="phphiddendiv" name="index" value="' . $index . '">';
+              echo '<div class="cart-order-title">' . $pizzaQty . 'x ' . ucfirst($pizzaSize) . " " . $pizzaName . '</div>';
+              echo '<div class="cart-order-subtotal" id = >$' . number_format($phpTotal, 2) . '</div>';
+              echo '</div>';
+
+              echo '<div class="cart-more-details-container">';
+              if ($pizzaTopping1Qty != 1 || $pizzaTopping2Qty != 1 || $pizzaTopping3Qty != 1) {
+                echo '<div class="cart-toppings-container">';
+                echo '<b>Toppings:</b>';
+                if ($pizzaTopping1Qty != 1) {
+                  echo '<div class="cart-more-details">' . $pizzaTopping1Qty . 'x Pineapple</div>';
+                }
+                if ($pizzaTopping2Qty != 1) {
+                  echo '<div class="cart-more-details">' . $pizzaTopping2Qty . 'x Ham</div>';
+                }
+                if ($pizzaTopping3Qty != 1) {
+                  echo '<div class="cart-more-details">' . $pizzaTopping3Qty . 'x Cheese</div>';
+                }
+                echo '</div>';
+              }
+              if ($pizzaAddOn1Qty > 0 || $pizzaAddOn2Qty > 0 || $pizzaAddOn3Qty > 0) {
+                echo '<div class="cart-addons-container">';
+                echo '<b>Add Ons:</b>';
+                if (isset($pizzaAddOn1Qty) && $pizzaAddOn1Qty > 0) {
+                  echo '<div class="cart-addon">' . $pizzaAddOn1Qty . 'x Snack Platter ($' . number_format($pizzaAddOn1Subtotal, 2) . ')</div>';
+                }
+                if (isset($pizzaAddOn2Qty) && $pizzaAddOn2Qty > 0) {
+                  echo '<div class="cart-addon">' . $pizzaAddOn2Qty . 'x 10pc Drumlets ($' . number_format($pizzaAddOn2Subtotal, 2) . ')</div>';
+                }
+                if (isset($pizzaAddOn3Qty) && $pizzaAddOn3Qty > 0) {
+                  echo '<div class="cart-addon">' . $pizzaAddOn3Qty . 'x Chocolate Waffle ($' . number_format($pizzaAddOn3Subtotal, 2) . ')</div>';
+                }
+
+                echo '</div>';
+              }
+              echo '</div>';
+
+
+              echo '<div class="cart-actions-container">';
+              echo '<div class="cart-actions-subcontainer">';
+              echo '<i class="fa-regular fa-pen-to-square cart-action-icon fa-lg"></i>';
+
+              echo '<button class="delete-cart-input" type="submit" name="remove" value=""><i class="fa-regular fa-trash-can cart-action-icon fa-xl"></i></button>';
+              echo '</div>';
+              echo '</div>';
+              echo '</form>';
             }
-          } else {
-            echo 'cart is empty';
           }
-          ?>
-        </div>
-        <div class="totals-container">
+          echo ' </div>';
+          echo '<div class="totals-container">';
+          echo '<div class="cart-servicefee-container">';
+          echo '<div class="servicefee-title">Service Fee (10%):</div>';
+          echo '<div class="servicefee-amount">$7.90</div>';
+          echo '</div>';
+          echo '<div class="cart-servicefee-container">';
+          echo '<div class="servicefee-title">Delivery Fee:</div>';
+          echo '<div class="servicefee-amount">$3.90</div>';
+          echo '</div>';
+          echo '<div class="cart-servicefee-container">';
+          echo '<div class="cart-grand-total-title">Total:</div>';
+          echo '<div class="cart-grand-total-title">$50.90</div>';
+          echo '</div>';
+          echo '</div>';
+          echo '<button class="cart-checkout-button" onclick="changePage(\'checkout.php\')">';
+          echo 'Check Out';
+          echo '</button>';
+
+
+
+        } else {
+          echo '<h1>Cart Is Empty</h1>';
+        }
+        ?>
+
+       
+        <!-- <div class="totals-container">
           <div class="cart-servicefee-container">
             <div class="servicefee-title">Service Fee (10%):</div>
             <div class="servicefee-amount">$7.90</div>
@@ -285,10 +405,10 @@ if (isset($_SESSION['cart'])) {
         </div>
         <button
           class="cart-checkout-button"
-          onclick="changePage('checkout.html')"
+          onclick="changePage('checkout.php')"
         >
           Check Out
-        </button>
+        </button> -->
       </div>
 
       <div class="page-title-container">

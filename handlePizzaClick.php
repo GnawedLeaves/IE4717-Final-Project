@@ -29,6 +29,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $pizzaAddOn1Qty = $_POST['pizzaAddOn1Qty'];
   $pizzaAddOn2Qty = $_POST['pizzaAddOn2Qty'];
   $pizzaAddOn3Qty = $_POST['pizzaAddOn3Qty'];
+  $pizzaAddOn1Subtotal = $_POST['pizzaAddOn1Subtotal'];
+  $pizzaAddOn2Subtotal = $_POST['pizzaAddOn2Subtotal'];
+  $pizzaAddOn3Subtotal = $_POST['pizzaAddOn3Subtotal'];
   $phpTotal = $_POST['phpTotal'];
 
 
@@ -50,9 +53,57 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'pizzaTopping1Qty' => $pizzaTopping1Qty,
         'pizzaTopping2Qty' => $pizzaTopping2Qty,
         'pizzaTopping3Qty' => $pizzaTopping3Qty,
-        'pizzaQtySubtotal' => $pizzaQtySubtotal
+        'pizzaQtySubtotal' => $pizzaQtySubtotal,
+        'pizzaAddOn1Qty' => $pizzaAddOn1Qty,
+        'pizzaAddOn1Subtotal' => $pizzaAddOn1Subtotal,
+        'pizzaAddOn2Qty' => $pizzaAddOn2Qty,
+        'pizzaAddOn2Subtotal' => $pizzaAddOn2Subtotal,
+        'pizzaAddOn3Qty' => $pizzaAddOn3Qty,
+        'pizzaAddOn3Subtotal' => $pizzaAddOn3Subtotal,
+        'phpTotal' => $phpTotal
       )
     );
+
+    // // check if they added a add on, if have then if qty > 0 then you add into cart if not just ignore
+    // if (isset($_POST['pizzaAddOn1Qty'])) {
+    //   if ($_POST['pizzaAddOn1Qty'] > 0) {
+    //     array_push(
+    //       $_SESSION['cart'],
+    //       array(
+    //         'id' => $id,
+    //         'pizzaAddOnName' => '1',
+    //         'pizzaAddOn1Qty' => $pizzaAddOn1Qty,
+    //         'pizzaAddOn1Subtotal' => $pizzaAddOn1Subtotal
+    //       )
+    //     );
+    //   }
+    // }
+    // if (isset($_POST['pizzaAddOn2Qty'])) {
+    //   if ($_POST['pizzaAddOn2Qty'] > 0) {
+    //     array_push(
+    //       $_SESSION['cart'],
+    //       array(
+    //         'id' => $id,
+    //         'pizzaAddOnName' => '2',
+    //         'pizzaAddOn2Qty' => $pizzaAddOn2Qty,
+    //         'pizzaAddOn2Subtotal' => $pizzaAddOn2Subtotal
+    //       )
+    //     );
+    //   }
+    // }
+    // if (isset($_POST['pizzaAddOn3Qty'])) {
+    //   if ($_POST['pizzaAddOn3Qty'] > 0) {
+    //     array_push(
+    //       $_SESSION['cart'],
+    //       array(
+    //         'id' => $id,
+    //         'pizzaAddOnName' => '3',
+    //         'pizzaAddOn3Qty' => $pizzaAddOn3Qty,
+    //         'pizzaAddOn3Subtotal' => $pizzaAddOn3Subtotal
+    //       )
+    //     );
+    //   }
+    // }
     header('Location: pizza.php');
     exit();
 
@@ -537,10 +588,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <input class="phphiddendiv" name="pizzaTopping2Qty" id="pizzaTopping2Qty" value="1" required>
             <input class="phphiddendiv" name="pizzaTopping3Qty" id="pizzaTopping3Qty" value="1" required>
 
-            <input class="phphiddendiv" name="pizzaAddOn1Qty" id="pizzaAddOn1Qty" value="0" required>
-            <input class="phphiddendiv" name="pizzaAddOn2Qty" id="pizzaAddOn2Qty" value="0" required>
-            <input class="phphiddendiv" name="pizzaAddOn3Qty" id="pizzaAddOn3Qty" value="0" required>
-            <input class="phphiddendiv" name="phpTotal" id="phpTotal" value="1" required>
+
+            
+            <input class="phphiddendiv" name="pizzaAddOn1Qty" id="pizzaAddOn1Qty" value="" >
+            <input class="phphiddendiv" name="pizzaAddOn2Qty" id="pizzaAddOn2Qty" value="" >
+            <input class="phphiddendiv" name="pizzaAddOn3Qty" id="pizzaAddOn3Qty" value="" >
+            <input class="phphiddendiv" name="pizzaAddOn1Subtotal" id="pizzaAddOn1Subtotal" value="" >
+            <input class="phphiddendiv" name="pizzaAddOn2Subtotal" id="pizzaAddOn2Subtotal" value="" >
+            <input class="phphiddendiv" name="pizzaAddOn3Subtotal" id="pizzaAddOn3Subtotal" value="" >
+            <input class="phphiddendiv" name="phpTotal" id="phpTotal" value="" required>
                   <input
               class="ordering-addtocart-button"
               type="submit" name="addToCart" value="Add to Cart" 
@@ -839,6 +895,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
           let addonQty2 = document.getElementById("addon2-qty-input").value;
           let addonQty3 = document.getElementById("addon3-qty-input").value;
      
+          //setting addon hidden input for php if the customer added add on then it will set the value 
+          if(addonQty1 >= 1){
+            document.getElementById('pizzaAddOn1Subtotal').value = addonSubtotal1;
+            document.getElementById('pizzaAddOn1Qty').value =addonQty1;
+            
+          }
+          if (addonQty2 >= 1){
+            document.getElementById('pizzaAddOn2Subtotal').value = addonSubtotal2;
+            document.getElementById('pizzaAddOn2Qty').value =addonQty2;
+
+          }
+          if (addonQty3 >= 1){
+            document.getElementById('pizzaAddOn3Subtotal').value = addonSubtotal3;
+            document.getElementById('pizzaAddOn3Qty').value =addonQty3;
+
+          }
+
           totalForCart =
             qtySubtotal +
             (addonQty1 >= 1 ? addonSubtotal1 : 0) +
@@ -847,6 +920,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
           document.getElementById("subtotal-bar-amount").innerHTML =
             "$" + totalForCart.toFixed(2);
+          document.getElementById('phpTotal').value = totalForCart;
         }
 
         function handleAddtocart() {}
