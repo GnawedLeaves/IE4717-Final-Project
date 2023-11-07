@@ -39,12 +39,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $pizzaName = $_POST['pizzaName'];
     $pizzaQty = $_POST['pizzaQty'];
     $pizzaQtySubtotal = $_POST['pizzaQtySubtotal'];
+    $pizzaSize = $_POST['pizzaSize'];
     array_push(
       $_SESSION['cart'],
       array(
-
+        'id' => $id,
+        'pizzaSize' => $pizzaSize,
         'pizzaName' => $pizzaName,
         'pizzaQty' => $pizzaQty,
+        'pizzaTopping1Qty' => $pizzaTopping1Qty,
+        'pizzaTopping2Qty' => $pizzaTopping2Qty,
+        'pizzaTopping3Qty' => $pizzaTopping3Qty,
         'pizzaQtySubtotal' => $pizzaQtySubtotal
       )
     );
@@ -52,11 +57,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit();
 
   }
-
-
-  echo "SESSION: " . var_dump($_SESSION);
-
-  // header('Location: pizza.php');
 }
 
 
@@ -509,13 +509,34 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
           </div>
           <form class="addtocart-button-container" method='post' >
-            <input class="phphiddendiv" name="pizzaName" id="pizzaName" value="pizzaName 12344444" required>
-            <input class="phphiddendiv" name="pizzaSize" id="pizzaSize" value="pizzaSize Large" required>
-            <input class="phphiddendiv" name="pizzaQty" id="pizzaQty" value="pizzaQty 5" required>
-            <input class="phphiddendiv" name="pizzaQtySubtotal" id="pizzaQtySubtotal" value="1" required>
+            <input class="phphiddendiv" name="pizzaName" id="pizzaName" value="             
+             <?php
+             if (isset($_POST["hawaiian"])) {
+               echo $_POST["hawaiian"];
+             } else if (isset($_POST["chicken-galore"])) {
+               echo $_POST["chicken-galore"];
+             } else if (isset($_POST["chris-special"])) {
+               echo $_POST["chris-special"];
+             } else if (isset($_POST["chicken-curry"])) {
+               echo $_POST["chicken-curry"];
+             } else if (isset($_POST["meat-lovers"])) {
+               echo $_POST["meat-lovers"];
+             } else if (isset($_POST["pepperoni"])) {
+               echo $_POST["pepperoni"];
+             } else if (isset($_POST["veggie-pizza"])) {
+               echo $_POST["veggie-pizza"];
+             } else if (isset($_POST["bbq-chicken"])) {
+               echo $_POST["bbq-chicken"];
+             }
+
+             ?>" required>
+            <input class="phphiddendiv" name="pizzaSize" id="pizzaSize" value="" required>
+            <input class="phphiddendiv" name="pizzaQty" id="pizzaQty" value="" required>
+            <input class="phphiddendiv" name="pizzaQtySubtotal" id="pizzaQtySubtotal" value="" required>
             <input class="phphiddendiv" name="pizzaTopping1Qty" id="pizzaTopping1Qty" value="1" required>
             <input class="phphiddendiv" name="pizzaTopping2Qty" id="pizzaTopping2Qty" value="1" required>
             <input class="phphiddendiv" name="pizzaTopping3Qty" id="pizzaTopping3Qty" value="1" required>
+
             <input class="phphiddendiv" name="pizzaAddOn1Qty" id="pizzaAddOn1Qty" value="0" required>
             <input class="phphiddendiv" name="pizzaAddOn2Qty" id="pizzaAddOn2Qty" value="0" required>
             <input class="phphiddendiv" name="pizzaAddOn3Qty" id="pizzaAddOn3Qty" value="0" required>
@@ -665,9 +686,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             calculateTotalSubtotalForCart();
           } else {
+            //for setting hidden input for php
+            if (subtotalElementId === "customise-item1-subtotal"){
+              document.getElementById('pizzaTopping1Qty').value = qty;
+            }
+            else if (subtotalElementId === "customise-item2-subtotal"){
+              document.getElementById('pizzaTopping2Qty').value = qty;
+            }
+            else if(subtotalElementId === "customise-item3-subtotal"){
+              document.getElementById('pizzaTopping3Qty').value = qty;
+            }
             price = 1.0;
             subtotal = ((qty - 1) * price).toFixed(2);
-
             if (subtotalElement) {
               if (qty === 0 || qty === 1) {
                 subtotalElement.innerHTML = "$0.00";
@@ -702,8 +732,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         function toggleSizeButtons(e) {
           buttonId = e.id;
-
           if (buttonId === "size-large-button") {
+            document.getElementById('pizzaSize').value = 'large'
             if (
               !regularButton.classList.contains(
                 "ordering-catagory-container-selected"
@@ -721,6 +751,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
               );
             }
           } else if (buttonId === "size-regular-button") {
+            document.getElementById('pizzaSize').value = 'regular'
             if (
               !largeButton.classList.contains(
                 "ordering-catagory-container-selected"
@@ -760,7 +791,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             "ordering-catagory-container-selected"
           )[0];
           let qtySubtotalTitle = document.getElementById("qty-subtotal-title");
-
           let qtyElement = document.getElementById("qty-input");
 
           if (selectedSizeElementText) {
@@ -774,6 +804,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             subtotal = (sizePrice + item1Price + item2Price + item3Price) * qty;
             qtySubtotalTitle.innerHTML = "$" + subtotal.toFixed(2);
+
+            //setting the values of the hidden inputs for php
+            document.getElementById('pizzaQty').value = qty;
+            document.getElementById('pizzaQtySubtotal').value = subtotal;
             calculateTotalSubtotalForCart(subtotal);
           } else {
             alert("You have not selected a size!");

@@ -10,45 +10,47 @@ if (!isset($_SESSION["cart"])) {
   $_SESSION['cart'] = array();
 }
 
-var_dump($_SESSION['cart']);
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+// var_dump($_SESSION['cart']);
+// if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-  $pizzaName = $_POST['pizzaName'];
-  $pizzaQty = $_POST['pizzaQty'];
-  $pizzaQtySubtotal = $_POST['pizzaQtySubtotal'];
-  $pizzaTopping1Qty = $_POST['pizzaTopping1Qty'];
-  $pizzaTopping2Qty = $_POST['pizzaTopping2Qty'];
-  $pizzaTopping3Qty = $_POST['pizzaTopping3Qty'];
-  $pizzaAddOn1Qty = $_POST['pizzaAddOn1Qty'];
-  $pizzaAddOn2Qty = $_POST['pizzaAddOn2Qty'];
-  $pizzaAddOn3Qty = $_POST['pizzaAddOn3Qty'];
-  $phpTotal = $_POST['phpTotal'];
-
-
-  $id = session_id();
-  echo "Session id in pizza test = $id <br>";
-
-  if (isset($_POST['pizzaName']) && isset($_POST['pizzaQty']) && isset($_POST['pizzaQtySubtotal'])) {
-    $pizzaName = $_POST['pizzaName'];
-    $pizzaQty = $_POST['pizzaQty'];
-    $pizzaQtySubtotal = $_POST['pizzaQtySubtotal'];
-    array_push(
-      $_SESSION['cart'],
-      array(
-
-        'pizzaName' => $pizzaName,
-        'pizzaQty' => $pizzaQty,
-        'pizzaQtySubtotal' => $pizzaQtySubtotal
-      )
-    );
-
-  }
+// $pizzaName = $_POST['pizzaName'];
+// $pizzaQty = $_POST['pizzaQty'];
+// $pizzaSize = $_POST['pizzaSize'];
+// $pizzaQtySubtotal = $_POST['pizzaQtySubtotal'];
+// $pizzaTopping1Qty = $_POST['pizzaTopping1Qty'];
+// $pizzaTopping2Qty = $_POST['pizzaTopping2Qty'];
+// $pizzaTopping3Qty = $_POST['pizzaTopping3Qty'];
+// $pizzaAddOn1Qty = $_POST['pizzaAddOn1Qty'];
+// $pizzaAddOn2Qty = $_POST['pizzaAddOn2Qty'];
+// $pizzaAddOn3Qty = $_POST['pizzaAddOn3Qty'];
+// $phpTotal = $_POST['phpTotal'];
 
 
-  echo "SESSION: " . var_dump($_SESSION);
-  unset($_POST);
-  header('Location: pizza.php');
-}
+//   $id = session_id();
+//   echo "Session id in pizza test = $id <br>";
+
+//   if (isset($_POST['pizzaName']) && isset($_POST['pizzaQty']) && isset($_POST['pizzaQtySubtotal']) && isset($_POST['pizzaSize'])) {
+//     $pizzaName = $_POST['pizzaName'];
+//     $pizzaQty = $_POST['pizzaQty'];
+//     $pizzaQtySubtotal = $_POST['pizzaQtySubtotal'];
+//     $pizzaSize = $_POST['pizzaSize'];
+//     array_push(
+//       $_SESSION['cart'],
+//       array(
+//         'pizzaSize' => $pizzaSize,
+//         'pizzaName' => $pizzaName,
+//         'pizzaQty' => $pizzaQty,
+//         'pizzaQtySubtotal' => $pizzaQtySubtotal
+//       )
+//     );
+
+//   }
+
+
+//   echo "SESSION: " . var_dump($_SESSION);
+//   unset($_POST);
+//   header('Location: pizza.php');
+// }
 
 
 
@@ -59,10 +61,20 @@ if (isset($_SESSION['cart'])) {
     $pizzaName = $cartItem['pizzaName'];
     $pizzaQty = $cartItem['pizzaQty'];
     $pizzaQtySubtotal = $cartItem['pizzaQtySubtotal'];
+    $pizzaSize = $cartItem['pizzaSize'];
+    $pizzaTopping1Qty = $cartItem['pizzaTopping1Qty'];
+    $pizzaTopping2Qty = $cartItem['pizzaTopping2Qty'];
+    $pizzaTopping3Qty = $cartItem['pizzaTopping3Qty'];
+    echo "<br/>";
     echo "Item ID: $id<br>";
     echo "Pizza Name: $pizzaName<br>";
     echo "Quantity: $pizzaQty<br>";
+    echo "Size: $pizzaSize<br>";
+    echo "Topping 1: $pizzaTopping1Qty<br>";
+    echo "Topping 2: $pizzaTopping2Qty<br>";
+    echo "Topping 3: $pizzaTopping3Qty<br>";
     echo "Subtotal: $pizzaQtySubtotal<br>";
+    echo "<br/>";
   }
 } else {
   echo 'cart is empty';
