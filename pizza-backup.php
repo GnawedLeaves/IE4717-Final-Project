@@ -138,7 +138,7 @@ echo "<br> Session id in pizza = $id <br>";
           <a href="#" class="navbarItem">Menu</a>
           <a href="#" class="navbarItem">Offers</a>
           <a href="#" class="navbarItem">Your Orders</a>
-          <a href="stores.html" class="navbarItem">Stores</a>
+          <a href="stores.php" class="navbarItem">Stores</a>
           <a href="#" class="navbarItem">Support</a>
         </div>
 
@@ -191,7 +191,7 @@ echo "<br> Session id in pizza = $id <br>";
           </div>
           <div class="cart-servicefee-container">
             <div class="cart-grand-total-title">Total:</div>
-            <div class="cart-grand-total-title">$50.90</div>
+            <div class="cart-grand-total-title">$0.00</div>
           </div>
         </div>
         <button

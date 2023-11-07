@@ -31,7 +31,7 @@
           <a href="#" class="navbarItem">Menu</a>
           <a href="#" class="navbarItem">Offers</a>
           <a href="#" class="navbarItem">Your Orders</a>
-          <a href="stores.html" class="navbarItem">Stores</a>
+          <a href="stores.php" class="navbarItem">Stores</a>
           <a href="#" class="navbarItem">Support</a>
         </div>
 

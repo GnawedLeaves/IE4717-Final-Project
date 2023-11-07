@@ -259,7 +259,7 @@ if (isset($_SESSION['cart'])) {
           <a href="#" class="navbarItem">Menu</a>
           <a href="#" class="navbarItem">Offers</a>
           <a href="#" class="navbarItem">Your Orders</a>
-          <a href="stores.html" class="navbarItem">Stores</a>
+          <a href="stores.php" class="navbarItem">Stores</a>
           <a href="#" class="navbarItem">Support</a>
         </div>
 
@@ -366,7 +366,7 @@ if (isset($_SESSION['cart'])) {
           echo '<div class="totals-container">';
           echo '<div class="cart-servicefee-container">';
           echo '<div class="servicefee-title">Service Fee (10%):</div>';
-          echo '<div class="servicefee-amount">$7.90</div>';
+          echo '<div class="servicefee-amount" id="servicefee-title">$0.00</div>';
           echo '</div>';
           echo '<div class="cart-servicefee-container">';
           echo '<div class="servicefee-title">Delivery Fee:</div>';
@@ -374,7 +374,7 @@ if (isset($_SESSION['cart'])) {
           echo '</div>';
           echo '<div class="cart-servicefee-container">';
           echo '<div class="cart-grand-total-title">Total:</div>';
-          echo '<div class="cart-grand-total-title">$50.90</div>';
+          echo '<div class="cart-grand-total-title" id="cart-grand-total-title-price">$0.00</div>';
           echo '</div>';
           echo '</div>';
           echo '<button class="cart-checkout-button" onclick="changePage(\'checkout.php\')">';
@@ -400,7 +400,7 @@ if (isset($_SESSION['cart'])) {
           </div>
           <div class="cart-servicefee-container">
             <div class="cart-grand-total-title">Total:</div>
-            <div class="cart-grand-total-title">$50.90</div>
+            <div class="cart-grand-total-title">$0.00</div>
           </div>
         </div>
         <button
@@ -780,17 +780,47 @@ if (isset($_SESSION['cart'])) {
           }
         }
 
+        function cleanUpStringToFloat(input) {
+  return parseFloat(input.replace(/[^\d.]/g, ""));
+}
+
+
+        //CART FUNCTIONS
+
         let cart = document.getElementById("cart");
         function showCart() {
-          // cart.style.display = "flex";
+         
           cart.style.transform = "translate(0%, -50%)";
         }
 
         function hideCart() {
-          // cart.style.display = "none";
+          
           cart.style.transform = "translate(100%, -50%)";
         }
+        getCartTotal();
+function getCartTotal() {
+  let cartTotal = 0;
+  let subtotalElements = document.getElementsByClassName("cart-order-subtotal");
+  Array.from(subtotalElements).forEach((element) => {
+    console.log(cleanUpStringToFloat(element.innerHTML));
+    cartTotal += cleanUpStringToFloat(element.innerHTML);
+  });
+  console.log(cartTotal);
+
+  cartTotal += cartTotal * 0.1;
+  document.getElementById("servicefee-title").innerHTML =
+    "$" + (cartTotal * 0.1).toFixed(2);
+  cartTotal += 3.9;
+  document.getElementById("cart-grand-total-title-price").innerHTML =
+    "$" + cartTotal.toFixed(2);
+}
+
+
+
+
+        
       </script>
+      <script src="script.js"></script>
       <script
         src="https://kit.fontawesome.com/0ef6f85575.js"
         crossorigin="anonymous"

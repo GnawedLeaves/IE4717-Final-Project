@@ -1,16 +1,15 @@
 <?php
-if (!isset($_SESSION))
-  session_start();
+session_start();
+
 $id = session_id();
 echo "Session id in pizza test = $id <br>";
 
 
 
-if (isset($_SESSION["cart"])) {
+if (!isset($_SESSION["cart"])) {
   $_SESSION['cart'] = array();
 }
-echo "SESSION: " . var_dump($_SESSION);
-echo "CART: " . $_SESSION['cart'];
+
 
 
 ?>
@@ -150,15 +149,12 @@ echo "CART: " . $_SESSION['cart'];
           <a href="#" class="navbarItem">Menu</a>
           <a href="#" class="navbarItem">Offers</a>
           <a href="#" class="navbarItem">Your Orders</a>
-          <a href="stores.html" class="navbarItem">Stores</a>
+          <a href="stores.php" class="navbarItem">Stores</a>
           <a href="#" class="navbarItem">Support</a>
         </div>
 
         <div class="cart-profile-container">
-          <i
-            class="nav-icon fa-solid fa-cart-shopping fa-xl"
-            onclick="showCart()"
-          ></i>
+ 
           <button
             class="button-filled join-button"
             onclick="openDialog('sign-up-dialog')"
@@ -168,51 +164,7 @@ echo "CART: " . $_SESSION['cart'];
         </div>
       </div>
 
-      <div class="cart-container" id="cart">
-        <i
-          class="fa-solid fa-xmark fa-xl"
-          id="cart-close-icon"
-          onclick="hideCart()"
-        ></i>
-        <div class="cart-title">Cart</div>
-        <div class="cart-orders-container">
-          <div class="cart-order-container">
-            <div class="cart-item-container">
-              <div class="cart-order-title">1x Chocolate Waffle</div>
-              <div class="cart-order-subtotal">$19.90</div>
-            </div>
 
-            <div class="cart-actions-container">
-              <div class="cart-actions-subcontainer">
-                <i
-                  class="fa-regular fa-pen-to-square cart-action-icon fa-lg"
-                ></i>
-                <i class="fa-regular fa-trash-can cart-action-icon fa-lg"></i>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="totals-container">
-          <div class="cart-servicefee-container">
-            <div class="servicefee-title">Service Fee (10%):</div>
-            <div class="servicefee-amount">$7.90</div>
-          </div>
-          <div class="cart-servicefee-container">
-            <div class="servicefee-title">Delivery Fee:</div>
-            <div class="servicefee-amount">$3.90</div>
-          </div>
-          <div class="cart-servicefee-container">
-            <div class="cart-grand-total-title">Total:</div>
-            <div class="cart-grand-total-title">$50.90</div>
-          </div>
-        </div>
-        <button
-          class="cart-checkout-button"
-          onclick="changePage('checkout.php')"
-        >
-          Check Out
-        </button>
-      </div>
 
       <div class="page-title-container">
         <div class="page-title">Review Your Order</div>
@@ -331,39 +283,112 @@ echo "CART: " . $_SESSION['cart'];
         <div class="checkout-container-right">
           <div class="cart-container-checkout" id="cart">
             <div class="cart-title-checkout">Cart</div>
-            <div class="cart-orders-container">
-              <div class="cart-order-container">
-                <div class="cart-item-container">
-                  <div class="cart-order-title">1x Chocolate Waffle</div>
-                  <div class="cart-order-subtotal">$19.90</div>
-                </div>
+            <?php
 
-                <div class="cart-actions-container">
-                  <div class="cart-actions-subcontainer">
-                    <i
-                      class="fa-regular fa-pen-to-square cart-action-icon fa-lg"
-                    ></i>
-                    <i
-                      class="fa-regular fa-trash-can cart-action-icon fa-lg"
-                    ></i>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="totals-container">
-              <div class="cart-servicefee-container">
-                <div class="servicefee-title">Service Fee (10%):</div>
-                <div class="servicefee-amount">$7.90</div>
-              </div>
-              <div class="cart-servicefee-container">
-                <div class="servicefee-title">Delivery Fee:</div>
-                <div class="servicefee-amount">$3.90</div>
-              </div>
-              <div class="cart-servicefee-container">
-                <div class="cart-grand-total-title">Total:</div>
-                <div class="cart-grand-total-title">$50.90</div>
-              </div>
-            </div>
+            if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0) {
+              echo '<div class="cart-orders-container">';
+              foreach ($_SESSION['cart'] as $index => $cartItem) {
+                // $id = $cartItem['id'];
+                $pizzaName = $cartItem['pizzaName'];
+                $pizzaQty = $cartItem['pizzaQty'];
+                $pizzaQtySubtotal = $cartItem['pizzaQtySubtotal'];
+                $pizzaSize = $cartItem['pizzaSize'];
+                $pizzaTopping1Qty = $cartItem['pizzaTopping1Qty'];
+                $pizzaTopping2Qty = $cartItem['pizzaTopping2Qty'];
+                $pizzaTopping3Qty = $cartItem['pizzaTopping3Qty'];
+
+                $pizzaAddOn1Qty = $cartItem['pizzaAddOn1Qty'];
+                $pizzaAddOn2Qty = $cartItem['pizzaAddOn2Qty'];
+                $pizzaAddOn3Qty = $cartItem['pizzaAddOn3Qty'];
+                $pizzaAddOn1Subtotal = $cartItem['pizzaAddOn1Subtotal'];
+                $pizzaAddOn2Subtotal = $cartItem['pizzaAddOn2Subtotal'];
+                $pizzaAddOn3Subtotal = $cartItem['pizzaAddOn3Subtotal'];
+
+                $phpTotal = $cartItem['phpTotal'];
+                if (isset($pizzaName)) {
+                  // echo "<br/>";
+                  // echo "Array Index: $index<br>";
+                  // echo "<br/>";
+                  echo '<form method="POST" action="./php/deleteCartItem.php" class="cart-order-container">';
+                  echo '<div class="cart-item-container">';
+                  // echo "Array Index: $index<br>";
+                  echo '<input class="phphiddendiv" name="index" value="' . $index . '">';
+                  echo '<div class="cart-order-title">' . $pizzaQty . 'x ' . ucfirst($pizzaSize) . " " . $pizzaName . '</div>';
+                  echo '<div class="cart-order-subtotal" id = >$' . number_format($phpTotal, 2) . '</div>';
+                  echo '</div>';
+
+                  echo '<div class="cart-more-details-container">';
+                  if ($pizzaTopping1Qty != 1 || $pizzaTopping2Qty != 1 || $pizzaTopping3Qty != 1) {
+                    echo '<div class="cart-toppings-container">';
+                    echo '<b>Toppings:</b>';
+                    if ($pizzaTopping1Qty != 1) {
+                      echo '<div class="cart-more-details">' . $pizzaTopping1Qty . 'x Pineapple</div>';
+                    }
+                    if ($pizzaTopping2Qty != 1) {
+                      echo '<div class="cart-more-details">' . $pizzaTopping2Qty . 'x Ham</div>';
+                    }
+                    if ($pizzaTopping3Qty != 1) {
+                      echo '<div class="cart-more-details">' . $pizzaTopping3Qty . 'x Cheese</div>';
+                    }
+                    echo '</div>';
+                  }
+                  if ($pizzaAddOn1Qty > 0 || $pizzaAddOn2Qty > 0 || $pizzaAddOn3Qty > 0) {
+                    echo '<div class="cart-addons-container">';
+                    echo '<b>Add Ons:</b>';
+                    if (isset($pizzaAddOn1Qty) && $pizzaAddOn1Qty > 0) {
+                      echo '<div class="cart-addon">' . $pizzaAddOn1Qty . 'x Snack Platter ($' . number_format($pizzaAddOn1Subtotal, 2) . ')</div>';
+                    }
+                    if (isset($pizzaAddOn2Qty) && $pizzaAddOn2Qty > 0) {
+                      echo '<div class="cart-addon">' . $pizzaAddOn2Qty . 'x 10pc Drumlets ($' . number_format($pizzaAddOn2Subtotal, 2) . ')</div>';
+                    }
+                    if (isset($pizzaAddOn3Qty) && $pizzaAddOn3Qty > 0) {
+                      echo '<div class="cart-addon">' . $pizzaAddOn3Qty . 'x Chocolate Waffle ($' . number_format($pizzaAddOn3Subtotal, 2) . ')</div>';
+                    }
+
+                    echo '</div>';
+                  }
+                  echo '</div>';
+
+
+                  echo '<div class="cart-actions-container">';
+                  echo '<div class="cart-actions-subcontainer">';
+                  echo '<i class="fa-regular fa-pen-to-square cart-action-icon fa-lg"></i>';
+
+                  echo '<button class="delete-cart-input" type="submit" name="remove" value=""><i class="fa-regular fa-trash-can cart-action-icon fa-xl"></i></button>';
+                  echo '</div>';
+                  echo '</div>';
+                  echo '</form>';
+                }
+              }
+              echo ' </div>';
+              echo '<div class="totals-container">';
+              echo '<div class="cart-servicefee-container">';
+              echo '<div class="servicefee-title">Service Fee (10%):</div>';
+              echo '<div class="servicefee-amount" id="servicefee-title">$0.00</div>';
+              echo '</div>';
+              echo '<div class="cart-servicefee-container">';
+              echo '<div class="servicefee-title">Delivery Fee:</div>';
+              echo '<div class="servicefee-amount">$3.90</div>';
+              echo '</div>';
+              echo '<div class="cart-servicefee-container">';
+              echo '<div class="cart-grand-total-title">Total:</div>';
+              echo '<div class="cart-grand-total-title" id="cart-grand-total-title-price">$0.00</div>';
+              echo '</div>';
+              echo '</div>';
+              echo '<button class="cart-checkout-button-notfilled" onclick="changePage(\'pizza.php\')">';
+              echo 'Order More';
+              echo '</button>';
+
+
+
+            } else {
+              echo '<h1>Cart Is Empty</h1>';
+              echo '<button class="cart-checkout-button-notfilled" onclick="changePage(\'pizza.php\')">';
+              echo 'Go to Menu';
+              echo '</button>';
+            }
+            ?>
+     
           </div>
         </div>
       </div>
@@ -474,16 +499,6 @@ echo "CART: " . $_SESSION['cart'];
           }
         }
 
-        let cart = document.getElementById("cart");
-        function showCart() {
-          // cart.style.display = "flex";
-          cart.style.transform = "translate(0%, -50%)";
-        }
-
-        function hideCart() {
-          // cart.style.display = "none";
-          cart.style.transform = "translate(100%, -50%)";
-        }
 
         let largeButton = document.getElementById("size-large-button");
         let regularButton = document.getElementById("size-regular-button");
@@ -531,6 +546,30 @@ echo "CART: " . $_SESSION['cart'];
             }
           }
         }
+
+                //CART FUNCTIONS
+                function cleanUpStringToFloat(input) {
+  return parseFloat(input.replace(/[^\d.]/g, ""));
+}
+                let cart = document.getElementById("cart");
+   
+        getCartTotal();
+function getCartTotal() {
+  let cartTotal = 0;
+  let subtotalElements = document.getElementsByClassName("cart-order-subtotal");
+  Array.from(subtotalElements).forEach((element) => {
+    console.log(cleanUpStringToFloat(element.innerHTML));
+    cartTotal += cleanUpStringToFloat(element.innerHTML);
+  });
+  console.log(cartTotal);
+
+  cartTotal += cartTotal * 0.1;
+  document.getElementById("servicefee-title").innerHTML =
+    "$" + (cartTotal * 0.1).toFixed(2);
+  cartTotal += 3.9;
+  document.getElementById("cart-grand-total-title-price").innerHTML =
+    "$" + cartTotal.toFixed(2);
+}
       </script>
       <script
         src="https://kit.fontawesome.com/0ef6f85575.js"
