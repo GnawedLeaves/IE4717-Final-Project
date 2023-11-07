@@ -1,6 +1,6 @@
 CREATE TABLE orders (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    order_id INT NOT NULL,
+    order_id VARCHAR(40) NOT NULL,
     customer_id INT NOT NULL,
     item_id INT NOT NULL,
     quantity INT NOT NULL,

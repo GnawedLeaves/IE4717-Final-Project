@@ -58,7 +58,7 @@ if (isset($_POST["checkout-email"])) {
       // Get the customer ID of the customer just inserted.
       $newCustomerId = $conn->insert_id;
       $customerId = $newCustomerId;
-      echo "Customer ID: " . $newCustomerId;
+
     } else {
       // Handle the case where the insert operation fails.
       echo "Error: " . $conn->error;
@@ -70,7 +70,86 @@ echo 'id:' . $customerId . '<br>';
 
 //end of customer Id handling 
 
+//get itemid
+
+
+
+
 //start of order sql handling
+$orderId = uniqid();
+if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0) {
+  foreach ($_SESSION['cart'] as $index => $cartItem) {
+    $pizzaName = ltrim($cartItem['pizzaName']);
+    $pizzaSize = $cartItem['pizzaSize'];
+    $pizzaQty = $cartItem['pizzaQty'];
+    $pizzaQtySubtotal = $cartItem['pizzaQtySubtotal'];
+    $pizzaTopping1Qty = $cartItem['pizzaTopping1Qty'];
+    $pizzaTopping2Qty = $cartItem['pizzaTopping2Qty'];
+    $pizzaTopping3Qty = $cartItem['pizzaTopping3Qty'];
+    $pizzaAddOn1Qty = $cartItem['pizzaAddOn1Qty'];
+    $pizzaAddOn2Qty = $cartItem['pizzaAddOn2Qty'];
+    $pizzaAddOn3Qty = $cartItem['pizzaAddOn3Qty'];
+    $pizzaAddOn1Subtotal = $cartItem['pizzaAddOn1Subtotal'];
+    $pizzaAddOn2Subtotal = $cartItem['pizzaAddOn2Subtotal'];
+    $pizzaAddOn3Subtotal = $cartItem['pizzaAddOn3Subtotal'];
+    $phpTotal = $cartItem['phpTotal'];
+
+    //getting the item id 
+    if (isset($pizzaName) && isset($pizzaSize)) {
+
+      $sql = "SELECT itemid FROM menu WHERE name = '$pizzaName' AND size = '$pizzaSize'";
+      $result = $conn->query($sql);
+      if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $itemId = $row["itemid"];
+        echo 'item id:' . $itemId . '<br>';
+      } else {
+
+      }
+    }
+
+    if (empty($pizzaAddOn1Qty)) {
+      $pizzaAddOn1Qty = 0;
+    }
+    if (empty($pizzaAddOn2Qty)) {
+      $pizzaAddOn2Qty = 0;
+    }
+    if (empty($pizzaAddOn3Qty)) {
+      $pizzaAddOn3Qty = 0;
+    }
+    echo "<br><strong>Pizza Name:</strong> " . $pizzaName . "<br>";
+    echo "<strong>Pizza Size:</strong> " . $pizzaSize . "<br>";
+    echo "<strong>Pizza Quantity:</strong> " . $pizzaQty . "<br>";
+    echo "<strong>Pizza Quantity Subtotal:</strong> " . $pizzaQtySubtotal . "<br>";
+    echo "<strong>Pizza Topping 1 Quantity:</strong> " . $pizzaTopping1Qty . "<br>";
+    echo "<strong>Pizza Topping 2 Quantity:</strong> " . $pizzaTopping2Qty . "<br>";
+    echo "<strong>Pizza Topping 3 Quantity:</strong> " . $pizzaTopping3Qty . "<br>";
+    echo "<strong>Pizza Add-On 1 Quantity:</strong> " . $pizzaAddOn1Qty . "<br>";
+    echo "<strong>Pizza Add-On 2 Quantity:</strong> " . $pizzaAddOn2Qty . "<br>";
+    echo "<strong>Pizza Add-On 3 Quantity:</strong> " . $pizzaAddOn3Qty . "<br>";
+    echo "<strong>Pizza Add-On 1 Subtotal:</strong> " . $pizzaAddOn1Subtotal . "<br>";
+    echo "<strong>Pizza Add-On 2 Subtotal:</strong> " . $pizzaAddOn2Subtotal . "<br>";
+    echo "<strong>Pizza Add-On 3 Subtotal:</strong> " . $pizzaAddOn3Subtotal . "<br>";
+    echo "<strong>Total:</strong> " . $phpTotal . "<br>";
+    echo "<br>" . $orderId . "<br>";
+    echo ' customer id:' . $customerId . '<br>';
+    echo ' Item id:' . $itemId . '<br>';
+
+
+
+    //end of getting the item id, time to insert into database
+    $sql = "INSERT INTO orders (order_id, customer_id, item_id, quantity, topping1, topping2, topping3, addon1, addon2, addon3, sub_total, status)
+    VALUES ('$orderId', $customerId, $itemId, $pizzaQty, $pizzaTopping1Qty, $pizzaTopping2Qty, $pizzaTopping3Qty, $pizzaAddOn1Qty, $pizzaAddOn2Qty, $pizzaAddOn3Qty, $phpTotal, 'pending')";
+
+    if ($conn->query($sql) === TRUE) {
+      echo "Order inserted successfully.";
+    } else {
+      //echo "Error: " . $sql . "<br>" . $conn->error;
+      echo 'error inserting';
+    }
+
+  }
+}
 
 
 
@@ -301,7 +380,9 @@ if (!isset($_SESSION["cart"])) {
       <div class="container">
         <div class="page-title-container-trackingorder">
           <div class="track-order-id-title">Order ID:</div>
-          <div class="track-order-id">#672756</div>
+          <div class="track-order-id"><?php
+          $orderId
+            ?></div>
           <div class="track-order-id-title">Estimated Delivery Time:</div>
           <div class="track-order-id-sub">3.53pm</div>
           <div class="track-order-id-title">Status:</div>
