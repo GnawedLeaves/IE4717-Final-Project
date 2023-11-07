@@ -802,10 +802,10 @@ function getCartTotal() {
   let cartTotal = 0;
   let subtotalElements = document.getElementsByClassName("cart-order-subtotal");
   Array.from(subtotalElements).forEach((element) => {
-    console.log(cleanUpStringToFloat(element.innerHTML));
+
     cartTotal += cleanUpStringToFloat(element.innerHTML);
   });
-  console.log(cartTotal);
+
 
   cartTotal += cartTotal * 0.1;
   document.getElementById("servicefee-title").innerHTML =

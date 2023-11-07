@@ -170,8 +170,8 @@ if (!isset($_SESSION["cart"])) {
         <div class="page-title">Review Your Order</div>
       </div>
 
-      <div class="checkout-container" onclick="hideCart()">
-        <div class="checkout-container-left">
+      <div class="checkout-container">
+        <form class="checkout-container-left" method='post' action='trackorder.php'>
           <div class="checkout-details-container">
             <div class="checkout-details-title">Details</div>
             <div class="signup-input-container-checkout">
@@ -179,7 +179,7 @@ if (!isset($_SESSION["cart"])) {
               <input
                 class="dialog-input-checkout"
                 type="text"
-                name="signup-name"
+                name="checkout-name"
                 required
               />
             </div>
@@ -187,8 +187,8 @@ if (!isset($_SESSION["cart"])) {
               <div class="dialog-text-checkout">Address</div>
               <input
                 class="dialog-input-checkout"
-                type="email"
-                name="signup-email"
+                type="text"
+                name="checkout-address"
                 required
               />
             </div>
@@ -197,7 +197,7 @@ if (!isset($_SESSION["cart"])) {
               <input
                 class="dialog-input-checkout"
                 type="email"
-                name="signup-email"
+                name="checkout-email"
                 required
               />
             </div>
@@ -205,8 +205,8 @@ if (!isset($_SESSION["cart"])) {
               <div class="dialog-text-checkout">Contact</div>
               <input
                 class="dialog-input-checkout"
-                type="email"
-                name="signup-email"
+                type="number"
+                name="checkout-contact"
                 required
               />
             </div>
@@ -236,18 +236,18 @@ if (!isset($_SESSION["cart"])) {
               <div class="dialog-text-checkout">Card Number</div>
               <input
                 class="dialog-input-checkout"
-                type="text"
-                name="signup-name"
-                required
+                type="number"
+               
+                
               />
             </div>
             <div class="signup-input-container-checkout">
               <div class="dialog-text-checkout">Card Holder Name</div>
               <input
                 class="dialog-input-checkout"
-                type="email"
-                name="signup-email"
-                required
+                type="text"
+                
+               
               />
             </div>
             <div class="credit-card-info-container">
@@ -256,9 +256,9 @@ if (!isset($_SESSION["cart"])) {
                 <input
                   class="dialog-input-checkout"
                   type="number"
-                  name="signup-email"
+               
                   style="width: 7rem"
-                  required
+                  
                 />
               </div>
               <div class="signup-input-container-checkout">
@@ -266,20 +266,20 @@ if (!isset($_SESSION["cart"])) {
                 <input
                   class="dialog-input-checkout"
                   type="number"
-                  name="signup-email"
+              
                   style="width: 7rem"
-                  required
+                  
                 />
               </div>
             </div>
           </div>
           <button
             class="payment-button"
-            onclick="changePage('trackorder.html')"
+            type='submit'
           >
             Pay
           </button>
-        </div>
+        </form>
         <div class="checkout-container-right">
           <div class="cart-container-checkout" id="cart">
             <div class="cart-title-checkout">Cart</div>
@@ -558,10 +558,10 @@ function getCartTotal() {
   let cartTotal = 0;
   let subtotalElements = document.getElementsByClassName("cart-order-subtotal");
   Array.from(subtotalElements).forEach((element) => {
-    console.log(cleanUpStringToFloat(element.innerHTML));
+    
     cartTotal += cleanUpStringToFloat(element.innerHTML);
   });
-  console.log(cartTotal);
+  
 
   cartTotal += cartTotal * 0.1;
   document.getElementById("servicefee-title").innerHTML =

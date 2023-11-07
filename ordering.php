@@ -495,7 +495,7 @@
               price = cleanUpStringToFloat(document.getElementById('addon3-php-price').innerHTML)
             }
 
-            console.log("price",price)
+          
             subtotal = (qty * price).toFixed(2);
 
             if (subtotalElement) {

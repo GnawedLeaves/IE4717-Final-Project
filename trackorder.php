@@ -1,3 +1,100 @@
+<?php
+session_start();
+
+$id = session_id();
+echo "Session id in track order = $id <br>";
+
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "chrispizza";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+if ($conn->connect_error) {
+  die("Connection failed: " . $conn->connect_error);
+}
+
+//Insert customer data and check if they are a memeber already
+$checkoutName = $_POST["checkout-name"];
+$checkoutEmail = $_POST["checkout-email"];
+$checkoutAddress = $_POST["checkout-address"];
+$checkoutContact = $_POST["checkout-contact"];
+
+
+
+if (isset($_POST["checkout-email"])) {
+  $checkoutName = $_POST["checkout-name"];
+  $checkoutEmail = $_POST["checkout-email"];
+  $checkoutAddress = $_POST["checkout-address"];
+  $checkoutContact = $_POST["checkout-contact"];
+
+  // Check if a customer with this email already exists
+  $sql = "SELECT * FROM customers WHERE email = '$checkoutEmail'";
+  $result = $conn->query($sql);
+
+  if ($result->num_rows > 0) {
+    // A customer with this email already exists.
+    echo "A customer with this email already exists.";
+
+    // Get the customer ID of the customer with this email.
+    $customer = $result->fetch_assoc();
+    $existingCustomerId = $customer["customer_id"];
+    $customerId = $existingCustomerId;
+    echo "Customer ID: " . $existingCustomerId;
+  } else {
+    // Adding a new customer
+    echo "Adding customer";
+    $type = 'guest';
+
+    // Insert the customer data into the database
+    $sql = "INSERT INTO customers (name, email, address, contact, type) 
+              VALUES ('$checkoutName', '$checkoutEmail', '$checkoutAddress', '$checkoutContact', '$type')";
+
+    if ($conn->query($sql) === TRUE) {
+      // Customer data inserted successfully.
+      echo "Customer data inserted successfully.";
+
+      // Get the customer ID of the customer just inserted.
+      $newCustomerId = $conn->insert_id;
+      $customerId = $newCustomerId;
+      echo "Customer ID: " . $newCustomerId;
+    } else {
+      // Handle the case where the insert operation fails.
+      echo "Error: " . $conn->error;
+    }
+  }
+}
+
+echo 'id:' . $customerId . '<br>';
+
+//end of customer Id handling 
+
+//start of order sql handling
+
+
+
+
+
+
+
+
+
+
+
+
+
+//change so that the cart will be cleared when the order is complete
+if (!isset($_SESSION["cart"])) {
+  $_SESSION['cart'] = array();
+}
+
+
+
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
