@@ -1,131 +1,9 @@
 <?php
 session_start();
-
-$id = session_id();
-echo "Session id in pizza test = $id <br>";
-
-
+error_reporting(E_ERROR | E_PARSE);
 
 if (!isset($_SESSION["cart"])) {
   $_SESSION['cart'] = array();
-}
-
-// var_dump($_SESSION['cart']);
-// if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-// $pizzaName = $_POST['pizzaName'];
-// $pizzaQty = $_POST['pizzaQty'];
-// $pizzaSize = $_POST['pizzaSize'];
-// $pizzaQtySubtotal = $_POST['pizzaQtySubtotal'];
-// $pizzaTopping1Qty = $_POST['pizzaTopping1Qty'];
-// $pizzaTopping2Qty = $_POST['pizzaTopping2Qty'];
-// $pizzaTopping3Qty = $_POST['pizzaTopping3Qty'];
-// $pizzaAddOn1Qty = $_POST['pizzaAddOn1Qty'];
-// $pizzaAddOn2Qty = $_POST['pizzaAddOn2Qty'];
-// $pizzaAddOn3Qty = $_POST['pizzaAddOn3Qty'];
-// $phpTotal = $_POST['phpTotal'];
-
-
-//   $id = session_id();
-//   echo "Session id in pizza test = $id <br>";
-
-//   if (isset($_POST['pizzaName']) && isset($_POST['pizzaQty']) && isset($_POST['pizzaQtySubtotal']) && isset($_POST['pizzaSize'])) {
-//     $pizzaName = $_POST['pizzaName'];
-//     $pizzaQty = $_POST['pizzaQty'];
-//     $pizzaQtySubtotal = $_POST['pizzaQtySubtotal'];
-//     $pizzaSize = $_POST['pizzaSize'];
-//     array_push(
-//       $_SESSION['cart'],
-//       array(
-//         'pizzaSize' => $pizzaSize,
-//         'pizzaName' => $pizzaName,
-//         'pizzaQty' => $pizzaQty,
-//         'pizzaQtySubtotal' => $pizzaQtySubtotal
-//       )
-//     );
-
-//   }
-
-
-//   echo "SESSION: " . var_dump($_SESSION);
-//   unset($_POST);
-//   header('Location: pizza.php');
-// }
-
-
-
-
-if (isset($_SESSION['cart'])) {
-  foreach ($_SESSION['cart'] as $index => $cartItem) {
-    // $id = $cartItem['id'];
-    $pizzaName = $cartItem['pizzaName'];
-    $pizzaQty = $cartItem['pizzaQty'];
-    $pizzaQtySubtotal = $cartItem['pizzaQtySubtotal'];
-    $pizzaSize = $cartItem['pizzaSize'];
-    $pizzaTopping1Qty = $cartItem['pizzaTopping1Qty'];
-    $pizzaTopping2Qty = $cartItem['pizzaTopping2Qty'];
-    $pizzaTopping3Qty = $cartItem['pizzaTopping3Qty'];
-
-    $pizzaAddOn1Qty = $cartItem['pizzaAddOn1Qty'];
-    $pizzaAddOn2Qty = $cartItem['pizzaAddOn2Qty'];
-    $pizzaAddOn3Qty = $cartItem['pizzaAddOn3Qty'];
-
-    $pizzaAddOn1Subtotal = $cartItem['pizzaAddOn1Subtotal'];
-    $pizzaAddOn2Subtotal = $cartItem['pizzaAddOn2Subtotal'];
-    $pizzaAddOn3Subtotal = $cartItem['pizzaAddOn3Subtotal'];
-
-    $phpTotal = $cartItem['phpTotal'];
-
-    if (isset($pizzaName)) {
-      echo "<br/>";
-      echo "Array Index: $index<br>";
-      echo "Item ID: $id<br>";
-      echo "Pizza Name: $pizzaName<br>";
-      echo "Quantity: $pizzaQty<br>";
-      echo "Size: $pizzaSize<br>";
-      echo "Topping 1: $pizzaTopping1Qty<br>";
-      echo "Topping 2: $pizzaTopping2Qty<br>";
-      echo "Topping 3: $pizzaTopping3Qty<br>";
-      echo "Subtotal: $pizzaQtySubtotal<br>";
-      echo "<br/>";
-    } else {
-      if (isset($pizzaAddOn1Qty) && $pizzaAddOn1Qty > 0) {
-        echo "<br/>";
-        echo "Array Index: $index<br>";
-        echo "Item ID: $id<br>";
-        echo "Add on Name: 1<br>";
-        echo "Quantity: $pizzaAddOn1Qty<br>";
-        echo "Subtotal: $pizzaAddOn1Subtotal<br>";
-        echo "<br/>";
-
-      }
-      if (isset($pizzaAddOn2Qty) && $pizzaAddOn2Qty > 0) {
-        echo "<br/>";
-        echo "Array Index: $index<br>";
-        echo "Item ID: $id<br>";
-        echo "Add on Name: 2<br>";
-        echo "Quantity: $pizzaAddOn2Qty<br>";
-        echo "Subtotal: $pizzaAddOn2Subtotal<br>";
-        echo "<br/>";
-
-      }
-      if (isset($pizzaAddOn3Qty) && $pizzaAddOn3Qty > 0) {
-        echo "<br/>";
-        echo "Array Index: $index<br>";
-        echo "Item ID: $id<br>";
-        echo "Add on Name: 3<br>";
-        echo "Quantity: $pizzaAddOn3Qty<br>";
-        echo "Subtotal: $pizzaAddOn3Subtotal<br>";
-        echo "<br/>";
-
-      }
-
-
-    }
-
-  }
-} else {
-  echo 'cart is empty';
 }
 
 
@@ -141,6 +19,7 @@ if (isset($_SESSION['cart'])) {
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Calistoga&family=Galada&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+<link rel="icon" href="./assets/images/favicon/favicon.ico" type="image/x-icon"/>
     <title>Chris' Pizza</title>
     <style></style>
   </head>
@@ -258,7 +137,7 @@ if (isset($_SESSION['cart'])) {
         <div class="navbarItems">
           <a href="#" class="navbarItem">Menu</a>
           <a href="#" class="navbarItem">Offers</a>
-          <a href="#" class="navbarItem">Your Orders</a>
+          <a href="allorders.php" class="navbarItem">Your Orders</a>
           <a href="stores.php" class="navbarItem">Stores</a>
           <a href="#" class="navbarItem">Support</a>
         </div>
@@ -389,26 +268,7 @@ if (isset($_SESSION['cart'])) {
         ?>
 
        
-        <!-- <div class="totals-container">
-          <div class="cart-servicefee-container">
-            <div class="servicefee-title">Service Fee (10%):</div>
-            <div class="servicefee-amount">$7.90</div>
-          </div>
-          <div class="cart-servicefee-container">
-            <div class="servicefee-title">Delivery Fee:</div>
-            <div class="servicefee-amount">$3.90</div>
-          </div>
-          <div class="cart-servicefee-container">
-            <div class="cart-grand-total-title">Total:</div>
-            <div class="cart-grand-total-title">$0.00</div>
-          </div>
-        </div>
-        <button
-          class="cart-checkout-button"
-          onclick="changePage('checkout.php')"
-        >
-          Check Out
-        </button> -->
+
       </div>
 
       <div class="page-title-container">

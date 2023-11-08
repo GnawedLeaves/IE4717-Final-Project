@@ -1,11 +1,12 @@
 <?php
 session_start();
-
+error_reporting(E_ERROR | E_PARSE);
 
 
 if (!isset($_SESSION["cart"])) {
   $_SESSION['cart'] = array();
 }
+
 ?>
 
 <!DOCTYPE html>
@@ -124,12 +125,6 @@ if (!isset($_SESSION["cart"])) {
         </div>
       </form>
     </dialog>
-    <dialog id="sign-up-dialog">
-      This is a dialog box
-      <button onclick="closeDialog('sign-up-dialog')" id="close-dialog-btn">
-        Close
-      </button>
-    </dialog>
 
     <div class="navbar">
       <a href="index.php">
@@ -161,7 +156,6 @@ if (!isset($_SESSION["cart"])) {
           </button>
         </div>
       </div>
-
       <div class="cart-container" id="cart">
         <i
           class="fa-solid fa-xmark fa-xl"
@@ -169,13 +163,12 @@ if (!isset($_SESSION["cart"])) {
           onclick="hideCart()"
         ></i>
         <div class="cart-title">Cart</div>
-        
+
         <?php
 
         if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0) {
           echo '<div class="cart-orders-container">';
           foreach ($_SESSION['cart'] as $index => $cartItem) {
-            // $id = $cartItem['id'];
             $pizzaName = $cartItem['pizzaName'];
             $pizzaQty = $cartItem['pizzaQty'];
             $pizzaQtySubtotal = $cartItem['pizzaQtySubtotal'];
@@ -193,12 +186,10 @@ if (!isset($_SESSION["cart"])) {
 
             $phpTotal = $cartItem['phpTotal'];
             if (isset($pizzaName)) {
-              // echo "<br/>";
-              // echo "Array Index: $index<br>";
-              // echo "<br/>";
+
               echo '<form method="POST" action="./php/deleteCartItem.php" class="cart-order-container">';
               echo '<div class="cart-item-container">';
-              // echo "Array Index: $index<br>";
+
               echo '<input class="phphiddendiv" name="index" value="' . $index . '">';
               echo '<div class="cart-order-title">' . $pizzaQty . 'x ' . ucfirst($pizzaSize) . " " . $pizzaName . '</div>';
               echo '<div class="cart-order-subtotal" id = >$' . number_format($phpTotal, 2) . '</div>';
@@ -272,77 +263,123 @@ if (!isset($_SESSION["cart"])) {
           echo '<h1>Cart Is Empty</h1>';
         }
         ?>
-
-       
-        <!-- <div class="totals-container">
-          <div class="cart-servicefee-container">
-            <div class="servicefee-title">Service Fee (10%):</div>
-            <div class="servicefee-amount">$7.90</div>
-          </div>
-          <div class="cart-servicefee-container">
-            <div class="servicefee-title">Delivery Fee:</div>
-            <div class="servicefee-amount">$3.90</div>
-          </div>
-          <div class="cart-servicefee-container">
-            <div class="cart-grand-total-title">Total:</div>
-            <div class="cart-grand-total-title">$0.00</div>
-          </div>
-        </div>
-        <button
-          class="cart-checkout-button"
-          onclick="changePage('checkout.php')"
-        >
-          Check Out
-        </button> -->
       </div>
-
       <div class="page-title-container">
-        <div class="page-title">Stores</div>
+        <div class="page-title">Your Orders</div>
       </div>
+      <div class="container">
+        <div class="orders-container">
+          <?php
+          $servername = "localhost";
+          $username = "root";
+          $password = "";
+          $dbname = "chrispizza";
 
-      <div class="container stores-container" onclick="hideCart()">
-        <table class="stores-table">
-          <tr class="stores-table-header">
-            <th class="stores-th">West</th>
-            <th class="stores-th">Central</th>
-            <th class="stores-th">East</th>
-          </tr>
-          <tr class="stores-table-content">
-            <td class="stores-table-content-td">
-              IMM Jurong East Street 21 #01-41 Singapore 609601
-            </td>
-            <td class="stores-table-content-td">
-              Holland Village MRT 200 Holland Avenue #B1-07 Singapore 278995
-            </td>
-            <td class="stores-table-content-td">
-              Tampines Hub 1 Tampines Walk #01-13/14 Singapore 528523
-            </td>
-          </tr>
-          <tr class="stores-table-content">
-            <td class="stores-table-content-td">
-              Hillion Mall 17 Petir Road #B2-54 Singapore 678278
-            </td>
-            <td class="stores-table-content-td">
-              Junction 8, 9 Bishan Pl, Singapore 579837
-            </td>
-            <td class="stores-table-content-td">
-              Singapore University of Technology and Design (SUTD), 8 Somapah
-              Rd, Singapore 487372
-            </td>
-          </tr>
-        </table>
+          $conn = new mysqli($servername, $username, $password, $dbname);
 
-        <iframe
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.725154506574!2d103.9612568790046!3d1.3412632090044765!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da3cd899f260cb%3A0x99becabc6d025518!2sSingapore%20University%20of%20Technology%20and%20Design%20(SUTD)!5e0!3m2!1sen!2ssg!4v1699259085439!5m2!1sen!2ssg"
-          width="600"
-          height="450"
-          style="border: 0"
-          allowfullscreen=""
-          loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"
-        ></iframe>
+
+          $customer_id = $_SESSION['customer_id'];
+          $sql = "SELECT * FROM ordersummary WHERE customer_id = '$customer_id' AND status != 'Completed'";
+          $result = $conn->query($sql);
+          if ($result === false) {
+            echo "Error: " . $conn->error;
+          } else {
+            if ($result->num_rows > 0) {
+
+              echo ' <div class="inprogress-orders-container">
+              <div class="inprogress-orders-title">In Progress</div>
+              <div class="inprogress-orders">';
+
+              while ($row = $result->fetch_assoc()) {
+                // Access and echo data for each row
+                $order_id = $row["order_id"];
+
+                $dateTime = new DateTime($row['date']);
+                $dateFormatted = $dateTime->format('j M Y');
+                $timeFormatted = $dateTime->format('H:i:s');
+                $total = $row["total"];
+                $delivery_time = $row["delivery_time"];
+                $status = $row["status"];
+
+                echo '<form class="order-container" method="get" action="order-summary.php">';
+                echo '<input type="hidden" name="queryOrderId" value=' . $order_id . ' />';
+                echo '<div class="order-title">Order: ' . $order_id . '</div>';
+                echo '<div class="order-title">' . $dateFormatted . '</div>';
+                echo '<div class="order-title">' . $timeFormatted . '</div>   <br />';
+                echo '<div class="order-title">Total:</div>';
+                echo '<div class="total-title">$' . $total . '</div>    <br />';
+                echo '                <div class="order-title">Status:</div>
+                <div class="total-title">' . $status . '</div>';
+                echo '    <button class="see-order-button">Details</button>';
+                echo '</form>';
+
+              }
+              echo '</div>
+              </div>';
+
+            } else {
+              echo "No orders found.";
+            }
+          }
+
+
+          ?>
+           <?php
+           $servername = "localhost";
+           $username = "root";
+           $password = "";
+           $dbname = "chrispizza";
+
+           $conn = new mysqli($servername, $username, $password, $dbname);
+
+
+           $customer_id = $_SESSION['customer_id'];
+           $sql = "SELECT * FROM ordersummary WHERE customer_id = '$customer_id' AND status = 'Completed'";
+           $result = $conn->query($sql);
+           if ($result === false) {
+             echo "Error: " . $conn->error;
+           } else {
+             if ($result->num_rows > 0) {
+
+               echo ' <div class="inprogress-orders-container">
+              <div class="inprogress-orders-title">Completed</div>
+              <div class="inprogress-orders">';
+
+               while ($row = $result->fetch_assoc()) {
+                 // Access and echo data for each row
+                 $order_id = $row["order_id"];
+
+                 $dateTime = new DateTime($row['date']);
+                 $dateFormatted = $dateTime->format('j M Y');
+                 $timeFormatted = $dateTime->format('H:i:s');
+                 $total = $row["total"];
+                 $delivery_time = $row["delivery_time"];
+                 $status = $row["status"];
+
+                 echo '<form class="order-container-completed" method="get" action="order-summary.php">';
+                 echo '<input type="hidden" name="queryOrderId" value=' . $order_id . ' />';
+                 echo '<div class="order-title">Order: ' . $order_id . '</div>';
+                 echo '<div class="order-title">' . $dateFormatted . '</div>';
+                 echo '<div class="order-title">' . $timeFormatted . '</div>   <br />';
+                 echo '<div class="order-title">Total:</div>';
+                 echo '<div class="total-title">$' . $total . '</div>    <br />';
+                 echo '                <div class="order-title">Status:</div>
+                <div class="total-title">' . $status . '</div>';
+                 echo '    <button class="see-order-button">Details</button>';
+                 echo '</form>';
+
+               }
+               echo '</div>
+              </div>';
+
+             }
+           }
+
+
+           ?>
+
+        </div>
       </div>
-
       <div class="footer">
         <div class="footer-left-container">
           <div class="footer-info-container">
@@ -410,19 +447,6 @@ if (!isset($_SESSION["cart"])) {
 
       <!-- <i class="nav-icon fa-solid fa-cart-shopping fa-xl"></i> -->
       <script>
-        function toggleOrderingCatagoryButton(e) {
-          if (e.classList.contains("ordering-catagory-container-selected")) {
-            e.classList.remove("ordering-catagory-container-selected");
-          } else {
-            e.classList.add("ordering-catagory-container-selected");
-          }
-        }
-
-        function changePage(url) {
-          window.location.href = url;
-        }
-
-        // Sign up dialog functions
         function openDialog(id) {
           const dialog = document.getElementById(id);
           dialog.showModal();
@@ -448,38 +472,39 @@ if (!isset($_SESSION["cart"])) {
             signUpPage = true;
           }
         }
+        function changePage(url) {
+          window.location.href = url;
+        }
 
- //CART FUNCTIONS
- function cleanUpStringToFloat(input) {
-  return parseFloat(input.replace(/[^\d.]/g, ""));
-}
-                let cart = document.getElementById("cart");
+        //CART FUNCTIONS
+        function cleanUpStringToFloat(input) {
+          return parseFloat(input.replace(/[^\d.]/g, ""));
+        }
+        let cart = document.getElementById("cart");
         function showCart() {
-         
           cart.style.transform = "translate(0%, -50%)";
         }
 
         function hideCart() {
-          
           cart.style.transform = "translate(100%, -50%)";
         }
         getCartTotal();
-function getCartTotal() {
-  let cartTotal = 0;
-  let subtotalElements = document.getElementsByClassName("cart-order-subtotal");
-  Array.from(subtotalElements).forEach((element) => {
-   
-    cartTotal += cleanUpStringToFloat(element.innerHTML);
-  });
+        function getCartTotal() {
+          let cartTotal = 0;
+          let subtotalElements = document.getElementsByClassName(
+            "cart-order-subtotal"
+          );
+          Array.from(subtotalElements).forEach((element) => {
+            cartTotal += cleanUpStringToFloat(element.innerHTML);
+          });
 
-
-  cartTotal += cartTotal * 0.1;
-  document.getElementById("servicefee-title").innerHTML =
-    "$" + (cartTotal * 0.1).toFixed(2);
-  cartTotal += 3.9;
-  document.getElementById("cart-grand-total-title-price").innerHTML =
-    "$" + cartTotal.toFixed(2);
-}
+          cartTotal += cartTotal * 0.1;
+          document.getElementById("servicefee-title").innerHTML =
+            "$" + (cartTotal * 0.1).toFixed(2);
+          cartTotal += 3.9;
+          document.getElementById("cart-grand-total-title-price").innerHTML =
+            "$" + cartTotal.toFixed(2);
+        }
       </script>
       <script
         src="https://kit.fontawesome.com/0ef6f85575.js"

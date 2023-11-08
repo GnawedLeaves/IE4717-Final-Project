@@ -1,9 +1,6 @@
 <?php
 session_start();
-
-$id = session_id();
-echo "Session id in track order = $id <br>";
-
+error_reporting(E_ERROR | E_PARSE);
 $servername = "localhost";
 $username = "root";
 $password = "";
@@ -34,18 +31,15 @@ if (isset($_POST["checkout-email"])) {
   $result = $conn->query($sql);
 
   if ($result->num_rows > 0) {
-    // A customer with this email already exists.
-    echo "A customer with this email already exists.";
-
     // Get the customer ID of the customer with this email.
     $customer = $result->fetch_assoc();
     $existingCustomerId = $customer["customer_id"];
     $customerId = $existingCustomerId;
     $_SESSION['customer_id'] = $customerId;
-    echo "Customer ID: " . $existingCustomerId;
+
   } else {
     // Adding a new customer
-    echo "Adding customer";
+
     $type = 'guest';
 
     // Insert the customer data into the database
@@ -54,7 +48,7 @@ if (isset($_POST["checkout-email"])) {
 
     if ($conn->query($sql) === TRUE) {
       // Customer data inserted successfully.
-      echo "Customer data inserted successfully.";
+
 
       // Get the customer ID of the customer just inserted.
       $newCustomerId = $conn->insert_id;
@@ -62,99 +56,109 @@ if (isset($_POST["checkout-email"])) {
       $_SESSION['customer_id'] = $customerId;
     } else {
       // Handle the case where the insert operation fails.
-      echo "Error: " . $conn->error;
+      // echo "Error: " . $conn->error;
     }
   }
 }
 
-echo 'id:' . $customerId . '<br>';
-var_dump($_SESSION);
+
+if (isset($_POST['cartgrandtotal'])) {
+  $cartgrandtotal = $_POST['cartgrandtotal'];
+}
+
+
 
 //end of customer Id handling 
-
-//get itemid
-
-
-
 
 //start of order sql handling
 $orderId = uniqid();
 if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0) {
-  foreach ($_SESSION['cart'] as $index => $cartItem) {
-    $pizzaName = ltrim($cartItem['pizzaName']);
-    $pizzaSize = $cartItem['pizzaSize'];
-    $pizzaQty = $cartItem['pizzaQty'];
-    $pizzaQtySubtotal = $cartItem['pizzaQtySubtotal'];
-    $pizzaTopping1Qty = $cartItem['pizzaTopping1Qty'];
-    $pizzaTopping2Qty = $cartItem['pizzaTopping2Qty'];
-    $pizzaTopping3Qty = $cartItem['pizzaTopping3Qty'];
-    $pizzaAddOn1Qty = $cartItem['pizzaAddOn1Qty'];
-    $pizzaAddOn2Qty = $cartItem['pizzaAddOn2Qty'];
-    $pizzaAddOn3Qty = $cartItem['pizzaAddOn3Qty'];
-    $pizzaAddOn1Subtotal = $cartItem['pizzaAddOn1Subtotal'];
-    $pizzaAddOn2Subtotal = $cartItem['pizzaAddOn2Subtotal'];
-    $pizzaAddOn3Subtotal = $cartItem['pizzaAddOn3Subtotal'];
-    $phpTotal = $cartItem['phpTotal'];
+  //Inserting into order summary first: 
+  date_default_timezone_set('Asia/Singapore');
+  $currentDateTime = new DateTime();
+  $currentDateTime->add(new DateInterval('PT30M'));
+  $dateTimeForSQL = $currentDateTime->format('Y-m-d H:i:s');
 
-    //getting the item id 
-    if (isset($pizzaName) && isset($pizzaSize)) {
 
-      $sql = "SELECT itemid FROM menu WHERE name = '$pizzaName' AND size = '$pizzaSize'";
-      $result = $conn->query($sql);
-      if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-        $itemId = $row["itemid"];
-        echo 'item id:' . $itemId . '<br>';
-      } else {
+  $orderDateTime = new DateTime();
+  $orderDateTimeForSQL = $orderDateTime->format('Y-m-d H:i:s');
 
+
+  $sql = "INSERT INTO orderSummary (order_id, customer_id, total, date, delivery_time, status) VALUES ('$orderId', $customerId, '$cartgrandtotal', '$orderDateTimeForSQL','$dateTimeForSQL' ,'In the Kitchen')";
+  if ($conn->query($sql) === TRUE) {
+    foreach ($_SESSION['cart'] as $index => $cartItem) {
+      $pizzaName = ltrim($cartItem['pizzaName']);
+      $pizzaSize = $cartItem['pizzaSize'];
+      $pizzaQty = $cartItem['pizzaQty'];
+      $pizzaQtySubtotal = $cartItem['pizzaQtySubtotal'];
+      $pizzaTopping1Qty = $cartItem['pizzaTopping1Qty'];
+      $pizzaTopping2Qty = $cartItem['pizzaTopping2Qty'];
+      $pizzaTopping3Qty = $cartItem['pizzaTopping3Qty'];
+      $pizzaAddOn1Qty = $cartItem['pizzaAddOn1Qty'];
+      $pizzaAddOn2Qty = $cartItem['pizzaAddOn2Qty'];
+      $pizzaAddOn3Qty = $cartItem['pizzaAddOn3Qty'];
+      $pizzaAddOn1Subtotal = $cartItem['pizzaAddOn1Subtotal'];
+      $pizzaAddOn2Subtotal = $cartItem['pizzaAddOn2Subtotal'];
+      $pizzaAddOn3Subtotal = $cartItem['pizzaAddOn3Subtotal'];
+      $phpTotal = $cartItem['phpTotal'];
+
+
+      //getting the item id 
+      if (isset($pizzaName) && isset($pizzaSize)) {
+
+        $sql = "SELECT itemid FROM menu WHERE name = '$pizzaName' AND size = '$pizzaSize'";
+        $result = $conn->query($sql);
+        if ($result->num_rows > 0) {
+          $row = $result->fetch_assoc();
+          $itemId = $row["itemid"];
+
+        }
       }
-    }
 
-    if (empty($pizzaAddOn1Qty)) {
-      $pizzaAddOn1Qty = 0;
-    }
-    if (empty($pizzaAddOn2Qty)) {
-      $pizzaAddOn2Qty = 0;
-    }
-    if (empty($pizzaAddOn3Qty)) {
-      $pizzaAddOn3Qty = 0;
-    }
-    echo "<br><strong>Pizza Name:</strong> " . $pizzaName . "<br>";
-    echo "<strong>Pizza Size:</strong> " . $pizzaSize . "<br>";
-    echo "<strong>Pizza Quantity:</strong> " . $pizzaQty . "<br>";
-    echo "<strong>Pizza Quantity Subtotal:</strong> " . $pizzaQtySubtotal . "<br>";
-    echo "<strong>Pizza Topping 1 Quantity:</strong> " . $pizzaTopping1Qty . "<br>";
-    echo "<strong>Pizza Topping 2 Quantity:</strong> " . $pizzaTopping2Qty . "<br>";
-    echo "<strong>Pizza Topping 3 Quantity:</strong> " . $pizzaTopping3Qty . "<br>";
-    echo "<strong>Pizza Add-On 1 Quantity:</strong> " . $pizzaAddOn1Qty . "<br>";
-    echo "<strong>Pizza Add-On 2 Quantity:</strong> " . $pizzaAddOn2Qty . "<br>";
-    echo "<strong>Pizza Add-On 3 Quantity:</strong> " . $pizzaAddOn3Qty . "<br>";
-    echo "<strong>Pizza Add-On 1 Subtotal:</strong> " . $pizzaAddOn1Subtotal . "<br>";
-    echo "<strong>Pizza Add-On 2 Subtotal:</strong> " . $pizzaAddOn2Subtotal . "<br>";
-    echo "<strong>Pizza Add-On 3 Subtotal:</strong> " . $pizzaAddOn3Subtotal . "<br>";
-    echo "<strong>Total:</strong> " . $phpTotal . "<br>";
-    echo "<br>" . $orderId . "<br>";
-    echo ' customer id:' . $customerId . '<br>';
-    echo ' Item id:' . $itemId . '<br>';
+      if (empty($pizzaAddOn1Qty)) {
+        $pizzaAddOn1Qty = 0;
+      }
+      if (empty($pizzaAddOn2Qty)) {
+        $pizzaAddOn2Qty = 0;
+      }
+      if (empty($pizzaAddOn3Qty)) {
+        $pizzaAddOn3Qty = 0;
+      }
+      // echo "<br><strong>Pizza Name:</strong> " . $pizzaName . "<br>";
+      // echo "<strong>Pizza Size:</strong> " . $pizzaSize . "<br>";
+      // echo "<strong>Pizza Quantity:</strong> " . $pizzaQty . "<br>";
+      // echo "<strong>Pizza Quantity Subtotal:</strong> " . $pizzaQtySubtotal . "<br>";
+      // echo "<strong>Pizza Topping 1 Quantity:</strong> " . $pizzaTopping1Qty . "<br>";
+      // echo "<strong>Pizza Topping 2 Quantity:</strong> " . $pizzaTopping2Qty . "<br>";
+      // echo "<strong>Pizza Topping 3 Quantity:</strong> " . $pizzaTopping3Qty . "<br>";
+      // echo "<strong>Pizza Add-On 1 Quantity:</strong> " . $pizzaAddOn1Qty . "<br>";
+      // echo "<strong>Pizza Add-On 2 Quantity:</strong> " . $pizzaAddOn2Qty . "<br>";
+      // echo "<strong>Pizza Add-On 3 Quantity:</strong> " . $pizzaAddOn3Qty . "<br>";
+      // echo "<strong>Pizza Add-On 1 Subtotal:</strong> " . $pizzaAddOn1Subtotal . "<br>";
+      // echo "<strong>Pizza Add-On 2 Subtotal:</strong> " . $pizzaAddOn2Subtotal . "<br>";
+      // echo "<strong>Pizza Add-On 3 Subtotal:</strong> " . $pizzaAddOn3Subtotal . "<br>";
+      // echo "<strong>Total:</strong> " . $phpTotal . "<br>";
+      // echo "<br>" . $orderId . "<br>";
+      // echo ' customer id:' . $customerId . '<br>';
+      // echo ' Item id:' . $itemId . '<br>';
 
-
-
-    //end of getting the item id, time to insert into database
-    $sql = "INSERT INTO orders (order_id, customer_id, item_id, quantity, topping1, topping2, topping3, addon1, addon2, addon3, sub_total, status)
-    VALUES ('$orderId', $customerId, $itemId, $pizzaQty, $pizzaTopping1Qty, $pizzaTopping2Qty, $pizzaTopping3Qty, $pizzaAddOn1Qty, $pizzaAddOn2Qty, $pizzaAddOn3Qty, $phpTotal, 'In The Kitchen')";
-
-    if ($conn->query($sql) === TRUE) {
-      echo "Order inserted successfully.";
-      $sql = "UPDATE customers SET orders = '$orderId' WHERE customer_id = '$customerId'";
+      //insert orders
+      $sql = "INSERT INTO orders (order_id, item_id, quantity, topping1, topping2, topping3, addon1, addon2, addon3, sub_total)
+      VALUES ('$orderId', $itemId, $pizzaQty, $pizzaTopping1Qty, $pizzaTopping2Qty, $pizzaTopping3Qty, $pizzaAddOn1Qty, $pizzaAddOn2Qty, $pizzaAddOn3Qty, $phpTotal)";
       if ($conn->query($sql) === TRUE) {
-        echo "updated order in customer table";
-      }
-    } else {
-      //echo "Error: " . $sql . "<br>" . $conn->error;
-      echo 'error inserting';
-    }
 
+        $sql = "UPDATE customers SET orders = '$orderId' WHERE customer_id = '$customerId'";
+        if ($conn->query($sql) === TRUE) {
+
+        }
+      } else {
+        //echo "Error: " . $sql . "<br>" . $conn->error;
+
+      }
+
+    }
   }
+  $_SESSION['feedback'] = false;
   $_SESSION['cart'] = array();
 
 }
@@ -183,6 +187,7 @@ if (!isset($_SESSION["cart"])) {
       href="https://fonts.googleapis.com/css2?family=Calistoga&family=Galada&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap"
       rel="stylesheet"
     />
+    <link rel="icon" href="./assets/images/favicon/favicon.ico" type="image/x-icon"/>
     <title>Chris' Pizza</title>
     <style></style>
   </head>
@@ -305,7 +310,7 @@ if (!isset($_SESSION["cart"])) {
         <div class="navbarItems">
           <a href="#" class="navbarItem">Menu</a>
           <a href="#" class="navbarItem">Offers</a>
-          <a href="#" class="navbarItem">Your Orders</a>
+          <a href="allorders.php" class="navbarItem">Your Orders</a>
           <a href="stores.php" class="navbarItem">Stores</a>
           <a href="#" class="navbarItem">Support</a>
         </div>
@@ -392,8 +397,7 @@ if (!isset($_SESSION["cart"])) {
             }
 
             $customer_id = $_SESSION['customer_id'];
-
-            $sql = " SELECT orders FROM customers WHERE customer_id = '$customer_id'";
+            $sql = "SELECT * FROM ordersummary WHERE customer_id = $customer_id ORDER BY id DESC LIMIT 1";
             $result = $conn->query($sql);
             if ($result === false) {
               // Check for errors in the query
@@ -401,103 +405,134 @@ if (!isset($_SESSION["cart"])) {
             } else {
               if ($result->num_rows > 0) {
                 $row = $result->fetch_assoc();
-                $orderId = $row["orders"];
-                echo $orderId;
+                $orderId = $row["order_id"];
                 $_SESSION['currentOrderId'] = $orderId;
+                echo $orderId;
               } else {
                 echo 'Order does not exist';
               }
             }
-
-
-
-
             ?>
           
         
         </div>
           <div class="track-order-id-title">Estimated Delivery Time:</div>
-          <div class="track-order-id-sub">3.53pm</div>
+          <div class="track-order-id-sub">
+          <?php
+          $servername = "localhost";
+          $username = "root";
+          $password = "";
+          $dbname = "chrispizza";
+
+          $conn = new mysqli($servername, $username, $password, $dbname);
+
+          if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+          }
+          $orderId = $_SESSION['currentOrderId'];
+          $sql = " SELECT DATE_FORMAT(delivery_time, '%H:%i') AS delivery_time FROM ordersummary WHERE order_id = '$orderId'";
+          $result = $conn->query($sql);
+          if ($result === false) {
+            // Check for errors in the query
+            echo "Error: " . $conn->error;
+          } else {
+            if ($result->num_rows > 0) {
+              $row = $result->fetch_assoc();
+              $delivery_time = $row["delivery_time"];
+              echo $delivery_time;
+            } else {
+              echo 'Order does not exist';
+            }
+          }
+
+          ?>
+          </div>
           <div class="track-order-id-title">Status:</div>
-          <div class="track-order-id-sub">In The Kitchen</div>
+          <div class="track-order-id-sub">
+          <?php
+          $servername = "localhost";
+          $username = "root";
+          $password = "";
+          $dbname = "chrispizza";
+
+          $conn = new mysqli($servername, $username, $password, $dbname);
+
+          if ($conn->connect_error) {
+            die("Connection failed: " . $conn->connect_error);
+          }
+          $orderId = $_SESSION['currentOrderId'];
+          $sql = " SELECT status FROM ordersummary WHERE order_id = '$orderId'";
+          $result = $conn->query($sql);
+          if ($result === false) {
+            // Check for errors in the query
+            echo "Error: " . $conn->error;
+          } else {
+            if ($result->num_rows > 0) {
+              $row = $result->fetch_assoc();
+              $status = $row["status"];
+              echo $status;
+            } else {
+              echo 'Order does not exist';
+            }
+          }
+
+          ?>
+          </div>
           <div class="track-order-buttons-container">
-            <button class="track-order-ordersummary-button">
+            <form action='order-summary.php' method='get'>
+              <input class='phphiddendiv'  name='queryOrderId' value="<?php echo $_SESSION['currentOrderId']; ?>" />
+            <button class="track-order-ordersummary-button" >
               Order Summary
             </button>
-            <button class="track-order-orderagain-button">Order Again</button>
+            <button  type='button' class="track-order-orderagain-button" onclick="changePage('index.php')">Order Again</button>
+            </form>
+
+           
           </div>
         </div>
-        <form class="feedback-container">
-          <div class="feedback-title">Help Us Improve!</div>
-          <div class="feedback-container-box">
-            <div class="feedback-question-title">
-              Rate your overall experience
-            </div>
-            <div class="feedback-rating-container">
-              <div class="feedback-rating">
-                1
-                <input
-                  type="radio"
-                  name="rating"
-                  value="1"
-                  class="feedback-radio"
-                  required
-                />
-              </div>
-              <div class="feedback-rating">
-                2
-                <input
-                  type="radio"
-                  name="rating"
-                  value="2"
-                  class="feedback-radio"
-                  required
-                />
-              </div>
-              <div class="feedback-rating">
-                3
-                <input
-                  type="radio"
-                  name="rating"
-                  value="3"
-                  class="feedback-radio"
-                  required
-                />
-              </div>
-              <div class="feedback-rating">
-                4
-                <input
-                  type="radio"
-                  name="rating"
-                  value="4"
-                  class="feedback-radio"
-                  required
-                />
-              </div>
-              <div class="feedback-rating">
-                5
-                <input
-                  type="radio"
-                  name="rating"
-                  value="5"
-                  class="feedback-radio"
-                  required
-                />
-              </div>
-            </div>
-            <div class="feedback-comment-container">
-              <div class="feedback-question-title">Other comments:</div>
-              <textarea
-                type="textarea"
-                name="feedback-comment"
-                class="feedback-comment"
-                placeholder="Comments on the food, delivery process, etc..."
-                cols="30"
-                rows="7"
-              ></textarea>
-            </div>
-            <button class="feedback-submit-button">Send</button>
-          </div>
+
+        <form class="feedback-container" method = "post" action = "./php/feedbackSubmit.php">
+        <?php
+        $feedback = $_SESSION['feedback'];
+        if ($feedback === false) {
+          echo '<div class="feedback-title">Help Us Improve!</div>
+      <div class="feedback-container-box">
+        <div class="feedback-question-title">
+          Rate your overall experience
+        </div>
+        <div class="feedback-rating-container">';
+
+          for ($i = 1; $i <= 5; $i++) {
+            echo '<div class="feedback-rating">
+            ' . $i . '
+            <input
+              type="radio"
+              name="rating"
+              value="' . $i . '"
+              class="feedback-radio"
+              required
+            />
+          </div>';
+          }
+
+          echo '</div>
+      <div class="feedback-comment-container">
+        <div class="feedback-question-title">Other comments:</div>
+        <textarea
+          type="textarea"
+          name="feedback-comment"
+          class="feedback-comment"
+          placeholder="Comments on the food, delivery process, etc..."
+          cols="30"
+          rows="7"
+        ></textarea>
+      </div>
+      <button class="feedback-submit-button">Send</button>
+    </div>';
+        } else if ($feedback === true) {
+          echo "<div class='feedback-failure-container'>Thank you for your feedback!</div>";
+        }
+        ?>
         </form>
       </div>
 

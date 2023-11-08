@@ -14,8 +14,6 @@ if (isset($_POST['index']) && isset($_POST['remove'])) {
 
     // Redirect back to the cart page
     header('Location: ' . $_SERVER['HTTP_REFERER']);
-    // header('location: ../pizza.php');
-    // header("location:javascript://history.go(-1)");
     exit;
   }
 }

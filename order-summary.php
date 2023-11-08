@@ -1,10 +1,6 @@
 <?php
 session_start();
-if (!isset($_SESSION["cart"])) {
-  $_SESSION['cart'] = array();
-}
-
-
+error_reporting(E_ERROR | E_PARSE);
 
 ?>
 
@@ -149,7 +145,10 @@ if (!isset($_SESSION["cart"])) {
         </div>
 
         <div class="cart-profile-container">
- 
+          <!-- <i
+            class="nav-icon fa-solid fa-cart-shopping fa-xl"
+            onclick="showCart()"
+          ></i> -->
           <button
             class="button-filled join-button"
             onclick="openDialog('sign-up-dialog')"
@@ -159,233 +158,298 @@ if (!isset($_SESSION["cart"])) {
         </div>
       </div>
 
+      <div class="cart-container" id="cart">
+        <i
+          class="fa-solid fa-xmark fa-xl"
+          id="cart-close-icon"
+          onclick="hideCart()"
+        ></i>
+        <div class="cart-title">Cart</div>
+        <div class="cart-orders-container">
+          <div class="cart-order-container">
+            <div class="cart-item-container">
+              <div class="cart-order-title">1x Chocolate Waffle</div>
+              <div class="cart-order-subtotal">$19.90</div>
+            </div>
 
-
-      <div class="page-title-container">
-        <div class="page-title">Review Your Order</div>
+            <div class="cart-actions-container">
+              <div class="cart-actions-subcontainer">
+                <i
+                  class="fa-regular fa-pen-to-square cart-action-icon fa-lg"
+                ></i>
+                <i class="fa-regular fa-trash-can cart-action-icon fa-lg"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="totals-container">
+          <div class="cart-servicefee-container">
+            <div class="servicefee-title">Service Fee (10%):</div>
+            <div class="servicefee-amount">$7.90</div>
+          </div>
+          <div class="cart-servicefee-container">
+            <div class="servicefee-title">Delivery Fee:</div>
+            <div class="servicefee-amount">$3.90</div>
+          </div>
+          <div class="cart-servicefee-container">
+            <div class="cart-grand-total-title">Total:</div>
+            <div class="cart-grand-total-title">$0.00</div>
+          </div>
+        </div>
+        <button
+          class="cart-checkout-button"
+          onclick="changePage('checkout.php')"
+        >
+          Check Out
+        </button>
       </div>
 
-      <div class="checkout-container">
-        <form class="checkout-container-left" method='post' action='trackorder.php'>
-          <div class="checkout-details-container">
-            <div class="checkout-details-title">Details</div>
-            <div class="signup-input-container-checkout">
-              <div class="dialog-text-checkout">Name</div>
-              <input
-                class="dialog-input-checkout"
-                type="text"
-                name="checkout-name"
-                required
-              />
-            </div>
-            <div class="signup-input-container-checkout">
-              <div class="dialog-text-checkout">Address</div>
-              <input
-                class="dialog-input-checkout"
-                type="text"
-                name="checkout-address"
-                required
-              />
-            </div>
-            <div class="signup-input-container-checkout">
-              <div class="dialog-text-checkout">Email</div>
-              <input
-                class="dialog-input-checkout"
-                type="email"
-                name="checkout-email"
-                required
-              />
-            </div>
-            <div class="signup-input-container-checkout">
-              <div class="dialog-text-checkout">Contact</div>
-              <input
-                class="dialog-input-checkout"
-                type="number"
-                name="checkout-contact"
-                
-              />
-            </div>
-          </div>
-          <div class="checkout-details-container" style="margin-top: 8rem">
-            <div class="checkout-details-title">Payment</div>
-            <div class="customise-size-container">
-              <div class="customise-size-buttons-container">
-                <div
-                  id="size-regular-button"
-                  class="ordering-pizza-size-button"
-                  onclick="toggleSizeButtons(this)"
-                >
-                  Credit Card
-                </div>
-                <div
-                  id="size-large-button"
-                  class="ordering-pizza-size-button"
-                  value="19.70"
-                  onclick="toggleSizeButtons(this)"
-                >
-                  Paylah
-                </div>
-              </div>
-            </div>
-            <div class="signup-input-container-checkout">
-              <div class="dialog-text-checkout">Card Number</div>
-              <input
-                class="dialog-input-checkout"
-                type="number"
-               
-                
-              />
-            </div>
-            <div class="signup-input-container-checkout">
-              <div class="dialog-text-checkout">Card Holder Name</div>
-              <input
-                class="dialog-input-checkout"
-                type="text"
-                
-               
-              />
-            </div>
-            <div class="credit-card-info-container">
-              <div class="signup-input-container-checkout">
-                <div class="dialog-text-checkout">Expiry Date</div>
-                <input
-                  class="dialog-input-checkout"
-                  type="number"
-               
-                  style="width: 7rem"
-                  
-                />
-              </div>
-              <div class="signup-input-container-checkout">
-                <div class="dialog-text-checkout">CVC</div>
-                <input
-                  class="dialog-input-checkout"
-                  type="number"
-              
-                  style="width: 7rem"
-                  
-                />
-              </div>
-            </div>
-          </div>
-          <input class="phphiddendiv" name="cartgrandtotal" id="cartgrandtotal" value="0">
-          <button
-            class="payment-button"
-            type='submit'
-          >
-            Pay
-          </button>
-        </form>
-        <div class="checkout-container-right">
+      <div class="page-title-container">
+        <div class="page-title">Order <br/><?php
+        echo $_GET['queryOrderId'];
+        ?>
+       </div>
+      </div>
+
+      <div class="container">
+        <a class="back-container-order-summary" href="allorders.php">
+          <i class="fa-solid fa-arrow-left fa-lg" style="color: #333333"></i>
+          <span class="back-span">Back</span>
+  
+        </a>
+
+
+        <div class="order-summary-container">
+        <div class="page-title-container-trackingorder">
           <div class="cart-container-checkout" id="cart">
-            <div class="cart-title-checkout">Cart</div>
+
+     <div class="track-order-id-title">
+      <?php
+      $servername = "localhost";
+      $username = "root";
+      $password = "";
+      $dbname = "chrispizza";
+
+      $conn = new mysqli($servername, $username, $password, $dbname);
+
+
+      $order_id = $_GET['queryOrderId'];
+      $sql = "SELECT date  FROM ordersummary WHERE order_id = '$order_id'";
+      $result = $conn->query($sql);
+      if ($result === false) {
+        echo "Error: " . $conn->error;
+      } else {
+        if ($result->num_rows > 0) {
+          $row = $result->fetch_assoc();
+          $dateTime = new DateTime($row['date']);
+          $dateFormatted = $dateTime->format('j M Y');
+          $timeFormatted = $dateTime->format('H:i:s');
+          echo $dateFormatted;
+          echo ' ';
+          echo $timeFormatted;
+        }
+      }
+
+
+
+
+      ?>
+     </div>
+            <div class="track-order-id-title">Status:</div>
+          <div class='summary-cusomter-info'>
+          <?php
+          $servername = "localhost";
+          $username = "root";
+          $password = "";
+          $dbname = "chrispizza";
+
+          $conn = new mysqli($servername, $username, $password, $dbname);
+
+
+          $order_id = $_GET['queryOrderId'];
+          $sql = "SELECT *  FROM ordersummary WHERE order_id = '$order_id'";
+          $result = $conn->query($sql);
+          if ($result === false) {
+            echo "Error: " . $conn->error;
+          } else {
+            if ($result->num_rows > 0) {
+              $row = $result->fetch_assoc();
+              echo $row['status'];
+
+            }
+          }
+          ?>
+          </div>
+                <div class="track-order-id-title">Delivered To:</div>
+          <div class="cart-title-checkout">    
+            
+          <?php
+          $servername = "localhost";
+          $username = "root";
+          $password = "";
+          $dbname = "chrispizza";
+
+          $conn = new mysqli($servername, $username, $password, $dbname);
+
+
+          $order_id = $_GET['queryOrderId'];
+          $sql = "SELECT customer_id  FROM ordersummary WHERE order_id = '$order_id'";
+          $result = $conn->query($sql);
+          if ($result === false) {
+            echo "Error: " . $conn->error;
+          } else {
+            if ($result->num_rows > 0) {
+              $row = $result->fetch_assoc();
+              $customerId = $row['customer_id'];
+              $sql = "SELECT *  FROM customers WHERE customer_id = ' $customerId'";
+              $innerresult = $conn->query($sql);
+              if ($innerresult->num_rows > 0) {
+                $row = $innerresult->fetch_assoc();
+                echo "<div class='summary-cusomter-info'>" . $row['name'] . "</div>";
+                echo "<div class='summary-cusomter-info'>" . $row['address'] . "</div>";
+
+
+              }
+            }
+          }
+          ?>
+        </div>
+          <!-- <div class="track-order-id-title">Order Summary:</div> -->
             <?php
 
-            if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0) {
-              echo '<div class="cart-orders-container">';
-              foreach ($_SESSION['cart'] as $index => $cartItem) {
-                // $id = $cartItem['id'];
-                $pizzaName = $cartItem['pizzaName'];
-                $pizzaQty = $cartItem['pizzaQty'];
-                $pizzaQtySubtotal = $cartItem['pizzaQtySubtotal'];
-                $pizzaSize = $cartItem['pizzaSize'];
-                $pizzaTopping1Qty = $cartItem['pizzaTopping1Qty'];
-                $pizzaTopping2Qty = $cartItem['pizzaTopping2Qty'];
-                $pizzaTopping3Qty = $cartItem['pizzaTopping3Qty'];
+            $servername = "localhost";
+            $username = "root";
+            $password = "";
+            $dbname = "chrispizza";
 
-                $pizzaAddOn1Qty = $cartItem['pizzaAddOn1Qty'];
-                $pizzaAddOn2Qty = $cartItem['pizzaAddOn2Qty'];
-                $pizzaAddOn3Qty = $cartItem['pizzaAddOn3Qty'];
-                $pizzaAddOn1Subtotal = $cartItem['pizzaAddOn1Subtotal'];
-                $pizzaAddOn2Subtotal = $cartItem['pizzaAddOn2Subtotal'];
-                $pizzaAddOn3Subtotal = $cartItem['pizzaAddOn3Subtotal'];
-
-                $phpTotal = $cartItem['phpTotal'];
-                if (isset($pizzaName)) {
-                  // echo "<br/>";
-                  // echo "Array Index: $index<br>";
-                  // echo "<br/>";
-                  echo '<form method="POST" action="./php/deleteCartItem.php" class="cart-order-container">';
-                  echo '<div class="cart-item-container">';
-                  // echo "Array Index: $index<br>";
-                  echo '<input class="phphiddendiv" name="index" value="' . $index . '">';
-                  echo '<div class="cart-order-title">' . $pizzaQty . 'x ' . ucfirst($pizzaSize) . " " . $pizzaName . '</div>';
-                  echo '<div class="cart-order-subtotal" id = >$' . number_format($phpTotal, 2) . '</div>';
-                  echo '</div>';
-
-                  echo '<div class="cart-more-details-container">';
-                  if ($pizzaTopping1Qty != 1 || $pizzaTopping2Qty != 1 || $pizzaTopping3Qty != 1) {
-                    echo '<div class="cart-toppings-container">';
-                    echo '<b>Toppings:</b>';
-                    if ($pizzaTopping1Qty != 1) {
-                      echo '<div class="cart-more-details">' . $pizzaTopping1Qty . 'x Pineapple</div>';
-                    }
-                    if ($pizzaTopping2Qty != 1) {
-                      echo '<div class="cart-more-details">' . $pizzaTopping2Qty . 'x Ham</div>';
-                    }
-                    if ($pizzaTopping3Qty != 1) {
-                      echo '<div class="cart-more-details">' . $pizzaTopping3Qty . 'x Cheese</div>';
-                    }
-                    echo '</div>';
-                  }
-                  if ($pizzaAddOn1Qty > 0 || $pizzaAddOn2Qty > 0 || $pizzaAddOn3Qty > 0) {
-                    echo '<div class="cart-addons-container">';
-                    echo '<b>Add Ons:</b>';
-                    if (isset($pizzaAddOn1Qty) && $pizzaAddOn1Qty > 0) {
-                      echo '<div class="cart-addon">' . $pizzaAddOn1Qty . 'x Snack Platter ($' . number_format($pizzaAddOn1Subtotal, 2) . ')</div>';
-                    }
-                    if (isset($pizzaAddOn2Qty) && $pizzaAddOn2Qty > 0) {
-                      echo '<div class="cart-addon">' . $pizzaAddOn2Qty . 'x 10pc Drumlets ($' . number_format($pizzaAddOn2Subtotal, 2) . ')</div>';
-                    }
-                    if (isset($pizzaAddOn3Qty) && $pizzaAddOn3Qty > 0) {
-                      echo '<div class="cart-addon">' . $pizzaAddOn3Qty . 'x Chocolate Waffle ($' . number_format($pizzaAddOn3Subtotal, 2) . ')</div>';
-                    }
-
-                    echo '</div>';
-                  }
-                  echo '</div>';
+            $conn = new mysqli($servername, $username, $password, $dbname);
 
 
-                  echo '<div class="cart-actions-container">';
-                  echo '<div class="cart-actions-subcontainer">';
-                  echo '<i class="fa-regular fa-pen-to-square cart-action-icon fa-lg"></i>';
-
-                  echo '<button class="delete-cart-input" type="submit" name="remove" value=""><i class="fa-regular fa-trash-can cart-action-icon fa-xl"></i></button>';
-                  echo '</div>';
-                  echo '</div>';
-                  echo '</form>';
-                }
-              }
-              echo ' </div>';
-              echo '<div class="totals-container">';
-              echo '<div class="cart-servicefee-container">';
-              echo '<div class="servicefee-title">Service Fee (10%):</div>';
-              echo '<div class="servicefee-amount" id="servicefee-title">$0.00</div>';
-              echo '</div>';
-              echo '<div class="cart-servicefee-container">';
-              echo '<div class="servicefee-title">Delivery Fee:</div>';
-              echo '<div class="servicefee-amount">$3.90</div>';
-              echo '</div>';
-              echo '<div class="cart-servicefee-container">';
-              echo '<div class="cart-grand-total-title">Total:</div>';
-              echo '<div class="cart-grand-total-title" id="cart-grand-total-title-price">$0.00</div>';
-              echo '</div>';
-              echo '</div>';
-              echo '<button class="cart-checkout-button-notfilled" onclick="changePage(\'pizza.php\')">';
-              echo 'Order More';
-              echo '</button>';
+            $order_id = $_GET['queryOrderId'];
+            $sql = "SELECT * FROM orders WHERE order_id = '$order_id'";
+            $result = $conn->query($sql);
 
 
 
+            if ($result === false) {
+              echo "Error: " . $conn->error;
             } else {
-              echo '<h1>Cart Is Empty</h1>';
-              echo '<button class="cart-checkout-button-notfilled" onclick="changePage(\'pizza.php\')">';
-              echo 'Go to Menu';
-              echo '</button>';
+              if ($result->num_rows > 0) {
+                echo '<div class="cart-orders-container">';
+                while ($row = $result->fetch_assoc()) {
+
+                  $pizzaQty = $row["quantity"];
+                  $pizzaQtySubtotal = 0;
+
+                  $pizzaTopping1Qty = $row["topping1"];
+                  $pizzaTopping2Qty = $row["topping2"];
+                  $pizzaTopping3Qty = $row["topping3"];
+
+                  $pizzaAddOn1Qty = $row["addon1"];
+                  $pizzaAddOn2Qty = $row["addon2"];
+                  $pizzaAddOn3Qty = $row["addon3"];
+
+                  $pizzaAddOn1Subtotal = 0;
+                  $pizzaAddOn2Subtotal = 0;
+                  $pizzaAddOn3Subtotal = 0;
+
+                  $phpTotal = $row['sub_total'];
+                  $itemId = $row["item_id"];
+                  $sql = "SELECT * FROM menu WHERE itemid = '$itemId'";
+                  $innerResult = $conn->query($sql);
+                  if ($innerResult === false) {
+                    echo "Error: " . $conn->error;
+                  } else {
+                    $row = $innerResult->fetch_assoc();
+                    $pizzaName = $row["name"];
+                    $pizzaPrice = $row["itemprice"];
+                    $pizzaSize = $row["size"];
+                  }
+                  if (isset($pizzaName)) {
+
+                    echo '<form method="POST" action="./php/deleteCartItem.php" class="cart-order-container">';
+                    echo '<div class="cart-item-container">';
+                    // echo "Array Index: $index<br>";
+            
+                    echo '<div class="cart-order-title">' . $pizzaQty . 'x ' . ucfirst($pizzaSize) . " " . $pizzaName . '</div>';
+                    echo '<div class="cart-order-subtotal" id = >$' . number_format($phpTotal, 2) . '</div>';
+                    echo '</div>';
+
+                    echo '<div class="cart-more-details-container">';
+                    if ($pizzaTopping1Qty != 1 || $pizzaTopping2Qty != 1 || $pizzaTopping3Qty != 1) {
+                      echo '<div class="cart-toppings-container">';
+                      echo '<b>Toppings:</b>';
+                      if ($pizzaTopping1Qty != 1) {
+                        echo '<div class="cart-more-details">' . $pizzaTopping1Qty . 'x Pineapple</div>';
+                      }
+                      if ($pizzaTopping2Qty != 1) {
+                        echo '<div class="cart-more-details">' . $pizzaTopping2Qty . 'x Ham</div>';
+                      }
+                      if ($pizzaTopping3Qty != 1) {
+                        echo '<div class="cart-more-details">' . $pizzaTopping3Qty . 'x Cheese</div>';
+                      }
+                      echo '</div>';
+                    }
+                    if ($pizzaAddOn1Qty > 0 || $pizzaAddOn2Qty > 0 || $pizzaAddOn3Qty > 0) {
+                      echo '<div class="cart-addons-container">';
+                      echo '<b>Add Ons:</b>';
+                      if (isset($pizzaAddOn1Qty) && $pizzaAddOn1Qty > 0) {
+                        echo '<div class="cart-addon">' . $pizzaAddOn1Qty . 'x Snack Platter ($' . number_format($pizzaAddOn1Subtotal, 2) . ')</div>';
+                      }
+                      if (isset($pizzaAddOn2Qty) && $pizzaAddOn2Qty > 0) {
+                        echo '<div class="cart-addon">' . $pizzaAddOn2Qty . 'x 10pc Drumlets ($' . number_format($pizzaAddOn2Subtotal, 2) . ')</div>';
+                      }
+                      if (isset($pizzaAddOn3Qty) && $pizzaAddOn3Qty > 0) {
+                        echo '<div class="cart-addon">' . $pizzaAddOn3Qty . 'x Chocolate Waffle ($' . number_format($pizzaAddOn3Subtotal, 2) . ')</div>';
+                      }
+
+                      echo '</div>';
+                    }
+                    echo '</div>';
+
+
+
+                    echo '</form>';
+                  }
+
+                }
+
+                $sql = "SELECT * FROM ordersummary WHERE order_id = '$order_id'";
+                $totalresult = $conn->query($sql);
+                if ($totalresult->num_rows > 0) {
+                  $row = $totalresult->fetch_assoc();
+                  $total = $row['total'];
+                }
+
+                echo ' </div>';
+                echo '<div class="totals-container">';
+                echo '<div class="cart-servicefee-container">';
+                echo '<div class="servicefee-title">Service Fee (10%):</div>';
+                echo '<div class="servicefee-amount" id="servicefee-title">$' . number_format(($total - 3.90) * (10 / 110), 2) . '</div>';
+                echo '</div>';
+                echo '<div class="cart-servicefee-container">';
+                echo '<div class="servicefee-title">Delivery Fee:</div>';
+                echo '<div class="servicefee-amount">$3.90</div>';
+                echo '</div>';
+                echo '<div class="cart-servicefee-container">';
+                echo '<div class="cart-grand-total-title">Total:</div>';
+                echo '<div class="cart-grand-total-title" id="cart-grand-total-title-price">$' . $total . '</div>';
+                echo '</div>';
+                echo '</div>';
+                //end of while loop
+                echo '</div>';
+              } else {
+                echo 'No orders found for the specified order ID.';
+              }
             }
+
             ?>
+           
      
           </div>
+        </div>
+        
+          
         </div>
       </div>
 
@@ -495,6 +559,16 @@ if (!isset($_SESSION["cart"])) {
           }
         }
 
+        let cart = document.getElementById("cart");
+        function showCart() {
+          // cart.style.display = "flex";
+          cart.style.transform = "translate(0%, -50%)";
+        }
+
+        function hideCart() {
+          // cart.style.display = "none";
+          cart.style.transform = "translate(100%, -50%)";
+        }
 
         let largeButton = document.getElementById("size-large-button");
         let regularButton = document.getElementById("size-regular-button");
@@ -542,34 +616,6 @@ if (!isset($_SESSION["cart"])) {
             }
           }
         }
-
-                //CART FUNCTIONS
-                function cleanUpStringToFloat(input) {
-  return parseFloat(input.replace(/[^\d.]/g, ""));
-}
-                let cart = document.getElementById("cart");
-   
-        getCartTotal();
-function getCartTotal() {
-  let cartTotal = 0;
-  let subtotalElements = document.getElementsByClassName("cart-order-subtotal");
-  Array.from(subtotalElements).forEach((element) => {
-    
-    cartTotal += cleanUpStringToFloat(element.innerHTML);
-  });
-  
-
-  cartTotal += cartTotal * 0.1;
-  document.getElementById("servicefee-title").innerHTML =
-    "$" + (cartTotal * 0.1).toFixed(2);
-  cartTotal += 3.9;
-  document.getElementById("cart-grand-total-title-price").innerHTML =
-    "$" + cartTotal.toFixed(2);
-    console.log(document.getElementById('cartgrandtotal').value)
-document.getElementById('cartgrandtotal').value = cartTotal;
-console.log(document.getElementById('cartgrandtotal').value)
-}
-
       </script>
       <script
         src="https://kit.fontawesome.com/0ef6f85575.js"

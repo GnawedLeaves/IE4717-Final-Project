@@ -1,8 +1,6 @@
 <?php
 session_start();
-var_dump($_SESSION);
-$id = session_id();
-echo "<br> Session id in index = $id <br>";
+error_reporting(E_ERROR | E_PARSE);
 
 
 if (!isset($_SESSION["cart"])) {
@@ -20,6 +18,7 @@ if (!isset($_SESSION["cart"])) {
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Calistoga&family=Galada&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+<link rel="icon" href="./assets/images/favicon/favicon.ico" type="image/x-icon"/>
     <title>Chris' Pizza</title>
     <style></style>
   </head>
@@ -136,7 +135,7 @@ if (!isset($_SESSION["cart"])) {
         <div class="navbarItems">
           <a href="#" class="navbarItem">Menu</a>
           <a href="#" class="navbarItem">Offers</a>
-          <a href="#" class="navbarItem">Your Orders</a>
+          <a href="allorders.php" class="navbarItem">Your Orders</a>
           <a href="stores.php" class="navbarItem">Stores</a>
           <a href="#" class="navbarItem">Support</a>
         </div>

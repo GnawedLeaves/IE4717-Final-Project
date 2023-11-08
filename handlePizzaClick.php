@@ -1,20 +1,13 @@
 <?php
 session_start();
-
-$id = session_id();
-echo "Session id in pizza test = $id <br>";
+error_reporting(E_ERROR | E_PARSE);
 
 
 
 if (!isset($_SESSION["cart"])) {
   $_SESSION['cart'] = array();
-} else {
-  echo 'cart exists';
 }
 
-
-echo "SESSION: " . var_dump($_SESSION);
-echo "CART: " . $_SESSION['cart'];
 
 
 
@@ -34,9 +27,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   $pizzaAddOn3Subtotal = $_POST['pizzaAddOn3Subtotal'];
   $phpTotal = $_POST['phpTotal'];
 
-
-  $id = session_id();
-  echo "Session id in pizza test = $id <br>";
 
   if (isset($_POST['pizzaName']) && isset($_POST['pizzaQty']) && isset($_POST['pizzaQtySubtotal'])) {
     $pizzaName = $_POST['pizzaName'];
@@ -63,47 +53,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'phpTotal' => $phpTotal
       )
     );
-
-    // // check if they added a add on, if have then if qty > 0 then you add into cart if not just ignore
-    // if (isset($_POST['pizzaAddOn1Qty'])) {
-    //   if ($_POST['pizzaAddOn1Qty'] > 0) {
-    //     array_push(
-    //       $_SESSION['cart'],
-    //       array(
-    //         'id' => $id,
-    //         'pizzaAddOnName' => '1',
-    //         'pizzaAddOn1Qty' => $pizzaAddOn1Qty,
-    //         'pizzaAddOn1Subtotal' => $pizzaAddOn1Subtotal
-    //       )
-    //     );
-    //   }
-    // }
-    // if (isset($_POST['pizzaAddOn2Qty'])) {
-    //   if ($_POST['pizzaAddOn2Qty'] > 0) {
-    //     array_push(
-    //       $_SESSION['cart'],
-    //       array(
-    //         'id' => $id,
-    //         'pizzaAddOnName' => '2',
-    //         'pizzaAddOn2Qty' => $pizzaAddOn2Qty,
-    //         'pizzaAddOn2Subtotal' => $pizzaAddOn2Subtotal
-    //       )
-    //     );
-    //   }
-    // }
-    // if (isset($_POST['pizzaAddOn3Qty'])) {
-    //   if ($_POST['pizzaAddOn3Qty'] > 0) {
-    //     array_push(
-    //       $_SESSION['cart'],
-    //       array(
-    //         'id' => $id,
-    //         'pizzaAddOnName' => '3',
-    //         'pizzaAddOn3Qty' => $pizzaAddOn3Qty,
-    //         'pizzaAddOn3Subtotal' => $pizzaAddOn3Subtotal
-    //       )
-    //     );
-    //   }
-    // }
     header('Location: pizza.php');
     exit();
 
@@ -129,6 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Calistoga&family=Galada&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+<link rel="icon" href="./assets/images/favicon/favicon.ico" type="image/x-icon"/>
     <title>Chris' Pizza</title>
     <style></style>
   </head>
@@ -152,7 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="navbarItems">
           <a href="#" class="navbarItem">Menu</a>
           <a href="#" class="navbarItem">Offers</a>
-          <a href="#" class="navbarItem">Your Orders</a>
+          <a href="allorders.php" class="navbarItem">Your Orders</a>
           <a href="stores.php" class="navbarItem">Stores</a>
           <a href="#" class="navbarItem">Support</a>
         </div>
