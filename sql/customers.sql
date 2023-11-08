@@ -6,7 +6,6 @@ CREATE TABLE customers (
     email VARCHAR(40) NOT NULL,
     address VARCHAR(40) NOT NULL,
     contact VARCHAR(40),
-    type VARCHAR(40) NOT NULL
+    type VARCHAR(40) NOT NULL,
+    orders VARCHAR(40)
 );
-
-INSERT INTO customers (name, password) VALUES ('adminuser', SHA1('abc123'));

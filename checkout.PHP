@@ -207,7 +207,7 @@ if (!isset($_SESSION["cart"])) {
                 class="dialog-input-checkout"
                 type="number"
                 name="checkout-contact"
-                required
+                
               />
             </div>
           </div>

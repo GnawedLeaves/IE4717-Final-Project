@@ -41,6 +41,7 @@ if (isset($_POST["checkout-email"])) {
     $customer = $result->fetch_assoc();
     $existingCustomerId = $customer["customer_id"];
     $customerId = $existingCustomerId;
+    $_SESSION['customer_id'] = $customerId;
     echo "Customer ID: " . $existingCustomerId;
   } else {
     // Adding a new customer
@@ -58,7 +59,7 @@ if (isset($_POST["checkout-email"])) {
       // Get the customer ID of the customer just inserted.
       $newCustomerId = $conn->insert_id;
       $customerId = $newCustomerId;
-
+      $_SESSION['customer_id'] = $customerId;
     } else {
       // Handle the case where the insert operation fails.
       echo "Error: " . $conn->error;
@@ -67,6 +68,7 @@ if (isset($_POST["checkout-email"])) {
 }
 
 echo 'id:' . $customerId . '<br>';
+var_dump($_SESSION);
 
 //end of customer Id handling 
 
@@ -139,28 +141,23 @@ if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0) {
 
     //end of getting the item id, time to insert into database
     $sql = "INSERT INTO orders (order_id, customer_id, item_id, quantity, topping1, topping2, topping3, addon1, addon2, addon3, sub_total, status)
-    VALUES ('$orderId', $customerId, $itemId, $pizzaQty, $pizzaTopping1Qty, $pizzaTopping2Qty, $pizzaTopping3Qty, $pizzaAddOn1Qty, $pizzaAddOn2Qty, $pizzaAddOn3Qty, $phpTotal, 'pending')";
+    VALUES ('$orderId', $customerId, $itemId, $pizzaQty, $pizzaTopping1Qty, $pizzaTopping2Qty, $pizzaTopping3Qty, $pizzaAddOn1Qty, $pizzaAddOn2Qty, $pizzaAddOn3Qty, $phpTotal, 'In The Kitchen')";
 
     if ($conn->query($sql) === TRUE) {
       echo "Order inserted successfully.";
+      $sql = "UPDATE customers SET orders = '$orderId' WHERE customer_id = '$customerId'";
+      if ($conn->query($sql) === TRUE) {
+        echo "updated order in customer table";
+      }
     } else {
       //echo "Error: " . $sql . "<br>" . $conn->error;
       echo 'error inserting';
     }
 
   }
+  $_SESSION['cart'] = array();
+
 }
-
-
-
-
-
-
-
-
-
-
-
 
 
 //change so that the cart will be cleared when the order is complete
@@ -314,10 +311,10 @@ if (!isset($_SESSION["cart"])) {
         </div>
 
         <div class="cart-profile-container">
-          <i
+          <!-- <i
             class="nav-icon fa-solid fa-cart-shopping fa-xl"
             onclick="showCart()"
-          ></i>
+          ></i> -->
           <button
             class="button-filled join-button"
             onclick="openDialog('sign-up-dialog')"
@@ -380,9 +377,45 @@ if (!isset($_SESSION["cart"])) {
       <div class="container">
         <div class="page-title-container-trackingorder">
           <div class="track-order-id-title">Order ID:</div>
-          <div class="track-order-id"><?php
-          $orderId
-            ?></div>
+          <div class="track-order-id">
+            
+            <?php
+            $servername = "localhost";
+            $username = "root";
+            $password = "";
+            $dbname = "chrispizza";
+
+            $conn = new mysqli($servername, $username, $password, $dbname);
+
+            if ($conn->connect_error) {
+              die("Connection failed: " . $conn->connect_error);
+            }
+
+            $customer_id = $_SESSION['customer_id'];
+
+            $sql = " SELECT orders FROM customers WHERE customer_id = '$customer_id'";
+            $result = $conn->query($sql);
+            if ($result === false) {
+              // Check for errors in the query
+              echo "Error: " . $conn->error;
+            } else {
+              if ($result->num_rows > 0) {
+                $row = $result->fetch_assoc();
+                $orderId = $row["orders"];
+                echo $orderId;
+                $_SESSION['currentOrderId'] = $orderId;
+              } else {
+                echo 'Order does not exist';
+              }
+            }
+
+
+
+
+            ?>
+          
+        
+        </div>
           <div class="track-order-id-title">Estimated Delivery Time:</div>
           <div class="track-order-id-sub">3.53pm</div>
           <div class="track-order-id-title">Status:</div>
