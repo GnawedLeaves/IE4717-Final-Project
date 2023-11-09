@@ -84,7 +84,7 @@ if (!isset($_SESSION["cart"])) {
           </div>
         </div>
       </form>
-      <form class="dialog-container" id="signinDialog" method="dialog">
+      <form class="dialog-container" id="signinDialog" method="post" action = 'signin.php'>
         <div class="dialog-title">Sign In</div>
 
         <div class="signup-input=container">
@@ -108,7 +108,7 @@ if (!isset($_SESSION["cart"])) {
         </div>
 
         <div class="signup-button-container">
-          <button class="dialog-signin-button" id="dialog-signin-button">
+          <button class="dialog-signin-button" id="dialog-signin-button" name = "sign-in-submit">
             Sign In
           </button>
           <div class="dialog-button-subtext">
@@ -143,13 +143,13 @@ if (!isset($_SESSION["cart"])) {
         <div class="cart-profile-container">
           <i class="nav-icon fa-solid fa-cart-shopping fa-2xl"  onclick="showCart()">
           <?php
-                    if (isset($_SESSION['cart'])){
-                      if (count($_SESSION['cart']) > 0){
-                        echo "<div class='cart-number'>" . count($_SESSION['cart']) . " </div>";
-                      }
-                    
-                    }
-            ?></i>
+          if (isset($_SESSION['cart'])) {
+            if (count($_SESSION['cart']) > 0) {
+              echo "<div class='cart-number'>" . count($_SESSION['cart']) . " </div>";
+            }
+
+          }
+          ?></i>
           <button
             class="button-filled join-button"
             onclick="openDialog('sign-up-dialog')"
