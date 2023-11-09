@@ -76,7 +76,7 @@ a {
   margin: 0.5rem 0;
   height: 2rem;
   border: none;
-  font-size: 1.1rem;
+  font-size: 0.9rem;
 }
 
 .signup-button-container {
@@ -197,12 +197,14 @@ a {
 }
 
 .button-filled {
-  background: var(--primary);
+
   padding: 0.5rem 1.5rem;
   color: var(--background);
+  border: 1px solid var(--primary);
+  background: var(--primary);
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
   border-radius: 5px;
-  border: 1px solid var(--primary);
+
   transition: 0.3s;
   cursor: pointer;
 }
@@ -211,6 +213,23 @@ a {
   background: var(--background);
   color: var(--primary);
   border: 1px solid var(--primary);
+}
+
+.button-not-filled {
+  padding: 0.5rem 1.5rem;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  border-radius: 5px;
+  transition: 0.3s;
+  cursor: pointer;
+  background: var(--background);
+  color: var(--primary);
+  border: 1px solid var(--primary);
+}
+
+.button-not-filled:hover {
+  color: var(--background);
+  border: 1px solid var(--primary);
+  background: var(--primary);
 }
 
 .join-button {
@@ -1461,13 +1480,18 @@ input[type=radio] {
   font-weight: 600;
 }
 
-.cart-number{
-  padding: 0.8rem 0.6rem ;
+.cart-number {
+  padding: 0.8rem 0.6rem;
   border-radius: 100%;
   background: var(--primary);
   color: var(--background);
   position: absolute;
   top: -1.9rem;
-  right:-0.8rem;
+  right: -0.8rem;
   font-size: 1rem;
+}
+
+#signup-error {
+
+  font-size: 0.9rem;
 }

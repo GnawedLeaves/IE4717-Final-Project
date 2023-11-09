@@ -30,7 +30,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `customers` (
   `customer_id` int(11) NOT NULL,
   `name` varchar(40) NOT NULL,
-  `password` varchar(40) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
   `email` varchar(40) NOT NULL,
   `address` varchar(40) NOT NULL,
   `contact` varchar(40) DEFAULT NULL,
@@ -46,9 +46,6 @@ INSERT INTO `customers` (`customer_id`, `name`, `password`, `email`, `address`, 
 (1, 'Ahmad Bin Abdullah', 'sghotpot', 'ahmad.abdullah@example.sg', '123 Orchard Road', '+65 9123 4567', 'member', NULL),
 (2, 'Linda Tan', 'noodlelover', 'linda.tan@example.sg', '456 Serangoon Ave', '+65 9876 5432', 'guest', NULL),
 (3, 'Siti Lim', 'singaporefood', 'siti.lim@example.sg', '789 Tampines St', '+65 8234 5678', 'member', NULL),
-(4, 'Marcel Yap', NULL, 'Marcelyap31@gmail.com', '45 Brockhampton Drive', '97774668', 'guest', '654bc002d1605'),
-(5, 'Yap Qi Long, Marcel', NULL, 'yapq0006@e.ntu.edu.sg', '45 Brockhampton Drive,', '', 'guest', '654bb9fcc433b'),
-(6, 'heheh hahaha ', NULL, 'cz@gmail.com', '43 hiuhqdw drive', '80123780123', 'guest', '654bc04d62e15');
 
 -- --------------------------------------------------------
 

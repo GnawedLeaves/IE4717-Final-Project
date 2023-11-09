@@ -149,12 +149,12 @@ if (!isset($_SESSION["cart"])) {
             onclick="showCart()"
           >
             <?php
-                    if (isset($_SESSION['cart'])){
-                      if (count($_SESSION['cart']) > 0){
-                        echo "<div class='cart-number'>" . count($_SESSION['cart']) . " </div>";
-                      }
-                    
-                    }
+            if (isset($_SESSION['cart'])) {
+              if (count($_SESSION['cart']) > 0) {
+                echo "<div class='cart-number'>" . count($_SESSION['cart']) . " </div>";
+              }
+
+            }
             ?>
          </i>
           <button
@@ -329,7 +329,7 @@ if (!isset($_SESSION["cart"])) {
               </div>';
 
             } else {
-              echo "No orders found.";
+              echo "No orders found.  Please sign in or place an order.";
             }
           }
 
@@ -376,7 +376,7 @@ if (!isset($_SESSION["cart"])) {
                  echo '<div class="total-title">$' . $total . '</div>    <br />';
                  echo '                <div class="order-title">Status:</div>
                 <div class="total-title">' . $status . '</div><br />';
-                echo '                <div class="order-title">Delivered on:</div>
+                 echo '                <div class="order-title">Delivered on:</div>
                 <div class="total-title">' . substr($delivery_time, 0, 5) . '</div>';
                  echo '    <button class="see-order-button">Details</button>';
                  echo '</form>';

@@ -2,6 +2,7 @@
 session_start();
 error_reporting(E_ERROR | E_PARSE);
 
+var_dump($_SESSION);
 
 if (!isset($_SESSION["cart"])) {
   $_SESSION['cart'] = array();
@@ -29,7 +30,7 @@ if (!isset($_SESSION["cart"])) {
         id="dialog-close-icon"
         onclick="closeDialog('sign-up-dialog')"
       ></i>
-      <form class="dialog-container" id="signupDialog" method="dialog">
+      <form class="dialog-container" onsubmit="submitSignupForm(); return false;" id="signupDialog" method="post" action = './php/signUp.php'>
         <div class="dialog-title">Sign Up</div>
 
         <div class="signup-input-container">
@@ -52,6 +53,7 @@ if (!isset($_SESSION["cart"])) {
             class="dialog-input"
             type="password"
             name="signup-password"
+            id="signup-password"
             required
           />
         </div>
@@ -69,7 +71,7 @@ if (!isset($_SESSION["cart"])) {
           <div class="dialog-text">Contact Number</div>
           <input class="dialog-input" type="number" name="signup-contact" />
         </div>
-
+        <div id="signup-error"></div>
         <div class="signup-button-container">
           <button class="dialog-signin-button" id="dialog-signup-button">
             Sign Up
@@ -84,17 +86,19 @@ if (!isset($_SESSION["cart"])) {
           </div>
         </div>
       </form>
-      <form class="dialog-container" id="signinDialog" method="post" action = 'signin.php'>
+      <form class="dialog-container" onsubmit="submitSigninForm(); return false;" id="signinDialog" method="post" action = './php/signIn.php'>
         <div class="dialog-title">Sign In</div>
-
+        
         <div class="signup-input=container">
           <div class="dialog-text">Email</div>
           <input
             class="dialog-input"
             type="email"
             name="signin-email"
+            id="signin-email"
             required
           />
+          <div id="signin-error-email"></div>
         </div>
 
         <div class="signup-input=container">
@@ -103,9 +107,12 @@ if (!isset($_SESSION["cart"])) {
             class="dialog-input"
             type="password"
             name="signin-password"
+            id="signin-password"
             required
           />
+          <div id="signin-error-password"></div>
         </div>
+       
 
         <div class="signup-button-container">
           <button class="dialog-signin-button" id="dialog-signin-button" name = "sign-in-submit">
@@ -150,12 +157,14 @@ if (!isset($_SESSION["cart"])) {
 
           }
           ?></i>
-          <button
-            class="button-filled join-button"
-            onclick="openDialog('sign-up-dialog')"
-          >
-            Join Us
-          </button>
+          <?php
+          if ($_SESSION["logged_in"] && isset($_SESSION["customer_id"])) {
+            echo '<button class=" join-button button-not-filled" onclick="logout()">Log Out</button>';
+          } else {
+            echo '<button class="button-filled join-button" onclick="openDialog(\'sign-up-dialog\')">Join Us</button>';
+          }
+
+          ?>
         </div>
       </div>
       <div class="cart-container" id="cart">
@@ -508,6 +517,103 @@ function getCartTotal() {
   cartTotal += 3.9;
   document.getElementById("cart-grand-total-title-price").innerHTML =
     "$" + cartTotal.toFixed(2);
+}
+
+//Sign In/ Sign Up Functions
+
+function submitSigninForm() {
+    // Get form data
+    var formData = new FormData(document.getElementById('signinDialog'));
+
+    // Use the Fetch API to send a POST request to the server
+    fetch('./php/signIn.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.text())
+    .then(data => {
+        // Handle the response
+       
+        console.log(data);
+        if (data.includes('successful')) {
+          setTimeout(function () {
+                closeDialog('sign-up-dialog');
+                location.reload();
+            }, 1000);
+          document.getElementById('signin-password').style.border = "1px solid black";
+          document.getElementById('signin-error-password').innerHTML = data;
+        }
+        else if (data.includes('Email')) {
+          document.getElementById('signin-error-email').innerHTML = data;
+          document.getElementById('signin-email').style.border = "1px solid red";
+          document.getElementById('signin-error-password').innerHTML = "";
+          document.getElementById('signin-password').style.border = "1px solid black";
+        }
+        else if (data.includes('password')) {
+          document.getElementById('signin-error-password').innerHTML = data;
+          document.getElementById('signin-password').style.border = "1px solid red";
+          document.getElementById('signin-password').value = "";
+          document.getElementById('signin-email').style.border = "1px solid black";
+          document.getElementById('signin-error-email').innerHTML = "";
+        }
+         
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+
+function submitSignupForm() {
+    // Get form data
+    var formData = new FormData(document.getElementById('signupDialog'));
+
+    // Use the Fetch API to send a POST request to the server
+    fetch('./php/signUp.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.text())
+    .then(data => {
+        // Handle the response
+        document.getElementById('signup-error').innerHTML = data;
+
+        console.log(data);
+        if (data.includes('successfully')) {
+          setTimeout(function () {
+            location.reload();
+            closeDialog('sign-up-dialog');
+        
+            }, 1000);
+      
+        }
+
+         
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+
+function logout() {
+    // Get form data
+    var formData = new FormData(document.getElementById('signupDialog'));
+
+    // Use the Fetch API to send a POST request to the server
+    fetch('./php/logout.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.text())
+    .then(data => {
+        // Handle the response
+        location.reload();
+        
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
 }
       </script>
       <script
