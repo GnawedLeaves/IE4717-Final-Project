@@ -215,7 +215,7 @@ if (!isset($_SESSION["cart"])) {
                   class="ordering-pizza-size-button"
                   onclick="toggleSizeButtons(this)"
                 >
-                  Credit Card
+                  MasterCard
                 </div>
                 <div
                   id="size-large-button"
@@ -223,7 +223,7 @@ if (!isset($_SESSION["cart"])) {
                   value="19.70"
                   onclick="toggleSizeButtons(this)"
                 >
-                  Paylah
+                  Visa
                 </div>
               </div>
             </div>

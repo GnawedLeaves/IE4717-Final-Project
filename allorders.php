@@ -145,9 +145,18 @@ if (!isset($_SESSION["cart"])) {
 
         <div class="cart-profile-container">
           <i
-            class="nav-icon fa-solid fa-cart-shopping fa-xl"
+            class="nav-icon fa-solid fa-cart-shopping fa-2xl"
             onclick="showCart()"
-          ></i>
+          >
+            <?php
+                    if (isset($_SESSION['cart'])){
+                      if (count($_SESSION['cart']) > 0){
+                        echo "<div class='cart-number'>" . count($_SESSION['cart']) . " </div>";
+                      }
+                    
+                    }
+            ?>
+         </i>
           <button
             class="button-filled join-button"
             onclick="openDialog('sign-up-dialog')"
@@ -309,7 +318,9 @@ if (!isset($_SESSION["cart"])) {
                 echo '<div class="order-title">Total:</div>';
                 echo '<div class="total-title">$' . $total . '</div>    <br />';
                 echo '                <div class="order-title">Status:</div>
-                <div class="total-title">' . $status . '</div>';
+                <div class="total-title">' . $status . '</div><br />';
+                echo '                <div class="order-title">Estimated Delivery Time:</div>
+                <div class="total-title">' . substr($delivery_time, 0, 5) . '</div>';
                 echo '    <button class="see-order-button">Details</button>';
                 echo '</form>';
 
@@ -364,7 +375,9 @@ if (!isset($_SESSION["cart"])) {
                  echo '<div class="order-title">Total:</div>';
                  echo '<div class="total-title">$' . $total . '</div>    <br />';
                  echo '                <div class="order-title">Status:</div>
-                <div class="total-title">' . $status . '</div>';
+                <div class="total-title">' . $status . '</div><br />';
+                echo '                <div class="order-title">Delivered on:</div>
+                <div class="total-title">' . substr($delivery_time, 0, 5) . '</div>';
                  echo '    <button class="see-order-button">Details</button>';
                  echo '</form>';
 

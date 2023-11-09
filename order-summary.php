@@ -280,6 +280,34 @@ error_reporting(E_ERROR | E_PARSE);
           }
           ?>
           </div>
+          <div class="track-order-id-title">Estimated Delivery Time:</div>
+          <div class='summary-cusomter-info'>
+          <?php
+          $servername = "localhost";
+          $username = "root";
+          $password = "";
+          $dbname = "chrispizza";
+
+          $conn = new mysqli($servername, $username, $password, $dbname);
+
+
+          $order_id = $_GET['queryOrderId'];
+          $sql = "SELECT * FROM ordersummary WHERE order_id = '$order_id'";
+          $result = $conn->query($sql);
+          if ($result === false) {
+            echo "Error: " . $conn->error;
+          } else {
+            if ($result->num_rows > 0) {
+              $row = $result->fetch_assoc();
+              echo substr($row['delivery_time'], 0, 5);
+
+            }
+          }
+          ?>
+
+
+          </div>
+
                 <div class="track-order-id-title">Delivered To:</div>
           <div class="cart-title-checkout">    
             

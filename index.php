@@ -141,7 +141,15 @@ if (!isset($_SESSION["cart"])) {
         </div>
 
         <div class="cart-profile-container">
-          <i class="nav-icon fa-solid fa-cart-shopping fa-xl"  onclick="showCart()"></i>
+          <i class="nav-icon fa-solid fa-cart-shopping fa-2xl"  onclick="showCart()">
+          <?php
+                    if (isset($_SESSION['cart'])){
+                      if (count($_SESSION['cart']) > 0){
+                        echo "<div class='cart-number'>" . count($_SESSION['cart']) . " </div>";
+                      }
+                    
+                    }
+            ?></i>
           <button
             class="button-filled join-button"
             onclick="openDialog('sign-up-dialog')"
@@ -261,27 +269,6 @@ if (!isset($_SESSION["cart"])) {
         }
         ?>
 
-       
-        <!-- <div class="totals-container">
-          <div class="cart-servicefee-container">
-            <div class="servicefee-title">Service Fee (10%):</div>
-            <div class="servicefee-amount">$7.90</div>
-          </div>
-          <div class="cart-servicefee-container">
-            <div class="servicefee-title">Delivery Fee:</div>
-            <div class="servicefee-amount">$3.90</div>
-          </div>
-          <div class="cart-servicefee-container">
-            <div class="cart-grand-total-title">Total:</div>
-            <div class="cart-grand-total-title">$0.00</div>
-          </div>
-        </div>
-        <button
-          class="cart-checkout-button"
-          onclick="changePage('checkout.php')"
-        >
-          Check Out
-        </button> -->
       </div>
 
       <div class="container">

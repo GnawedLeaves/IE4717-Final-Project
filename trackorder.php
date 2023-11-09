@@ -84,6 +84,8 @@ if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0) {
   $orderDateTimeForSQL = $orderDateTime->format('Y-m-d H:i:s');
 
 
+
+
   $sql = "INSERT INTO orderSummary (order_id, customer_id, total, date, delivery_time, status) VALUES ('$orderId', $customerId, '$cartgrandtotal', '$orderDateTimeForSQL','$dateTimeForSQL' ,'In the Kitchen')";
   if ($conn->query($sql) === TRUE) {
     foreach ($_SESSION['cart'] as $index => $cartItem) {
@@ -149,6 +151,30 @@ if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0) {
 
         $sql = "UPDATE customers SET orders = '$orderId' WHERE customer_id = '$customerId'";
         if ($conn->query($sql) === TRUE) {
+          $dateFormatted = $currentDateTime->format('j M Y');
+          $timeFormatted = $currentDateTime->format('H:i:s');
+        
+          $currentDateTime2  = new DateTime();
+          $dateFormatted2 = $currentDateTime2->format('j M Y');
+          $timeFormatted2 = $currentDateTime2->format('H:i:s');
+          $to = 'f32ee@localhost';
+$subject = 'Your Delicious Pizza Order is Confirmed! ';
+$message = "Hi ". $checkoutName .",<br/><br/>" . "We're thrilled to let you know that your pizza order is officially confirmed and in the works! Our expert chefs are gearing up to craft the perfect, mouthwatering pizza experience just for you." 
+. "<br/>Here are the details of your order:<br/><br/>
+Order Number: ".$orderId."<br/> 
+Delivery Address: ".$checkoutAddress."<br/>
+Date Ordered: ".$dateFormatted2. " " . $timeFormatted2."<br/>
+Estimated Delivery Time: ".$dateFormatted." ". $timeFormatted. "<br/><br/>" 
+. "You can view and track your order <a href='http://localhost:8000/YAPQ0006/Documents/IE4717/IE4717-Final-Project/order-summary.php?queryOrderId=$orderId'>here</a>.<br/>"
+."If you have any special requests or need to make any changes to your order, feel free to reply to this email or give us a call at +65 6347 3287 or drop us an email at chrispizza@gmail.com.<br/>"
+. "Thank you once again for choosing Chris' Pizza. We can't wait for you to savor the deliciousness we have in store for you!<br/><br/>"
+. "Best Regards,<br/>
+Chris' Pizza";
+$headers = 'From: f32ee@localhost' . "\r\n" .
+'Reply-To: f32ee@localhost' . "\r\n" .
+'X-Mailer: PHP/' . phpversion();$headers .= "\r\nContent-Type: text/html; charset=UTF-8\r\n";
+mail($to, $subject, $message, $headers,
+'-ff32ee@localhost');
 
         }
       } else {
