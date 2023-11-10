@@ -45,7 +45,7 @@ CREATE TABLE `customers` (
 INSERT INTO `customers` (`customer_id`, `name`, `password`, `email`, `address`, `contact`, `type`, `orders`) VALUES
 (1, 'Ahmad Bin Abdullah', 'sghotpot', 'ahmad.abdullah@example.sg', '123 Orchard Road', '+65 9123 4567', 'member', NULL),
 (2, 'Linda Tan', 'noodlelover', 'linda.tan@example.sg', '456 Serangoon Ave', '+65 9876 5432', 'guest', NULL),
-(3, 'Siti Lim', 'singaporefood', 'siti.lim@example.sg', '789 Tampines St', '+65 8234 5678', 'member', NULL),
+(3, 'Siti Lim', 'singaporefood', 'siti.lim@example.sg', '789 Tampines St', '+65 8234 5678', 'member', NULL);
 
 -- --------------------------------------------------------
 
@@ -66,10 +66,10 @@ CREATE TABLE `feedback` (
 --
 
 INSERT INTO `feedback` (`id`, `order_id`, `customer_id`, `rating`, `comments`) VALUES
-(1, '654bba74cfb3d', 4, 2, 'ee'),
-(2, '654bba74cfb3d', 4, 2, 'ee'),
-(3, '654bba74cfb3d', 4, 4, 'eee'),
-(4, '654bc002d1605', 4, 3, '12`12`12');
+(1, '654bba74cfb3d', 3, 2, 'ee'),
+(2, '654bba74cfb3d', 3, 2, 'ee'),
+(3, '654bba74cfb3d', 3, 4, 'eee'),
+(4, '654bc002d1605', 3, 3, '12`12`12');
 
 -- --------------------------------------------------------
 
@@ -168,14 +168,14 @@ CREATE TABLE `ordersummary` (
 --
 
 INSERT INTO `ordersummary` (`id`, `order_id`, `customer_id`, `total`, `date`, `delivery_time`, `status`) VALUES
-(1, '654b6c02a5397', 4, 151.21, '2023-11-08 19:07:46', '19:37:46', 'In the Kitchen'),
-(2, '654bb4ec42a5d', 4, 177.58, '2023-11-09 00:18:52', '00:48:52', 'Completed'),
-(3, '654bb83783541', 4, 56.66, '2023-11-09 00:32:55', '01:02:55', 'In the Kitchen'),
-(4, '654bb9c2cbf7e', 4, 98.45, '2023-11-09 00:39:30', '01:09:30', 'In the Kitchen'),
-(5, '654bb9fcc433b', 5, 62.15, '2023-11-09 00:40:28', '01:10:28', 'In the Kitchen'),
-(6, '654bba74cfb3d', 4, 120.43, '2023-11-09 00:42:28', '01:12:28', 'In the Kitchen'),
-(7, '654bc002d1605', 4, 304.53, '2023-11-09 01:06:10', '01:36:10', 'In the Kitchen'),
-(8, '654bc04d62e15', 6, 81.95, '2023-11-09 01:07:25', '01:37:25', 'In the Kitchen');
+(1, '654b6c02a5397', 3, 151.21, '2023-11-08 19:07:46', '19:37:46', 'In the Kitchen'),
+(2, '654bb4ec42a5d', 3, 177.58, '2023-11-09 00:18:52', '00:48:52', 'Completed'),
+(3, '654bb83783541', 3, 56.66, '2023-11-09 00:32:55', '01:02:55', 'In the Kitchen'),
+(4, '654bb9c2cbf7e', 3, 98.45, '2023-11-09 00:39:30', '01:09:30', 'In the Kitchen'),
+(5, '654bb9fcc433b', 3, 62.15, '2023-11-09 00:40:28', '01:10:28', 'In the Kitchen'),
+(6, '654bba74cfb3d', 3, 120.43, '2023-11-09 00:42:28', '01:12:28', 'In the Kitchen'),
+(7, '654bc002d1605', 3, 304.53, '2023-11-09 01:06:10', '01:36:10', 'In the Kitchen'),
+(8, '654bc04d62e15', 3, 81.95, '2023-11-09 01:07:25', '01:37:25', 'In the Kitchen');
 
 --
 -- Indexes for dumped tables
