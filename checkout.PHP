@@ -416,7 +416,7 @@ if (!isset($_SESSION["logged_in"])) {
             </div>
           </div>
           <input class="phphiddendiv" name="cartgrandtotal" id="cartgrandtotal" value="0">
-          <button onclick="checkCheckoutInputs()" type="button">check</button>
+    
           <button
             class="payment-button"
             type='submit'
@@ -944,7 +944,10 @@ function checkCheckoutInputs(){
   }
 
   allInputsValid = testSignUpAddress(checkoutAddressInput) && testSignUpEmail(checkoutEmailInput) && testSignUpName(checkoutNameInput);
-  console.log("allInputsValid",allInputsValid)
+  console.log("allInputsValid",allInputsValid);
+  if (!allInputsValid){
+    alert("Details incorrectly filled. Please check again.")
+  }
   return  allInputsValid;
 
 }
