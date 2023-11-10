@@ -21,18 +21,20 @@ error_reporting(E_ERROR | E_PARSE);
     <style></style>
   </head>
   <body>
-    <dialog id="sign-up-dialog" class="signup-dialog">
+  <dialog id="sign-up-dialog" class="signup-dialog">
       <i
         class="fa-solid fa-xmark fa-l"
         id="dialog-close-icon"
         onclick="closeDialog('sign-up-dialog')"
       ></i>
-      <form class="dialog-container" id="signupDialog" method="dialog">
+      <form class="dialog-container" onsubmit="submitSignupForm(); return false;" id="signupDialog" method="post" action = './php/signUp.php'>
+
         <div class="dialog-title">Sign Up</div>
 
         <div class="signup-input-container">
           <div class="dialog-text">Name</div>
-          <input class="dialog-input" type="text" name="signup-name" required />
+          <input class="dialog-input" type="text" name="signup-name" id="signup-name" required />
+          <div style="color: red;" id="signup-name-error"></div>
         </div>
         <div class="signup-input-container">
           <div class="dialog-text">Email</div>
@@ -40,8 +42,10 @@ error_reporting(E_ERROR | E_PARSE);
             class="dialog-input"
             type="email"
             name="signup-email"
+            id = "signup-email"
             required
           />
+          <div style="color: red;" id="signup-email-error"></div>
         </div>
 
         <div class="signup-input-container">
@@ -50,8 +54,10 @@ error_reporting(E_ERROR | E_PARSE);
             class="dialog-input"
             type="password"
             name="signup-password"
+            id="signup-password"
             required
           />
+          <div style="color: red;" id="signup-password-error"></div>
         </div>
 
         <div class="signup-input-container">
@@ -60,14 +66,16 @@ error_reporting(E_ERROR | E_PARSE);
             class="dialog-input"
             type="text"
             name="signup-address"
+            id="signup-address"
             required
           />
+          <div style="color: red;" id="signup-address-error"></div>
         </div>
         <div class="signup-input-container">
           <div class="dialog-text">Contact Number</div>
           <input class="dialog-input" type="number" name="signup-contact" />
         </div>
-
+        <div id="signup-error"></div>
         <div class="signup-button-container">
           <button class="dialog-signin-button" id="dialog-signup-button">
             Sign Up
@@ -82,17 +90,19 @@ error_reporting(E_ERROR | E_PARSE);
           </div>
         </div>
       </form>
-      <form class="dialog-container" id="signinDialog" method="dialog">
+      <form class="dialog-container" onsubmit="submitSigninForm(); return false;" id="signinDialog" method="post" action = './php/signIn.php'>
         <div class="dialog-title">Sign In</div>
-
+        
         <div class="signup-input=container">
           <div class="dialog-text">Email</div>
           <input
             class="dialog-input"
             type="email"
             name="signin-email"
+            id="signin-email"
             required
           />
+          <div style="color: red;" id="signin-error-email"></div>
         </div>
 
         <div class="signup-input=container">
@@ -101,12 +111,15 @@ error_reporting(E_ERROR | E_PARSE);
             class="dialog-input"
             type="password"
             name="signin-password"
+            id="signin-password"
             required
           />
+          <div id="signin-error-password"></div>
         </div>
+       
 
         <div class="signup-button-container">
-          <button class="dialog-signin-button" id="dialog-signin-button">
+          <button class="dialog-signin-button" id="dialog-signin-button" name = "sign-in-submit">
             Sign In
           </button>
           <div class="dialog-button-subtext">
@@ -120,13 +133,6 @@ error_reporting(E_ERROR | E_PARSE);
         </div>
       </form>
     </dialog>
-    <dialog id="sign-up-dialog">
-      This is a dialog box
-      <button onclick="closeDialog('sign-up-dialog')" id="close-dialog-btn">
-        Close
-      </button>
-    </dialog>
-
     <div class="navbar">
       <a href="index.php">
         <div class="navbar-logo-container">
@@ -144,17 +150,44 @@ error_reporting(E_ERROR | E_PARSE);
           <a href="#" class="navbarItem">Support</a>
         </div>
 
-        <div class="cart-profile-container">
-          <!-- <i
-            class="nav-icon fa-solid fa-cart-shopping fa-xl"
-            onclick="showCart()"
-          ></i> -->
-          <button
-            class="button-filled join-button"
-            onclick="openDialog('sign-up-dialog')"
-          >
-            Join Us
-          </button>
+        <div class="cart-profile-container" style ="display: flex;align-items: center;">
+          <!-- <i class="nav-icon fa-solid fa-cart-shopping fa-2xl"  onclick="showCart()">
+          <?php
+          if (isset($_SESSION['cart'])) {
+            if (count($_SESSION['cart']) > 0) {
+              echo "<div class='cart-number'>" . count($_SESSION['cart']) . " </div>";
+            }
+          }
+          ?></i> -->
+          <?php
+          if ($_SESSION["logged_in"] && isset($_SESSION["customer_id"])) {
+
+            $servername = "localhost";
+            $username = "root";
+            $password = "";
+            $dbname = "chrispizza";
+
+            $conn = new mysqli($servername, $username, $password, $dbname);
+            $customer_id = $_SESSION["customer_id"];
+
+            $sql = "SELECT name FROM customers WHERE customer_id = $customer_id";
+            $result = $conn->query($sql);
+
+            if ($conn->connect_error) {
+              die("Connection failed: " . $conn->connect_error);
+            }
+            if ($result) {
+              $row = mysqli_fetch_assoc($result);
+              $customer_name = $row['name'];
+            }
+
+            echo '<div style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem;" class="logged-in-container"><div class="logged-in-details">' . $customer_name . '</div><button class="join-button button-not-filled" onclick="logout()">Log Out</button></div>';
+
+          } else {
+            echo '<button class="button-filled join-button" onclick="openDialog(\'sign-up-dialog\')">Join Us</button>';
+          }
+
+          ?>
         </div>
       </div>
 
@@ -644,6 +677,181 @@ error_reporting(E_ERROR | E_PARSE);
             }
           }
         }
+        //Sign In/ Sign Up Functions
+
+function submitSigninForm() {
+    // Get form data
+    var formData = new FormData(document.getElementById('signinDialog'));
+
+    if (testSignUpEmail(document.getElementById('signin-email').value)){
+      fetch('./php/signIn.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.text())
+    .then(data => {
+        // Handle the response
+       
+        console.log(data);
+        if (data.includes('successful')) {
+          setTimeout(function () {
+                closeDialog('sign-up-dialog');
+                location.reload();
+            }, 1000);
+          document.getElementById('signin-password').style.border = "1px solid black";
+          document.getElementById('signin-error-password').innerHTML = data;
+        }
+        else if (data.includes('Email')) {
+          document.getElementById('signin-error-email').innerHTML = data;
+          document.getElementById('signin-email').style.border = "1px solid red";
+          document.getElementById('signin-error-password').innerHTML = "";
+          document.getElementById('signin-password').style.border = "1px solid black";
+        }
+        else if (data.includes('password')) {
+          document.getElementById('signin-error-password').innerHTML = data;
+          document.getElementById('signin-password').style.border = "1px solid red";
+          document.getElementById('signin-password').value = "";
+          document.getElementById('signin-email').style.border = "1px solid black";
+          document.getElementById('signin-error-email').innerHTML = "";
+        }
+         
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+    }else{
+      document.getElementById('signin-error-email').innerHTML = "Please enter a valid email";
+      document.getElementById('signin-email').style.border = "1px solid red";
+    }
+    // Use the Fetch API to send a POST request to the server
+   
+}
+
+
+function submitSignupForm() {
+    // Get form data
+    var formData = new FormData(document.getElementById('signupDialog'));
+    if (signUpFormSubmit()){
+ // Use the Fetch API to send a POST request to the server
+ fetch('./php/signUp.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.text())
+    .then(data => {
+        // Handle the response
+        document.getElementById('signup-error').innerHTML = data;
+
+        console.log(data);
+        if (data.includes('successfully')) {
+          setTimeout(function () {
+            location.reload();
+            closeDialog('sign-up-dialog');
+        
+            }, 1000);
+      
+        }
+
+         
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+    }
+
+   
+}
+
+
+function logout() {
+    // Get form data
+    var formData = new FormData(document.getElementById('signupDialog'));
+
+    // Use the Fetch API to send a POST request to the server
+    fetch('./php/logout.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.text())
+    .then(data => {
+        // Handle the response
+        location.reload();
+        
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
+}
+
+
+
+function testSignUpName(name) {
+  var namePattern = /^[a-zA-Z\s'-]{3,}$/;  // (alphabets, spaces, ', and -) with a minimum of 3 characters
+    return namePattern.test(name);
+}
+
+function testSignUpEmail(email) {
+    var emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/; // (alphabets, numbers,._%+-) @ (alphabets, numbers, -.) .(alphabets of minimum 2 characters)
+    return emailPattern.test(email);
+}
+
+function testSignUpAddress(address) {
+    var addressPattern = /^[a-zA-Z0-9\s,-]+(?:#\d{2,3}-\d{2,3})?$/; // (alphabets, numbers, spaces, ,, and -) optional(#, 2 or 3 digits, -, 2 or 3 digits)
+    return addressPattern.test(address);
+}
+
+function signUpFormSubmit () {
+
+  let allInputsValid = false;
+  let signUpNameInput = document.getElementById('signup-name').value;
+  let signUpEmailInput = document.getElementById('signup-email').value;
+  let signUpAddressInput = document.getElementById('signup-address').value;
+
+  let signUpNameError = document.getElementById('signup-name-error');
+  let signUpEmailError = document.getElementById('signup-email-error');
+  let signUpAddressError = document.getElementById('signup-address-error');
+  console.log("signUpAddressError",signUpAddressError)
+
+  if (testSignUpName(signUpNameInput)){
+    signUpNameError.innerHTML = "";
+    signUpNameError.style.display = "none";
+    console.log("testSignUpName(signUpNameInput)",testSignUpName(signUpNameInput));
+    allInputsValid = true;
+  } else {
+    signUpNameError.innerHTML = "Please enter a valid name <br/> (< 3 letters, no numbers)";
+    signUpNameError.style.display = "block";
+    console.log("testSignUpName(signUpNameInput)",testSignUpName(signUpNameInput));
+    allInputsValid = false;
+  }
+
+  if (testSignUpEmail(signUpEmailInput)){
+    signUpEmailError.innerHTML = "";
+    signUpEmailError.style.display = "none";
+    console.log("testSignUpEmail(signUpEmailInput)",testSignUpEmail(signUpEmailInput));
+    allInputsValid = true;
+  } else {
+    signUpEmailError.innerHTML = "Please enter a valid email";
+    signUpEmailError.style.display = "block";
+    console.log("testSignUpEmail(signUpEmailInput)",testSignUpEmail(signUpEmailInput));
+    allInputsValid = false;
+  }
+
+  if (testSignUpAddress(signUpAddressInput)){
+    signUpAddressError.innerHTML = "";
+    signUpAddressError.style.display = "none";
+    console.log("testSignUpAddress(signUpAddressInput)",testSignUpAddress(signUpAddressInput))
+    allInputsValid = true;
+  } else {
+    signUpAddressError.innerHTML = "Please enter a valid address";
+    signUpAddressError.style.display = "block";
+    console.log("testSignUpAddress(signUpAddressInput)",testSignUpAddress(signUpAddressInput))
+     allInputsValid = false;
+  }
+
+  allInputsValid = testSignUpAddress(signUpAddressInput) && testSignUpEmail(signUpEmailInput) &&testSignUpName(signUpNameInput);
+  return  allInputsValid;
+
+}
       </script>
       <script
         src="https://kit.fontawesome.com/0ef6f85575.js"

@@ -2,7 +2,6 @@
 session_start();
 error_reporting(E_ERROR | E_PARSE);
 
-var_dump($_SESSION);
 
 if (!isset($_SESSION["cart"])) {
   $_SESSION['cart'] = array();
@@ -154,8 +153,7 @@ if (!isset($_SESSION["cart"])) {
           <a href="#" class="navbarItem">Support</a>
         </div>
 
-        <div class="cart-profile-container" style ="display: flex;align-items: center;
- ">
+        <div class="cart-profile-container" style ="display: flex;align-items: center;">
           <i class="nav-icon fa-solid fa-cart-shopping fa-2xl"  onclick="showCart()">
           <?php
           if (isset($_SESSION['cart'])) {
@@ -272,8 +270,8 @@ if (!isset($_SESSION["cart"])) {
 
               echo '<div class="cart-actions-container">';
               echo '<div class="cart-actions-subcontainer">';
-              echo '<i class="fa-regular fa-pen-to-square cart-action-icon fa-lg"></i>';
-
+              // echo '<i class="fa-regular fa-pen-to-square cart-action-icon fa-lg"></i>';
+        
               echo '<button class="delete-cart-input" type="submit" name="remove" value=""><i class="fa-regular fa-trash-can cart-action-icon fa-xl"></i></button>';
               echo '</div>';
               echo '</div>';
@@ -547,6 +545,8 @@ function getCartTotal() {
     "$" + cartTotal.toFixed(2);
 }
 
+
+
 //Sign In/ Sign Up Functions
 
 function submitSigninForm() {
@@ -675,16 +675,10 @@ function signUpFormSubmit () {
   let allInputsValid = false;
   let signUpNameInput = document.getElementById('signup-name').value;
   let signUpEmailInput = document.getElementById('signup-email').value;
-  // let signUpPasswordInput = document.getElementById('signup-password').value;
   let signUpAddressInput = document.getElementById('signup-address').value;
-  // let signUpContactInput = document.getElementById('signup-contact').value;
-  // let signUpButton =   document.getElementById("dialog-signup-button")
-
-
 
   let signUpNameError = document.getElementById('signup-name-error');
   let signUpEmailError = document.getElementById('signup-email-error');
-  // let signUpPasswordError = document.getElementById('signup-password-error');
   let signUpAddressError = document.getElementById('signup-address-error');
   console.log("signUpAddressError",signUpAddressError)
 
