@@ -209,7 +209,7 @@ if (!isset($_SESSION["logged_in"])) {
       </div>
 
       <div class="checkout-container">
-        <form class="checkout-container-left" method='post' action='trackorder.php'>
+        <form class="checkout-container-left" method='post' action='trackorder.php' id = "checkout-form" name = "checkout-form" onsubmit="return checkCheckoutInputs()">
           <div class="checkout-details-container">
             <div class="checkout-details-title">Details</div>
             <div class="signup-input-container-checkout">
@@ -218,6 +218,7 @@ if (!isset($_SESSION["logged_in"])) {
                 class="dialog-input-checkout"
                 type="text"
                 name="checkout-name"
+                id = "checkout-name"
                 value= "<?php
                 if ($_SESSION["logged_in"] && isset($_SESSION["customer_id"])) {
 
@@ -244,6 +245,7 @@ if (!isset($_SESSION["logged_in"])) {
                 ?>"
                 required
               />
+              <div style="color: red;" id="checkout-name-error"></div>
             </div>
             <div class="signup-input-container-checkout">
               <div class="dialog-text-checkout">Address</div>
@@ -251,6 +253,7 @@ if (!isset($_SESSION["logged_in"])) {
                 class="dialog-input-checkout"
                 type="text"
                 name="checkout-address"
+                id = "checkout-address"
                 value= "<?php
                 if ($_SESSION["logged_in"] && isset($_SESSION["customer_id"])) {
 
@@ -277,6 +280,7 @@ if (!isset($_SESSION["logged_in"])) {
                 ?>"
                 required
               />
+              <div style="color: red;" id="checkout-address-error"></div>
             </div>
             <div class="signup-input-container-checkout">
               <div class="dialog-text-checkout">Email</div>
@@ -284,6 +288,7 @@ if (!isset($_SESSION["logged_in"])) {
                 class="dialog-input-checkout"
                 type="email"
                 name="checkout-email"
+                id= "checkout-email"
                 <?php
                 if ($_SESSION["logged_in"] && isset($_SESSION["customer_id"])) {
 
@@ -311,6 +316,7 @@ if (!isset($_SESSION["logged_in"])) {
                 ?>
                 required
               />
+              <div style="color: red;" id="checkout-email-error"></div>
             </div>
             <div class="signup-input-container-checkout">
               <div class="dialog-text-checkout">Contact</div>
@@ -318,6 +324,7 @@ if (!isset($_SESSION["logged_in"])) {
                 class="dialog-input-checkout"
                 type="number"
                 name="checkout-contact"
+                id="checkout-contact"
                 value= "<?php
                 if ($_SESSION["logged_in"] && isset($_SESSION["customer_id"])) {
 
@@ -343,6 +350,7 @@ if (!isset($_SESSION["logged_in"])) {
                 }
                 ?>"
               />
+             
             </div>
           </div>
           <div class="checkout-details-container" style="margin-top: 8rem">
@@ -408,6 +416,7 @@ if (!isset($_SESSION["logged_in"])) {
             </div>
           </div>
           <input class="phphiddendiv" name="cartgrandtotal" id="cartgrandtotal" value="0">
+          <button onclick="checkCheckoutInputs()" type="button">check</button>
           <button
             class="payment-button"
             type='submit'
@@ -880,10 +889,66 @@ function signUpFormSubmit () {
      allInputsValid = false;
   }
 
-  allInputsValid = testSignUpAddress(signUpAddressInput) && testSignUpEmail(signUpEmailInput) &&testSignUpName(signUpNameInput);
+  allInputsValid = testSignUpAddress(signUpAddressInput) && testSignUpEmail(signUpEmailInput) && testSignUpName(signUpNameInput);
   return  allInputsValid;
 
 }
+
+function checkCheckoutInputs(){
+  
+  let allInputsValid = false;
+
+  let checkoutNameInput = document.getElementById('checkout-name').value;
+  let checkoutEmailInput = document.getElementById('checkout-email').value;
+  let checkoutAddressInput = document.getElementById('checkout-address').value;
+
+  let signUpNameError = document.getElementById('checkout-name-error');
+  let signUpEmailError = document.getElementById('checkout-email-error');
+  let signUpAddressError = document.getElementById('checkout-address-error');
+  console.log("checkoutAddressInput",checkoutAddressInput)
+
+  if (testSignUpName(checkoutNameInput)){
+    signUpNameError.innerHTML = "";
+    signUpNameError.style.display = "none";
+    console.log("testSignUpName(signUpNameInput)",testSignUpName(checkoutNameInput));
+    allInputsValid = true;
+  } else {
+    signUpNameError.innerHTML = "Please enter a valid name <br/> (< 3 letters, no numbers)";
+    signUpNameError.style.display = "block";
+    console.log("testSignUpName(signUpNameInput)",testSignUpName(checkoutNameInput));
+    allInputsValid = false;
+  }
+
+  if (testSignUpEmail(checkoutEmailInput)){
+    signUpEmailError.innerHTML = "";
+    signUpEmailError.style.display = "none";
+    console.log("testSignUpEmail(signUpEmailInput)",testSignUpEmail(checkoutEmailInput));
+    allInputsValid = true;
+  } else {
+    signUpEmailError.innerHTML = "Please enter a valid email";
+    signUpEmailError.style.display = "block";
+    console.log("testSignUpEmail(signUpEmailInput)",testSignUpEmail(checkoutEmailInput));
+    allInputsValid = false;
+  }
+
+  if (testSignUpAddress(checkoutAddressInput)){
+    signUpAddressError.innerHTML = "";
+    signUpAddressError.style.display = "none";
+    console.log("testSignUpAddress(signUpAddressInput)",testSignUpAddress(checkoutAddressInput))
+    allInputsValid = true;
+  } else {
+    signUpAddressError.innerHTML = "Please enter a valid address";
+    signUpAddressError.style.display = "block";
+    console.log("testSignUpAddress(signUpAddressInput)",testSignUpAddress(checkoutAddressInput))
+     allInputsValid = false;
+  }
+
+  allInputsValid = testSignUpAddress(checkoutAddressInput) && testSignUpEmail(checkoutEmailInput) && testSignUpName(checkoutNameInput);
+  console.log("allInputsValid",allInputsValid)
+  return  allInputsValid;
+
+}
+
 
       </script>
       <script
