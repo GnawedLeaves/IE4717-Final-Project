@@ -194,6 +194,8 @@ a {
 .cart-profile-container {
   position: absolute;
   right: 2rem;
+  display: flex;
+  gap: 1rem;
 }
 
 .button-filled {
@@ -1494,4 +1496,11 @@ input[type=radio] {
 #signup-error {
 
   font-size: 0.9rem;
+}
+
+.logged-in-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
 }
