@@ -103,7 +103,7 @@ if (!isset($_SESSION["cart"])) {
       }
 
       if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        // Validate user input
+
         foreach ($_POST['itemprice'] as $itemid => $price) {
           $price = floatval($price);
           if ($price < 0) {
@@ -111,7 +111,7 @@ if (!isset($_SESSION["cart"])) {
             exit;
           }
 
-          // Update the database
+
           $updateQuery = "UPDATE menu SET itemprice = $price WHERE itemid = $itemid";
 
           if ($conn->query($updateQuery) !== TRUE) {
@@ -120,10 +120,10 @@ if (!isset($_SESSION["cart"])) {
           }
         }
 
-        echo "Prices updated successfully!";
+        echo "<div style='font-weight: bold; color: red;'></div>Prices updated successfully!";
       }
 
-      // Fetch current menu items from the database
+
       $query = "SELECT * FROM menu";
       $result = $conn->query($query);
       ?>
@@ -149,6 +149,80 @@ if (!isset($_SESSION["cart"])) {
 
         <button type="submit">Update Prices</button>
     </form>
+<?php
+
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "chrispizza";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+
+if ($conn->connect_error) {
+  die("Connection failed: " . $conn->connect_error);
+}
+
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+  $allowedStatus = ["In the kitchen", "On the way", "Completed"];
+
+  foreach ($_POST['status'] as $orderId => $status) {
+    if (!in_array($status, $allowedStatus)) {
+      echo "Invalid status selected.";
+      exit;
+    }
+
+
+    $updateQuery = "UPDATE ordersummary SET status = '$status' WHERE id = $orderId";
+
+    if ($conn->query($updateQuery) !== TRUE) {
+      echo "Error updating status: " . $conn->error;
+      exit;
+    }
+  }
+
+  echo "<div style='font-weight: bold; color: red;'></div>Status updated successfully!";
+}
+
+
+$query = "SELECT * FROM ordersummary ORDER BY id DESC";
+$result = $conn->query($query);
+?>
+    <form method="post" action="">
+        <table border="1">
+            <tr>
+                <th>Order ID</th>
+                <th>Customer ID</th>
+                <th>Total</th>
+                <th>Date</th>
+                <th>Delivery Time</th>
+                <th>Status</th>
+            </tr>
+
+            <?php
+            while ($row = $result->fetch_assoc()) {
+              echo "<tr>";
+              echo "<td>{$row['order_id']}</td>";
+              echo "<td>{$row['customer_id']}</td>";
+              echo "<td>\${$row['total']}</td>";
+              echo "<td>{$row['date']}</td>";
+              echo "<td>{$row['delivery_time']}</td>";
+              echo "<td>
+                        <select name='status[{$row['id']}]'>
+                            <option value='In the kitchen' " . ($row['status'] == 'In the kitchen' ? 'selected' : '') . ">In the kitchen</option>
+                            <option value='On the way' " . ($row['status'] == 'On the way' ? 'selected' : '') . ">On the way</option>
+                            <option value='Completed' " . ($row['status'] == 'Completed' ? 'selected' : '') . ">Completed</option>
+                        </select>
+                    </td>";
+              echo "</tr>";
+            }
+            ?>
+        </table>
+
+        <button type="submit">Update Status</button>
+    </form>
+
       </div>
         <div class="footer">
           <div class="footer-left-container">
