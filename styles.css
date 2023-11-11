@@ -1504,3 +1504,17 @@ input[type=radio] {
   align-items: center;
   gap: 0.5rem;
 }
+
+.edit-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.update-prices-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+}
