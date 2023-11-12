@@ -1,47 +1,12 @@
 <?php
 session_start();
-// error_reporting(E_ERROR | E_PARSE);
+error_reporting(E_ERROR | E_PARSE);
 // var_dump($_SESSION);
 
 if (!isset($_SESSION["cart"])) {
   $_SESSION['cart'] = array();
 }
 
-// $servername = "localhost";
-// $username = "root";
-// $password = "";
-// $dbname = "chrispizza";
-
-// $conn = new mysqli($servername, $username, $password, $dbname);
-
-// if ($conn->connect_error) {
-//   die("Connection failed: " . $conn->connect_error);
-// }
-
-// if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-//   // Validate user input
-//   foreach ($_POST['itemprice'] as $itemid => $price) {
-//     $price = floatval($price);
-//     if ($price < 0) {
-//       echo "Prices must be non-negative numbers.";
-//       exit;
-//     }
-
-//     // Update the database
-//     $updateQuery = "UPDATE menu SET itemprice = $price WHERE itemid = $itemid";
-
-//     if ($conn->query($updateQuery) !== TRUE) {
-//       echo "Error updating prices: " . $conn->error;
-//       exit;
-//     }
-//   }
-
-//   echo "Prices updated successfully!";
-// }
-
-// // Fetch current menu items from the database
-// $query = "SELECT * FROM menu";
-// $result = $conn->query($query);
 ?>
 
 
@@ -89,7 +54,11 @@ if (!isset($_SESSION["cart"])) {
         <div class="page-title">Admin </div>
       </div>
       <div class="edit-container">
-    <form method="post" action="" class="update-prices-form">
+    <form method="post" action="" class="update-prices-form" style="    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;">
       <?php
       $servername = "localhost";
       $username = "root";
@@ -147,49 +116,54 @@ if (!isset($_SESSION["cart"])) {
             ?>
         </table>
 
-        <button type="submit">Update Prices</button>
+        <button style="padding: 1rem; border-radius: 5px; background: #ff9900; color: white; font-weight: 600; border:none; cursor: pointer;" type="submit">Update Prices</button>
     </form>
-<?php
 
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "chrispizza";
+    <form method="post" action="" style="    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem; margin: 2rem 0">
+    <?php
 
-$conn = new mysqli($servername, $username, $password, $dbname);
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "chrispizza";
 
-if ($conn->connect_error) {
-  die("Connection failed: " . $conn->connect_error);
-}
+    $conn = new mysqli($servername, $username, $password, $dbname);
 
-
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
-  $allowedStatus = ["In the kitchen", "On the way", "Completed"];
-
-  foreach ($_POST['status'] as $orderId => $status) {
-    if (!in_array($status, $allowedStatus)) {
-      echo "Invalid status selected.";
-      exit;
+    if ($conn->connect_error) {
+      die("Connection failed: " . $conn->connect_error);
     }
 
 
-    $updateQuery = "UPDATE ordersummary SET status = '$status' WHERE id = $orderId";
+    if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-    if ($conn->query($updateQuery) !== TRUE) {
-      echo "Error updating status: " . $conn->error;
-      exit;
+      $allowedStatus = ["In the kitchen", "On the way", "Completed"];
+
+      foreach ($_POST['status'] as $orderId => $status) {
+        if (!in_array($status, $allowedStatus)) {
+          echo "Invalid status selected.";
+          exit;
+        }
+
+
+        $updateQuery = "UPDATE ordersummary SET status = '$status' WHERE id = $orderId";
+
+        if ($conn->query($updateQuery) !== TRUE) {
+          echo "Error updating status: " . $conn->error;
+          exit;
+        }
+      }
+
+      echo "<div style='font-weight: bold; color: red;'></div>Status updated successfully!";
     }
-  }
-
-  echo "<div style='font-weight: bold; color: red;'></div>Status updated successfully!";
-}
 
 
-$query = "SELECT * FROM ordersummary ORDER BY id DESC";
-$result = $conn->query($query);
-?>
-    <form method="post" action="">
+    $query = "SELECT * FROM ordersummary ORDER BY id DESC";
+    $result = $conn->query($query);
+    ?>
         <table border="1">
             <tr>
                 <th>Order ID</th>
@@ -220,7 +194,7 @@ $result = $conn->query($query);
             ?>
         </table>
 
-        <button type="submit">Update Status</button>
+        <button type="submit" style="padding: 1rem; border-radius: 5px; background: #ff9900; color: white; font-weight: 600; border:none; cursor: pointer;">Update Status</button>
     </form>
 
       </div>
