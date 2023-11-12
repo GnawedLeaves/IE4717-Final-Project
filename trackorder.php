@@ -151,23 +151,7 @@ if (isset($_SESSION['cart']) && count($_SESSION['cart']) > 0) {
       if (empty($pizzaAddOn3Qty)) {
         $pizzaAddOn3Qty = 0;
       }
-      // echo "<br><strong>Pizza Name:</strong> " . $pizzaName . "<br>";
-      // echo "<strong>Pizza Size:</strong> " . $pizzaSize . "<br>";
-      // echo "<strong>Pizza Quantity:</strong> " . $pizzaQty . "<br>";
-      // echo "<strong>Pizza Quantity Subtotal:</strong> " . $pizzaQtySubtotal . "<br>";
-      // echo "<strong>Pizza Topping 1 Quantity:</strong> " . $pizzaTopping1Qty . "<br>";
-      // echo "<strong>Pizza Topping 2 Quantity:</strong> " . $pizzaTopping2Qty . "<br>";
-      // echo "<strong>Pizza Topping 3 Quantity:</strong> " . $pizzaTopping3Qty . "<br>";
-      // echo "<strong>Pizza Add-On 1 Quantity:</strong> " . $pizzaAddOn1Qty . "<br>";
-      // echo "<strong>Pizza Add-On 2 Quantity:</strong> " . $pizzaAddOn2Qty . "<br>";
-      // echo "<strong>Pizza Add-On 3 Quantity:</strong> " . $pizzaAddOn3Qty . "<br>";
-      // echo "<strong>Pizza Add-On 1 Subtotal:</strong> " . $pizzaAddOn1Subtotal . "<br>";
-      // echo "<strong>Pizza Add-On 2 Subtotal:</strong> " . $pizzaAddOn2Subtotal . "<br>";
-      // echo "<strong>Pizza Add-On 3 Subtotal:</strong> " . $pizzaAddOn3Subtotal . "<br>";
-      // echo "<strong>Total:</strong> " . $phpTotal . "<br>";
-      // echo "<br>" . $orderId . "<br>";
-      // echo ' customer id:' . $customerId . '<br>';
-      // echo ' Item id:' . $itemId . '<br>';
+
 
       //insert orders
       $sql = "INSERT INTO orders (order_id, item_id, quantity, topping1, topping2, topping3, addon1, addon2, addon3, sub_total)

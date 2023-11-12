@@ -11,7 +11,7 @@ Change all the ports and shit according to the notes (will add more details next
 2.1 Once XAMPP is up and running with the apache, mysql and mercury servers running, go to localhost:8000 or localhost:8000/IE4717 to check if its working  
 2.2 Go localhost:8000/phpmyadmin to access database  
 2.3 Click on create new database and name it 'chrispizza'  
-2.4 Click into the database and click on import and select the file called ultimateseed.sql and import it  
+2.4 Click into the database and click on import and select the file called ultimateseed2.sql and import it  
 2.4.1 If that doesnt work or got some errors, then import the other files manually one by one in this order: menu.sql, customers.sql, ordersummary.sql, orders.sql,feedback.sql, seed.sql  
 2.5 Databse set up is completed
 
