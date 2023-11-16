@@ -361,8 +361,20 @@ if (!isset($_SESSION["cart"])) {
               </div>';
 
             } else {
-              echo "No orders found.  Please sign in or place an order.";
-            }
+              $customer_id = $_SESSION['customer_id'];
+              $sql = "SELECT * FROM ordersummary WHERE customer_id = '$customer_id' AND status = 'Completed'";
+              $result = $conn->query($sql);
+              if ($result === false) {
+                echo "Error: " . $conn->error;
+              } else {
+                if ($result->num_rows > 0) {
+
+                }
+                else{
+                  echo "No orders found.  Please sign in or place an order.";
+                }
+             
+            }}
           }
 
 
@@ -417,6 +429,9 @@ if (!isset($_SESSION["cart"])) {
                echo '</div>
               </div>';
 
+             }
+             else{
+              echo "";
              }
            }
 
