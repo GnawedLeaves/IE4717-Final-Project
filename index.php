@@ -373,6 +373,8 @@ if (!isset($_SESSION["cart"])) {
             </a>
           </div>
         </div>
+
+        
         <form class="dialog-container" id="signinDialog">
           <div class="dialog-title">Sign In</div>
 
