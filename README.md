@@ -4,7 +4,7 @@
 
 ### Step 1: Install XAMPP
 
-Change all the ports and shit according to the notes (will add more details next time)
+Change all the ports according to the notes (will add more details next time)
 
 ### Step 2: Setting Up Database
 

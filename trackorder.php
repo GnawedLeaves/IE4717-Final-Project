@@ -577,8 +577,6 @@ if (!isset($_SESSION["cart"])) {
             </button>
             <button  type='button' class="track-order-orderagain-button" onclick="changePage('index.php')">Order Again</button>
             </form>
-
-           
           </div>
         </div>
 

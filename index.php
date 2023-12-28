@@ -513,29 +513,31 @@ if (!isset($_SESSION["cart"])) {
 
        
 
-                //CART FUNCTIONS
-                function cleanUpStringToFloat(input) {
+              // CART FUNCTIONS
+
+function cleanUpStringToFloat(input) {
   return parseFloat(input.replace(/[^\d.]/g, ""));
 }
-                let cart = document.getElementById("cart");
-        function showCart() {
-         
-          cart.style.transform = "translate(0%, -50%)";
-        }
 
-        function hideCart() {
-          
-          cart.style.transform = "translate(100%, -50%)";
-        }
-        getCartTotal();
+let cart = document.getElementById("cart");
+
+function showCart() {
+  cart.style.transform = "translate(0%, -50%)";
+}
+
+function hideCart() {
+  cart.style.transform = "translate(100%, -50%)";
+}
+
+getCartTotal();
+
 function getCartTotal() {
   let cartTotal = 0;
   let subtotalElements = document.getElementsByClassName("cart-order-subtotal");
-  Array.from(subtotalElements).forEach((element) => {
   
+  Array.from(subtotalElements).forEach((element) => {
     cartTotal += cleanUpStringToFloat(element.innerHTML);
   });
- 
 
   cartTotal += cartTotal * 0.1;
   document.getElementById("servicefee-title").innerHTML =
@@ -544,6 +546,7 @@ function getCartTotal() {
   document.getElementById("cart-grand-total-title-price").innerHTML =
     "$" + cartTotal.toFixed(2);
 }
+
 
 
 
